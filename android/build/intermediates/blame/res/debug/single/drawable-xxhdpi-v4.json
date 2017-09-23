@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/nik/Documents/ohm/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/home/nik/Documents/ohm/android/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/nik/Documents/Projects/Ohm/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/home/nik/Documents/Projects/Ohm/android/res/drawable-xxhdpi/ic_launcher.png"
+    }
+]
