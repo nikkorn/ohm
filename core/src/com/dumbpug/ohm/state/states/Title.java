@@ -47,9 +47,7 @@ public class Title implements State {
 		int posY       = (Gdx.graphics.getHeight()/2) - (logoHeight/2);
 
 		// Draw our logo to the screen.
-		batch.begin();
 		batch.draw(dumbpugLogo, posX, posY, logoWidth, logoHeight);
-		batch.end();
 	}
 
     @Override

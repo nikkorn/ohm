@@ -2,52 +2,10 @@
 <items version="2" >
 
     <item
-        jar="/home/nik/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4">
-        <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/ashley-1.7.0_58c298e580284fb10d5463d15314ea61ed448d28.jar" />
-    </item>
-    <item
-        jar="/home/nik/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/4b4b7962d1bc75af0438f5c81ec1010557bc9ee5/gdx-1.9.4.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="4b4b7962d1bc75af0438f5c81ec1010557bc9ee5">
-        <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/gdx-1.9.4_0b0000ea7e9ab1809b39960bb10f5d207df49a27.jar" />
-    </item>
-    <item
-        jar="/home/nik/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.9.4/194b33382d6d58fad031521ba3331d926c476c9b/gdx-backend-android-1.9.4.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="194b33382d6d58fad031521ba3331d926c476c9b">
-        <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/gdx-backend-android-1.9.4_2feccf3c97f17ca473ea7dae1c15d90d8c24907d.jar" />
-    </item>
-    <item
-        jar="/home/nik/Documents/Projects/Ohm/core/build/libs/core-1.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="065737da6938c4bc8dbe7a94aa30098676506866">
-        <dex dex="/home/nik/Documents/Projects/Ohm/android/build/intermediates/pre-dexed/debug/core-1.0_bcaf355de25741c0b622a832f85332a3e3a8307a.jar" />
-    </item>
-    <item
-        jar="/home/nik/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.4/d182ca36785df4226ef63009a3d96462952665c3/gdx-controllers-1.9.4.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="d182ca36785df4226ef63009a3d96462952665c3">
-        <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/gdx-controllers-1.9.4_aa3d497d88e80cfed661746b9a11f4b34c4f4db3.jar" />
-    </item>
-    <item
-        jar="/home/nik/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-android/1.9.4/dd3d37ac9f03084edc1b1d9aa7c7b3e08b6744a3/gdx-controllers-android-1.9.4.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="dd3d37ac9f03084edc1b1d9aa7c7b3e08b6744a3">
-        <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/gdx-controllers-android-1.9.4_47f7cb5a08e0422bfcc612584bb256be30437eb8.jar" />
-    </item>
-    <item
         jar="/home/nik/Documents/ohm/core/build/libs/core-1.0.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="70ba7f9b66142b19905d360edd5767b89895de46">
+        sha1="6e429f6c092009c3c1bf4957ca96e61a270cc2f4">
         <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/core-1.0_b6105c0391885abce2946a75a44812c847e3692b.jar" />
     </item>
 

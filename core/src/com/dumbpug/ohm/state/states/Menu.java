@@ -1,7 +1,6 @@
 package com.dumbpug.ohm.state.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
@@ -14,16 +13,14 @@ import com.dumbpug.ohm.state.StateType;
 public class Menu implements State {
 
     @Override
-    public void tick(StateManager manager) {}
-
-    public void draw(SpriteBatch batch) {
-        // Draw our logo to the screen.
-        batch.begin();
-        batch.draw(AreaResources.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+    public void tick(StateManager manager) {
+        // Go straight to a new game.
+        manager.setState(new Game(true));
     }
 
-    public void onTransitionFromState(State state) {}
+    public void draw(SpriteBatch batch) {
+        batch.draw(AreaResources.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
 
     @Override
     public StateType getStateType() { return StateType.MENU; }
