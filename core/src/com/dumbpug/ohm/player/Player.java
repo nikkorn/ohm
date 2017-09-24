@@ -1,6 +1,9 @@
 package com.dumbpug.ohm.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.resources.PlayerResources;
 
@@ -31,7 +34,7 @@ public class Player extends com.dumbpug.ohm.character.Character {
     }
 
     /**
-     * Add the playres physics box to the specified physics world.
+     * Add the players physics box to the specified physics world.
      * @param world
      * @param x
      * @param y
@@ -41,6 +44,18 @@ public class Player extends com.dumbpug.ohm.character.Character {
         this.setPosition(x, y);
         // Add the players physics box to the world.
         world.addBox(this.physicsBox);
+    }
+
+    /**
+     * Update the specified camera to reflect the players position.
+     * @param camera
+     */
+    public void grabCamera(OrthographicCamera camera) {
+        // Clamp the camera horizontally to the screen.
+        float x = Math.max((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2, this.physicsBox.getX());
+        // TODO Clamp to the end of the area too.
+        // Set the camera to looks at the player.
+        camera.position.set(x, Constants.TILE_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
     }
 
     /**

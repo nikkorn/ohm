@@ -5,7 +5,7 @@
         jar="/home/nik/Documents/ohm/core/build/libs/core-1.0.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="6e429f6c092009c3c1bf4957ca96e61a270cc2f4">
+        sha1="e071008fc78bcd49459e589e152435f785c6fad5">
         <dex dex="/home/nik/Documents/ohm/android/build/intermediates/pre-dexed/debug/core-1.0_b6105c0391885abce2946a75a44812c847e3692b.jar" />
     </item>
 

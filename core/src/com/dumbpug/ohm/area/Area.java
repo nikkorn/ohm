@@ -2,7 +2,10 @@ package com.dumbpug.ohm.area;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.mappings.Ouya;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,15 +14,13 @@ import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 /**
  * Represents an area in game.
  */
 public class Area {
+
+    /** The area camera. */
+    private OrthographicCamera camera;
 
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
@@ -37,6 +38,11 @@ public class Area {
     public Area(String areaName) {
         // Create the physics world.
         this.createPhysicsWorld(areaName);
+        // Create the area camera..
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false);
+        camera.zoom = Constants.AREA_ZOOM;
+        camera.update();
         // Set the area overlay.
         this.overlay = new Texture(Gdx.files.internal("areas/" + areaName + "/overlay.png"));
     }
@@ -59,8 +65,8 @@ public class Area {
         physicsWorld.update();
         // Process input.
         processInput();
-        // Update camera.
-        updateCamera();
+        // Allow the player to grab the camera.
+        player.grabCamera(camera);
     }
 
     /**
@@ -68,6 +74,8 @@ public class Area {
      * @param batch
      */
     public void draw(SpriteBatch batch) {
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
         // Draw background.
         batch.draw(AreaResources.background, 0, 0);
         // TODO Draw game entities.
@@ -81,9 +89,26 @@ public class Area {
      * Process user input.
      */
     private void processInput() {
-        // The way we handle nput depends n whether we are running on ouya or not.
-        if(Ouya.runningOnOuya) {
-            // TODO Handle Ouya input.
+        // The way we handle input depends n whether we are running on ouya or not.
+        if (Ouya.runningOnOuya) {
+
+            // Handle Ouya input.
+            for (Controller controller : Controllers.getControllers()) {
+
+                if (controller.getButton(Ouya.BUTTON_O)) {
+                    player.jump();
+                }
+
+                float leftXAxis = controller.getAxis(Ouya.AXIS_LEFT_X);
+
+                if (leftXAxis < -0.5) {
+                    player.moveLeft();
+                }
+                if (leftXAxis > 0.5) {
+                    player.moveRight();
+                }
+            }
+
         } else {
             // Are we running left?
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -97,14 +122,11 @@ public class Area {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 player.jump();
             }
+            // Do we want to exit?
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                Gdx.app.exit();
+            }
         }
-    }
-
-    /**
-     * Update the camera.
-     */
-    private void updateCamera() {
-        // TODO Update the camera to reflect the player position.
     }
 
     /**

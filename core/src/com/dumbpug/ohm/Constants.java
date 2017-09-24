@@ -1,5 +1,7 @@
 package com.dumbpug.ohm;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by nik on 23/09/17.
  */
@@ -8,6 +10,7 @@ public class Constants {
     /** Area. */
     public static final int TILE_SIZE              = 16;
     public static final int AREA_TILE_HEIGHT       = 8;
+    public static final float AREA_ZOOM            = (float)(TILE_SIZE * AREA_TILE_HEIGHT) / Gdx.graphics.getHeight();
 
     /** Physics. */
     public static final float PHYSICS_GRAVITY      = 0.09f;

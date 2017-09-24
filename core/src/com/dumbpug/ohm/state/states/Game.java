@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.state.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.player.Player;
