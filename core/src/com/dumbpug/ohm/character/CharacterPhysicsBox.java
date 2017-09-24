@@ -100,6 +100,13 @@ public class CharacterPhysicsBox extends NBPBox {
         // Player was not able to jump.
         return false;
     }
+    /**
+     * Get whether the character is currently idle (not moving at all)
+     * @return is idle.
+     */
+    public boolean isIdle() {
+        return (getVelx() < 0.2f && getVelx() > -0.2f) && (getVely() < 0.2f && getVely() > -0.2f);
+    }
 
     /**
      * Get whether the character is touching the floor (if false then the character is airborne).
