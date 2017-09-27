@@ -164,12 +164,16 @@ public class CharacterPhysicsBox extends NBPBox {
             // Determine whether we can wall jump instead.
             if (this.canWallJumpLeft) {
                 // Do a wall jump!
-                applyImpulse(-1f, Constants.CHARACTER_JUMPING_IMPULSE * 1.5f);
+                setVelx(0);
+                setVely(0);
+                applyImpulse(-0.4f, Constants.CHARACTER_JUMPING_IMPULSE);
                 // Character was able to jump.
                 return true;
             } else if (this.canWallJumpRight) {
                 // Do a wall jump!
-                applyImpulse(1f, Constants.CHARACTER_JUMPING_IMPULSE * 1.5f);
+                setVelx(0);
+                setVely(0);
+                applyImpulse(0.4f, Constants.CHARACTER_JUMPING_IMPULSE);
                 // Character was able to jump.
                 return true;
             }
