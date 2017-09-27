@@ -199,6 +199,12 @@ public class CharacterPhysicsBox extends NBPBox {
     }
 
     /**
+     * Get whether the character is prepped for a wall jump.
+     * @return is prepped for wall jump.
+     */
+    public boolean isPreppedForWallJump() { return (!canJump) && (this.canWallJumpLeft || this.canWallJumpRight); }
+
+    /**
      * Return the character which this physics box represents.
      * @return character
      */

@@ -90,11 +90,16 @@ public class Player extends com.dumbpug.ohm.character.Character {
         if (this.facingDirection == Direction.LEFT) {
 
             if(!physicsBox.isTouchingFloor()) {
-                // If our player is airborne, then draw airborne body based on whether we are ascending or descending
-                if (physicsBox.getVely() > 0) {
-                    batch.draw(PlayerResources.ohm_jumping_left, this.physicsBox.getX(), this.physicsBox.getY());
+                // Are we prepped for a wall jump?
+                if (physicsBox.isPreppedForWallJump()) {
+                    batch.draw(PlayerResources.ohm_jumping_right, this.physicsBox.getX(), this.physicsBox.getY());
                 } else {
-                    batch.draw(PlayerResources.ohm_falling_left, this.physicsBox.getX(), this.physicsBox.getY());
+                    // If our player is airborne, then draw airborne body based on whether we are ascending or descending
+                    if (physicsBox.getVely() > 0) {
+                        batch.draw(PlayerResources.ohm_jumping_left, this.physicsBox.getX(), this.physicsBox.getY());
+                    } else {
+                        batch.draw(PlayerResources.ohm_falling_left, this.physicsBox.getX(), this.physicsBox.getY());
+                    }
                 }
             } else if(physicsBox.isIdle()) {
                 // If our player is idle then draw idle body.
@@ -107,11 +112,16 @@ public class Player extends com.dumbpug.ohm.character.Character {
         } else {
 
             if(!physicsBox.isTouchingFloor()) {
-                // If our player is airborne, then draw airborne body based on whether we are ascending or descending
-                if (physicsBox.getVely() > 0) {
-                    batch.draw(PlayerResources.ohm_jumping_right, this.physicsBox.getX(), this.physicsBox.getY());
+                // Are we prepped for a wall jump?
+                if (physicsBox.isPreppedForWallJump()) {
+                    batch.draw(PlayerResources.ohm_jumping_left, this.physicsBox.getX(), this.physicsBox.getY());
                 } else {
-                    batch.draw(PlayerResources.ohm_falling_right, this.physicsBox.getX(), this.physicsBox.getY());
+                    // If our player is airborne, then draw airborne body based on whether we are ascending or descending
+                    if (physicsBox.getVely() > 0) {
+                        batch.draw(PlayerResources.ohm_jumping_right, this.physicsBox.getX(), this.physicsBox.getY());
+                    } else {
+                        batch.draw(PlayerResources.ohm_falling_right, this.physicsBox.getX(), this.physicsBox.getY());
+                    }
                 }
             } else if(physicsBox.isIdle()) {
                 // If our player is idle then draw idle body.
