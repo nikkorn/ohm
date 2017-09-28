@@ -14,6 +14,9 @@ public class PlayerResources {
     public static Texture ohm_jumping_left;
     public static Texture ohm_jumping_right;
 
+    public static Texture ohm_wall_jumping_left;
+    public static Texture ohm_wall_jumping_right;
+
     public static Texture ohm_falling_left;
     public static Texture ohm_falling_right;
 
@@ -29,6 +32,9 @@ public class PlayerResources {
 
         ohm_jumping_left  = new Texture(Gdx.files.internal("graphics/player/ohm_jumping_left.png"));
         ohm_jumping_right = new Texture(Gdx.files.internal("graphics/player/ohm_jumping_right.png"));
+
+        ohm_wall_jumping_left  = new Texture(Gdx.files.internal("graphics/player/ohm_wall_jumping_left.png"));
+        ohm_wall_jumping_right = new Texture(Gdx.files.internal("graphics/player/ohm_wall_jumping_right.png"));
 
         ohm_falling_left  = new Texture(Gdx.files.internal("graphics/player/ohm_falling_left.png"));
         ohm_falling_right = new Texture(Gdx.files.internal("graphics/player/ohm_falling_right.png"));

@@ -16,9 +16,6 @@ public class Player extends com.dumbpug.ohm.character.Character {
     /** The players physics box. */
     private PlayerPhysicsBox physicsBox;
 
-    /** The players facing direction.*/
-    private Direction facingDirection = Direction.RIGHT;
-
     /**
      * Initialise a new instance of the Player class.
      */
@@ -65,18 +62,12 @@ public class Player extends com.dumbpug.ohm.character.Character {
     /**
      * Move the character to the left.
      */
-    public void moveLeft() {
-        this.facingDirection = Direction.LEFT;
-        this.physicsBox.moveLeft();
-    }
+    public void moveLeft() { this.physicsBox.moveLeft(); }
 
     /**
      * Move the character to the right.
      */
-    public void moveRight() {
-        this.facingDirection = Direction.RIGHT;
-        this.physicsBox.moveRight();
-    }
+    public void moveRight() { this.physicsBox.moveRight(); }
 
     /**
      * Make the character jump if he can.
@@ -86,51 +77,49 @@ public class Player extends com.dumbpug.ohm.character.Character {
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Calculate the x position of where to draw th sprite.
+        float x = this.physicsBox.getX() - ((Constants.PLAYER_SIZE - Constants.PLAYER_PHYSICS_SIZE) / 2f);
         // Which way is the player facing?
-        if (this.facingDirection == Direction.LEFT) {
-
+        if (this.physicsBox.getFacingDirection() == Direction.LEFT) {
             if(!physicsBox.isTouchingFloor()) {
                 // Are we prepped for a wall jump?
                 if (physicsBox.isPreppedForWallJump()) {
-                    batch.draw(PlayerResources.ohm_jumping_right, this.physicsBox.getX(), this.physicsBox.getY());
+                    batch.draw(PlayerResources.ohm_wall_jumping_right, x, this.physicsBox.getY());
                 } else {
                     // If our player is airborne, then draw airborne body based on whether we are ascending or descending
                     if (physicsBox.getVely() > 0) {
-                        batch.draw(PlayerResources.ohm_jumping_left, this.physicsBox.getX(), this.physicsBox.getY());
+                        batch.draw(PlayerResources.ohm_jumping_left, x, this.physicsBox.getY());
                     } else {
-                        batch.draw(PlayerResources.ohm_falling_left, this.physicsBox.getX(), this.physicsBox.getY());
+                        batch.draw(PlayerResources.ohm_falling_left, x, this.physicsBox.getY());
                     }
                 }
             } else if(physicsBox.isIdle()) {
                 // If our player is idle then draw idle body.
-                batch.draw(PlayerResources.ohm_standing_left, this.physicsBox.getX(), this.physicsBox.getY());
+                batch.draw(PlayerResources.ohm_standing_left, x, this.physicsBox.getY());
             } else {
                 // If our player is not airborne and not idle, they must be walking. Draw walk animation.
-                batch.draw(PlayerResources.ohm_walking_left.getCurrentFrame(true), this.physicsBox.getX(), this.physicsBox.getY());
+                batch.draw(PlayerResources.ohm_walking_left.getCurrentFrame(true), x, this.physicsBox.getY());
             }
-
         } else {
-
             if(!physicsBox.isTouchingFloor()) {
                 // Are we prepped for a wall jump?
                 if (physicsBox.isPreppedForWallJump()) {
-                    batch.draw(PlayerResources.ohm_jumping_left, this.physicsBox.getX(), this.physicsBox.getY());
+                    batch.draw(PlayerResources.ohm_wall_jumping_left, x, this.physicsBox.getY());
                 } else {
                     // If our player is airborne, then draw airborne body based on whether we are ascending or descending
                     if (physicsBox.getVely() > 0) {
-                        batch.draw(PlayerResources.ohm_jumping_right, this.physicsBox.getX(), this.physicsBox.getY());
+                        batch.draw(PlayerResources.ohm_jumping_right, x, this.physicsBox.getY());
                     } else {
-                        batch.draw(PlayerResources.ohm_falling_right, this.physicsBox.getX(), this.physicsBox.getY());
+                        batch.draw(PlayerResources.ohm_falling_right, x, this.physicsBox.getY());
                     }
                 }
             } else if(physicsBox.isIdle()) {
                 // If our player is idle then draw idle body.
-                batch.draw(PlayerResources.ohm_standing_right, this.physicsBox.getX(), this.physicsBox.getY());
+                batch.draw(PlayerResources.ohm_standing_right, x, this.physicsBox.getY());
             } else {
                 // If our player is not airborne and not idle, they must be walking. Draw walk animation.
-                batch.draw(PlayerResources.ohm_walking_right.getCurrentFrame(true), this.physicsBox.getX(), this.physicsBox.getY());
+                batch.draw(PlayerResources.ohm_walking_right.getCurrentFrame(true), x, this.physicsBox.getY());
             }
-
         }
     }
 }

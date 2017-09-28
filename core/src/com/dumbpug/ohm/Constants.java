@@ -16,8 +16,8 @@ public class Constants {
     public static final float PHYSICS_GRAVITY      = 0.09f;
 
     /** Player. */
-    public static final int PLAYER_SIZE            = 14;
-    public static final int PLAYER_PHYSICS_SIZE    = 12;
+    public static final int PLAYER_SIZE          = 14;
+    public static final int PLAYER_PHYSICS_SIZE  = 12;
 
     /* Character. */
     public static final int CHARACTER_MAX_LEVEL                         = 100;
@@ -27,5 +27,5 @@ public class Constants {
     public static final float CHARACTER_PHYSICS_MAX_VELOCITY            = 1.6f;
     public static final float CHARACTER_PHYSICS_FRICTION                = 0.75f;
     public static final float CHARACTER_PHYSICS_RESTITUTION             = 0f;
-
+    public static final float CHARACTER_WALL_JUMP_X_OFFSET              = 0.3f;
 }

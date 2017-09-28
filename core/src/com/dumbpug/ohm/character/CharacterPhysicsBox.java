@@ -24,6 +24,9 @@ public class CharacterPhysicsBox extends NBPBox {
     /** Can the character wall jump to the right? */
     private boolean canWallJumpRight = false;
 
+    /** The characters facing direction.*/
+    private Direction facingDirection = Direction.RIGHT;
+
     /**
      * Creates a new instance of the CharacterPhysicsBox class.
      * @param character
@@ -127,6 +130,8 @@ public class CharacterPhysicsBox extends NBPBox {
                 applyImpulse(-Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE, 0f);
             }
         }
+        // Change the facing direction of this physics box.
+        this.facingDirection = Direction.LEFT;
     }
 
     /**
@@ -142,6 +147,8 @@ public class CharacterPhysicsBox extends NBPBox {
                 applyImpulse(Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE, 0f);
             }
         }
+        // Change the facing direction of this physics box.
+        this.facingDirection = Direction.RIGHT;
     }
 
     /**
@@ -166,14 +173,18 @@ public class CharacterPhysicsBox extends NBPBox {
                 // Do a wall jump!
                 setVelx(0);
                 setVely(0);
-                applyImpulse(-0.4f, Constants.CHARACTER_JUMPING_IMPULSE);
+                applyImpulse(-Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
+                // Change the facing direction of this physics box.
+                this.facingDirection = Direction.LEFT;
                 // Character was able to jump.
                 return true;
             } else if (this.canWallJumpRight) {
                 // Do a wall jump!
                 setVelx(0);
                 setVely(0);
-                applyImpulse(0.4f, Constants.CHARACTER_JUMPING_IMPULSE);
+                applyImpulse(Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
+                // Change the facing direction of this physics box.
+                this.facingDirection = Direction.RIGHT;
                 // Character was able to jump.
                 return true;
             }
@@ -205,10 +216,10 @@ public class CharacterPhysicsBox extends NBPBox {
     public boolean isPreppedForWallJump() { return (!canJump) && (this.canWallJumpLeft || this.canWallJumpRight); }
 
     /**
-     * Return the character which this physics box represents.
-     * @return character
+     * Get the facing direction of the character physics box.
+     * @return facing direction.
      */
-    public Character getCharacter() { return this.character; }
+    public Direction getFacingDirection() { return this.facingDirection; }
 
     @Override
     public void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {
@@ -235,6 +246,7 @@ public class CharacterPhysicsBox extends NBPBox {
         if(sensor.getName().equals("wall_sensor_left")) {
             // If we are against any static block then we can wall jump off of it.
             if(enteredBox.getType() == NBPBoxType.STATIC) {
+                System.out.println("in right");
                 this.canWallJumpRight = true;
             }
         }
@@ -299,6 +311,7 @@ public class CharacterPhysicsBox extends NBPBox {
                 }
                 // Set the flag to show whether we can still wall jump.
                 this.canWallJumpRight = isStillAgainstWall;
+                System.out.println("out right against wall: " + this.canWallJumpRight);
             }
         }
     }
