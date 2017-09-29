@@ -125,7 +125,7 @@ public class CharacterPhysicsBox extends NBPBox {
         // by a value lower that its max velocity. In this case, a walking speed.
         if(this.getVelx() > -Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY) {
             if((-Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY - this.getVelx()) > Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE) {
-                applyImpulse(-Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY - this.getVelx(), 0f);
+                applyImpulse(-Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY + this.getVelx(), 0f);
             } else {
                 applyImpulse(-Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE, 0f);
             }
@@ -170,21 +170,23 @@ public class CharacterPhysicsBox extends NBPBox {
         } else {
             // Determine whether we can wall jump instead.
             if (this.canWallJumpLeft) {
+                this.canWallJumpLeft = false;
+                // Change the facing direction of this physics box.
+                this.facingDirection = Direction.LEFT;
                 // Do a wall jump!
                 setVelx(0);
                 setVely(0);
                 applyImpulse(-Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
-                // Change the facing direction of this physics box.
-                this.facingDirection = Direction.LEFT;
                 // Character was able to jump.
                 return true;
             } else if (this.canWallJumpRight) {
+                this.canWallJumpRight = false;
+                // Change the facing direction of this physics box.
+                this.facingDirection = Direction.RIGHT;
                 // Do a wall jump!
                 setVelx(0);
                 setVely(0);
                 applyImpulse(Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
-                // Change the facing direction of this physics box.
-                this.facingDirection = Direction.RIGHT;
                 // Character was able to jump.
                 return true;
             }
@@ -246,7 +248,6 @@ public class CharacterPhysicsBox extends NBPBox {
         if(sensor.getName().equals("wall_sensor_left")) {
             // If we are against any static block then we can wall jump off of it.
             if(enteredBox.getType() == NBPBoxType.STATIC) {
-                System.out.println("in right");
                 this.canWallJumpRight = true;
             }
         }

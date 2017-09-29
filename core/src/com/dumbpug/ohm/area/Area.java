@@ -65,8 +65,8 @@ public class Area {
         physicsWorld.update();
         // Process input.
         processInput();
-        // Allow the player to grab the camera.
-        player.grabCamera(camera);
+        // Update the camera.
+        updateCamera();
     }
 
     /**
@@ -127,6 +127,17 @@ public class Area {
                 Gdx.app.exit();
             }
         }
+    }
+
+    /**
+     * Update the specified camera to reflect the players position.
+     */
+    private void updateCamera() {
+        // Clamp the camera horizontally to the screen.
+        float x = Math.max((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2, this.player.getX());
+        // TODO Clamp to the end of the area too.
+        // Set the camera to look at the player.
+        camera.position.set(x, Constants.TILE_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
     }
 
     /**

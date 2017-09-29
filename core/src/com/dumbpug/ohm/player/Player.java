@@ -35,6 +35,18 @@ public class Player extends com.dumbpug.ohm.character.Character {
     }
 
     /**
+     * Get the players X position.
+     * @return X position
+     */
+    public float getX() { return this.physicsBox.getX(); }
+
+    /**
+     * Get the players Y position.
+     * @return Y position
+     */
+    public float getY() { return this.physicsBox.getY(); }
+
+    /**
      * Add the players physics box to the specified physics world.
      * @param world
      * @param x
@@ -45,18 +57,6 @@ public class Player extends com.dumbpug.ohm.character.Character {
         this.setPosition(x, y);
         // Add the players physics box to the world.
         world.addBox(this.physicsBox);
-    }
-
-    /**
-     * Update the specified camera to reflect the players position.
-     * @param camera
-     */
-    public void grabCamera(OrthographicCamera camera) {
-        // Clamp the camera horizontally to the screen.
-        float x = Math.max((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2, this.physicsBox.getX());
-        // TODO Clamp to the end of the area too.
-        // Set the camera to looks at the player.
-        camera.position.set(x, Constants.TILE_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
     }
 
     /**
