@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.player.Player;
@@ -31,13 +33,28 @@ public class Area {
     /** The player. */
     private Player player;
 
+    /** The player spawn. */
+    private Spawn playerSpawn;
+
+    /** The name of the next area. */
+    private String nextArea;
+
+    /** Flag defining whether this area is complete. */
+    private boolean isComplete = false;
+
     /**
      * Create a new instance of the Area class.
      * @param areaName
      */
     public Area(String areaName) {
+        // Get the area details from disk.
+        JsonValue details = new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json"));
         // Create the physics world.
         this.createPhysicsWorld(areaName);
+        // Create the player spawn.
+        this.playerSpawn = new Spawn(details.get("spawn"));
+        // Set the name of the next area.
+        this.nextArea = details.getString("nextArea");
         // Create the area camera..
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
@@ -52,9 +69,9 @@ public class Area {
      * @param player
      */
     public void addPlayer(Player player) {
-        // Add player to this area. TODO Set actual starting position.
+        // Add player to this area at the player spawn.
         this.player = player;
-        player.addToPhysicsWorld(this.physicsWorld, 32, 48);
+        player.addToPhysicsWorld(this.physicsWorld, this.playerSpawn.getX(), this.playerSpawn.getY());
     }
 
     /**
@@ -78,7 +95,6 @@ public class Area {
         batch.setProjectionMatrix(camera.combined);
         // Draw background.
         batch.draw(AreaResources.background, 0, 0);
-        // TODO Draw game entities.
         // Draw player.
         player.draw(batch);
         // Draw overlay.
@@ -86,21 +102,32 @@ public class Area {
     }
 
     /**
+     * Gets whether this area is complete.
+     * @return is complete.
+     */
+    public boolean isComplete() { return this.isComplete; }
+
+    /**
+     * Gets the name of the next area.
+     * @return the name of the next area.
+     */
+    public String getNextArea() { return this.nextArea; }
+
+    /**
      * Process user input.
      */
     private void processInput() {
         // The way we handle input depends n whether we are running on ouya or not.
         if (Ouya.runningOnOuya) {
-
             // Handle Ouya input.
             for (Controller controller : Controllers.getControllers()) {
-
+                // Are we jumping?
                 if (controller.getButton(Ouya.BUTTON_O)) {
                     player.jump();
                 }
-
+                // Get the x axis of the left stick (movement).
                 float leftXAxis = controller.getAxis(Ouya.AXIS_LEFT_X);
-
+                // Maybe move left or right, based on the position of the stick.
                 if (leftXAxis < -0.5) {
                     player.moveLeft();
                 }
@@ -108,7 +135,6 @@ public class Area {
                     player.moveRight();
                 }
             }
-
         } else {
             // Are we running left?
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -142,17 +168,19 @@ public class Area {
 
     /**
      * Create the physics world.
+     * @param areaName The name of the area.
      */
     private void createPhysicsWorld(String areaName) {
         // Create the physics world.
         physicsWorld = new NBPWorld(Constants.PHYSICS_GRAVITY);
         // Populate the physics world with static blocks based on the area block map image.
         Pixmap pixmap = new Pixmap(Gdx.files.internal("areas/" + areaName + "/block_map.png"));
+        // Go pixel by pixel ...
         for (int y = 0; y < pixmap.getHeight(); y++) {
             for (int x = 0; x < pixmap.getWidth(); x++)  {
-                // Get the pixel colour.
+                // ... Get the pixel colour ...
                 int pixelColour = pixmap.getPixel(x, y);
-                // If we have a black pixel then we have a static block.
+                // ... If we have a black pixel then we have a static block.
                 if (pixelColour == 255) {
                     // Create a new static block and add it to the physics world.
                     this.physicsWorld.addBox(new Block(x * Constants.TILE_SIZE, (pixmap.getHeight() - (1 + y)) * Constants.TILE_SIZE));
