@@ -1,11 +1,9 @@
 package com.dumbpug.ohm.state.states;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.Area;
+import com.dumbpug.ohm.area.Transition;
 import com.dumbpug.ohm.player.Player;
-import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.StateType;
@@ -20,6 +18,9 @@ public class Game implements State {
 
     /** The player. */
     private Player player;
+
+    /** The area transition. */
+    private Transition transition;
 
     /**
      * Create a new instance of the Game class.
@@ -42,10 +43,27 @@ public class Game implements State {
 
     @Override
     public void tick(StateManager manager) {
-        // Tick the area.
-        this.area.tick();
+        // Find out if the current area needs to be reset.
+        if (this.area.isFailed()) {
+            // Reset the current area. Set the area to be a newly created version of the same area.
+            this.area = new Area(this.area.getAreaName());
+            // Add the player to the newly created area.
+            this.area.addPlayer(player);
+        } else if (this.area.isComplete()){
+            // Set the area to be a newly created version of the next area.
+            this.area = new Area(this.area.getNextAreaName());
+            // Add the player to the newly created area.
+            this.area.addPlayer(player);
+        } else {
+            // Tick the area.
+            this.area.tick();
+        }
     }
 
+    /**
+     * Draw the area.
+     * @param batch
+     */
     public void draw(SpriteBatch batch) {
         // Draw the area.
         this.area.draw(batch);

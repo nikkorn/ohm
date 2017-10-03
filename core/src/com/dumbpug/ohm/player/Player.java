@@ -77,8 +77,8 @@ public class Player extends com.dumbpug.ohm.character.Character {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // Calculate the x position of where to draw th sprite.
-        float x = this.physicsBox.getX() - ((Constants.PLAYER_SIZE - Constants.PLAYER_PHYSICS_SIZE) / 2f);
+        // Calculate the x position of where to draw the sprite.
+        float x = this.physicsBox.getX() - ((Constants.PLAYER_SIZE - Constants.PLAYER_PHYSICS_SIZE_WIDTH) / 2f);
         // Which way is the player facing?
         if (this.physicsBox.getFacingDirection() == Direction.LEFT) {
             if(!physicsBox.isTouchingFloor()) {

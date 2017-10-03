@@ -27,6 +27,9 @@ public class Area {
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
 
+    /** The width of the area in blocks. */
+    private int blocksWide;
+
     /** The area overlay. */
     private Texture overlay;
 
@@ -37,16 +40,24 @@ public class Area {
     private Spawn playerSpawn;
 
     /** The name of the next area. */
+    private String area;
+
+    /** The name of the next area. */
     private String nextArea;
 
     /** Flag defining whether this area is complete. */
     private boolean isComplete = false;
+
+    /** Flag defining whether this area is failed (player died or dropped out). */
+    private boolean isFailed = false;
 
     /**
      * Create a new instance of the Area class.
      * @param areaName
      */
     public Area(String areaName) {
+        // Set the area name.
+        this.area = areaName;
         // Get the area details from disk.
         JsonValue details = new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json"));
         // Create the physics world.
@@ -84,6 +95,8 @@ public class Area {
         processInput();
         // Update the camera.
         updateCamera();
+        // Check the status of the player.
+        checkPlayerStatus();
     }
 
     /**
@@ -108,10 +121,22 @@ public class Area {
     public boolean isComplete() { return this.isComplete; }
 
     /**
+     * Gets whether this area is failed.
+     * @return is failed.
+     */
+    public boolean isFailed() { return this.isFailed; }
+
+    /**
      * Gets the name of the next area.
      * @return the name of the next area.
      */
-    public String getNextArea() { return this.nextArea; }
+    public String getNextAreaName() { return this.nextArea; }
+
+    /**
+     * Gets the name of the area.
+     * @return the name of the area.
+     */
+    public String getAreaName() { return this.area; }
 
     /**
      * Process user input.
@@ -163,7 +188,23 @@ public class Area {
         float x = Math.max((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2, this.player.getX());
         // TODO Clamp to the end of the area too.
         // Set the camera to look at the player.
-        camera.position.set(x, Constants.TILE_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
+        camera.position.set(x, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
+    }
+
+    /**
+     * Check the status of the player and respond accordingly.
+     */
+    private void checkPlayerStatus() {
+        // Has the player dropped out the bottom of the area?
+        if (player.getY() < -(Constants.PLAYER_PHYSICS_SIZE_HEIGHT)) {
+            // The player is below the area and should die.
+            this.isFailed = true;
+        }
+        // Has the player made it through to the right of the area (completed).
+        if (player.getX() > (Constants.BLOCK_SIZE * this.blocksWide)) {
+            // The player has made it to the right of the area! This area is complete.
+            this.isComplete = true;
+        }
     }
 
     /**
@@ -175,6 +216,8 @@ public class Area {
         physicsWorld = new NBPWorld(Constants.PHYSICS_GRAVITY);
         // Populate the physics world with static blocks based on the area block map image.
         Pixmap pixmap = new Pixmap(Gdx.files.internal("areas/" + areaName + "/block_map.png"));
+        // Determine the block width of the area.
+        this.blocksWide = pixmap.getWidth();
         // Go pixel by pixel ...
         for (int y = 0; y < pixmap.getHeight(); y++) {
             for (int x = 0; x < pixmap.getWidth(); x++)  {
@@ -183,7 +226,7 @@ public class Area {
                 // ... If we have a black pixel then we have a static block.
                 if (pixelColour == 255) {
                     // Create a new static block and add it to the physics world.
-                    this.physicsWorld.addBox(new Block(x * Constants.TILE_SIZE, (pixmap.getHeight() - (1 + y)) * Constants.TILE_SIZE));
+                    this.physicsWorld.addBox(new Block(x * Constants.BLOCK_SIZE, (pixmap.getHeight() - (1 + y)) * Constants.BLOCK_SIZE));
                 }
             }
         }

@@ -18,7 +18,7 @@ public class Block extends NBPBox {
      * @param y
      */
     public Block(float x, float y) {
-        super(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE, NBPBoxType.STATIC);
+        super(x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, NBPBoxType.STATIC);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
      * @param y
      */
     public PlayerPhysicsBox(Character character, float x, float y) {
-        super(character, x, y, Constants.PLAYER_PHYSICS_SIZE, Constants.PLAYER_PHYSICS_SIZE);
+        super(character, x, y, Constants.PLAYER_PHYSICS_SIZE_WIDTH, Constants.PLAYER_PHYSICS_SIZE_HEIGHT);
         this.setName("PLAYER");
     }
 }

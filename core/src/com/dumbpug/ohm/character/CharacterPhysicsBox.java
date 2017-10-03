@@ -312,7 +312,6 @@ public class CharacterPhysicsBox extends NBPBox {
                 }
                 // Set the flag to show whether we can still wall jump.
                 this.canWallJumpRight = isStillAgainstWall;
-                System.out.println("out right against wall: " + this.canWallJumpRight);
             }
         }
     }
