@@ -184,9 +184,17 @@ public class Area {
      * Update the specified camera to reflect the players position.
      */
     private void updateCamera() {
+        // Calculate the min/max horizontal camera positions.
+        float minCameraPosX = (Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2f;
+        float maxCameraPosX = (this.blocksWide * Constants.BLOCK_SIZE) - ((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2f);
+        // Set the cameras position to match the players.
+        float x = this.player.getX();
         // Clamp the camera horizontally to the screen.
-        float x = Math.max((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2, this.player.getX());
-        // TODO Clamp to the end of the area too.
+        if (this.player.getX() < minCameraPosX) {
+            x = minCameraPosX;
+        } else if (this.player.getX() > maxCameraPosX) {
+            x = maxCameraPosX;
+        }
         // Set the camera to look at the player.
         camera.position.set(x, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
     }
