@@ -91,6 +91,8 @@ public class Area {
     public void tick() {
         // Update the physics world.
         physicsWorld.update();
+        // Tick the player if we have one yet.
+        if (player != null) { player.tick(); }
         // Process input.
         processInput();
         // Update the camera.

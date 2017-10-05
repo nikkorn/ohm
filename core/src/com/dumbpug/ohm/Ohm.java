@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.resources.AreaResources;
+import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PlayerResources;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.states.Title;
@@ -26,6 +27,7 @@ public class Ohm extends ApplicationAdapter {
 		// Load the game resources.
 		AreaResources.load();
 		PlayerResources.load();
+		ParticleResources.load();
 
 		// Create the game state manager.
 		stateManager = new StateManager();

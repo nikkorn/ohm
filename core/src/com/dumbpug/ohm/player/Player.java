@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.Direction;
 import com.dumbpug.ohm.nbp.NBPWorld;
+import com.dumbpug.ohm.particles.Emitter;
+import com.dumbpug.ohm.particles.EmitterDetails;
+import com.dumbpug.ohm.particles.IEmitterDetails;
+import com.dumbpug.ohm.particles.electro.ElectroParticle;
+import com.dumbpug.ohm.particles.electro.ElectroParticleGenerator;
 import com.dumbpug.ohm.resources.PlayerResources;
 
 /**
@@ -16,12 +21,17 @@ public class Player extends com.dumbpug.ohm.character.Character {
     /** The players physics box. */
     private PlayerPhysicsBox physicsBox;
 
+    /** The player electro particle emitter. */
+    private Emitter electroEmitter;
+
     /**
      * Initialise a new instance of the Player class.
      */
     public Player() {
         // Initialise our players physics box.
         this.physicsBox = new PlayerPhysicsBox(this, 0, 0);
+        // Create the players electro emitter.
+        createElectroEmitter();
     }
 
     /**
@@ -75,8 +85,18 @@ public class Player extends com.dumbpug.ohm.character.Character {
      */
     public boolean jump() { return this.physicsBox.jump(); }
 
+    /**
+     * Tick the player.
+     */
+    public void tick() {
+        // Update the players electro particle emitter.
+        this.electroEmitter.update();
+    }
+
     @Override
     public void draw(SpriteBatch batch) {
+        // Draw the electro emitter particles.
+        this.electroEmitter.draw(batch);
         // Calculate the x position of where to draw the sprite.
         float x = this.physicsBox.getX() - ((Constants.PLAYER_SIZE - Constants.PLAYER_PHYSICS_SIZE_WIDTH) / 2f);
         // Which way is the player facing?
@@ -121,5 +141,18 @@ public class Player extends com.dumbpug.ohm.character.Character {
                 batch.draw(PlayerResources.ohm_walking_right.getCurrentFrame(true), x, this.physicsBox.getY());
             }
         }
+    }
+
+    /**
+     * Create the electro particle emitter for the player.
+     */
+    private void createElectroEmitter() {
+        // Create an explosion emitter/particle generator.
+        ElectroParticleGenerator electroParticleGenerator = new ElectroParticleGenerator();
+        this.electroEmitter = new Emitter(electroParticleGenerator);
+        // Set the emitter details. This will map the emitter position to the players position.
+        this.electroEmitter.setEmitterDetails(new ElectroParticleEmitterDetails(this));
+        // Set the emitter activity.
+        this.electroEmitter.setEmitterActivity(electroParticleGenerator);
     }
 }

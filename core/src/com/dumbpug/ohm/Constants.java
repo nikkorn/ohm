@@ -3,7 +3,7 @@ package com.dumbpug.ohm;
 import com.badlogic.gdx.Gdx;
 
 /**
- * Created by nik on 23/09/17.
+ * Game constants.
  */
 public class Constants {
 
@@ -14,7 +14,7 @@ public class Constants {
     public static final long AREA_TRANSITION_DURATION_MS = 2000;
 
     /** Physics. */
-    public static final float PHYSICS_GRAVITY      = 0.09f;
+    public static final float PHYSICS_GRAVITY = 0.09f;
 
     /** Player. */
     public static final int PLAYER_SIZE                 = 14;
@@ -29,4 +29,10 @@ public class Constants {
     public static final float CHARACTER_PHYSICS_FRICTION                = 0.75f;
     public static final float CHARACTER_PHYSICS_RESTITUTION             = 0f;
     public static final float CHARACTER_WALL_JUMP_X_OFFSET              = 0.3f;
+
+    /** Particles. */
+    public static final long PARTICLES_DEFAULT_LIFE           = 1000;
+    public static final float PARTICLES_ELECTRO_SIZE_SMALL    = 2f;
+    public static final float PARTICLES_ELECTRO_SIZE_LARGE    = 4f;
+    public static final int PARTICLES_EMITTER_PARTICLE_LIMIT  = 80;
 }
