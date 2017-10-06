@@ -240,6 +240,12 @@ public class Area {
                 }
             }
         }
+        // Dispose of the pixmap.
         pixmap.dispose();
+        // Create a block which stops the player going left off the screen.
+        this.physicsWorld.addBox(new BoundaryBox(-10, 0, 10, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT));
+        // Create a block which stops the player going above the screen.
+        this.physicsWorld.addBox(new BoundaryBox(0, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT,
+                Constants.BLOCK_SIZE * this.blocksWide, 10));
     }
 }

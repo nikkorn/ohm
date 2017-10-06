@@ -1,6 +1,5 @@
 package com.dumbpug.ohm.area;
 
-import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.NBPBloom;
 import com.dumbpug.ohm.nbp.NBPBox;
 import com.dumbpug.ohm.nbp.NBPBoxType;
@@ -8,18 +7,20 @@ import com.dumbpug.ohm.nbp.NBPIntersectionPoint;
 import com.dumbpug.ohm.nbp.NBPSensor;
 
 /**
- * Represents a plain world block.
+ * A boundary box to place around the area.
  */
-public class Block extends NBPBox {
+public class BoundaryBox extends NBPBox {
 
     /**
-     * Creates an instance of the Block class.
+     * Creates an instance of the BoundaryBox class.
      * @param x
      * @param y
+     * @param width
+     * @param height
      */
-    public Block(float x, float y) {
-        super(x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, NBPBoxType.STATIC);
-        this.setName("Block");
+    public BoundaryBox(float x, float y, float width, float height) {
+        super(x, y, width, height, NBPBoxType.STATIC);
+        this.setName("AreaBoundary");
     }
 
     @Override
