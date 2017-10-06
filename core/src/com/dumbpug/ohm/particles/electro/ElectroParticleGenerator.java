@@ -12,7 +12,7 @@ import com.dumbpug.ohm.particles.Particle;
 public class ElectroParticleGenerator implements IParticleGenerator, IEmitterActivity {
 
 	/** The time in milliseconds to wait between particle generations. */
-	private long particleGenerationDelay = 80;
+	private long particleGenerationDelay = 15;
 
 	/** The last time that a particle was generated. */
 	private long lastParticleGenerationTime = System.currentTimeMillis();
