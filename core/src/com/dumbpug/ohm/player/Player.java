@@ -1,15 +1,10 @@
 package com.dumbpug.ohm.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.Direction;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.particles.Emitter;
-import com.dumbpug.ohm.particles.EmitterDetails;
-import com.dumbpug.ohm.particles.IEmitterDetails;
-import com.dumbpug.ohm.particles.electro.ElectroParticle;
 import com.dumbpug.ohm.particles.electro.ElectroParticleGenerator;
 import com.dumbpug.ohm.resources.PlayerResources;
 
@@ -24,6 +19,9 @@ public class Player extends com.dumbpug.ohm.character.Character {
     /** The player electro particle emitter. */
     private Emitter electroEmitter;
 
+    /** The player electro charge level. */
+    private ElectroChargeLevel electroChargeLevel;
+
     /**
      * Initialise a new instance of the Player class.
      */
@@ -32,6 +30,8 @@ public class Player extends com.dumbpug.ohm.character.Character {
         this.physicsBox = new PlayerPhysicsBox(this, 0, 0);
         // Create the players electro emitter.
         createElectroEmitter();
+        // Create the players electro charge level.
+        this.electroChargeLevel = new ElectroChargeLevel();
     }
 
     /**
@@ -55,6 +55,12 @@ public class Player extends com.dumbpug.ohm.character.Character {
      * @return Y position
      */
     public float getY() { return this.physicsBox.getY(); }
+
+    /**
+     * Get the players electro charge level.
+     * @return electro charge level.
+     */
+    public ElectroChargeLevel getElectroChargeLevel() { return electroChargeLevel; }
 
     /**
      * Add the players physics box to the specified physics world.
@@ -91,6 +97,8 @@ public class Player extends com.dumbpug.ohm.character.Character {
     public void tick() {
         // Update the players electro particle emitter.
         this.electroEmitter.update();
+        // Update the players electro charge.
+        this.electroChargeLevel.update();
     }
 
     @Override

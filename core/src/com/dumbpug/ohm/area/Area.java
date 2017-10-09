@@ -175,6 +175,13 @@ public class Area {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 player.jump();
             }
+            // Are we using electro charge?
+            if (Gdx.input.isKeyPressed(Input.Keys.S))
+            {
+                player.getElectroChargeLevel().setEnabled(true);
+            } else {
+                player.getElectroChargeLevel().setEnabled(false);
+            }
             // Do we want to exit?
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 Gdx.app.exit();

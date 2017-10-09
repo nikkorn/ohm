@@ -123,11 +123,11 @@ public class CharacterPhysicsBox extends NBPBox {
     public void moveLeft() {
         // Calculate how to apply an impulse to this character so that its moving speed is defined
         // by a value lower that its max velocity. In this case, a walking speed.
-        if(this.getVelx() > -Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY) {
-            if((-Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY - this.getVelx()) > Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE) {
-                applyImpulse(-Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY + this.getVelx(), 0f);
+        if(this.getVelx() > -getMaxWalkingVelocity()) {
+            if((-getMaxWalkingVelocity() - this.getVelx()) > getWalkingImpulse()) {
+                applyImpulse(-getMaxWalkingVelocity() + this.getVelx(), 0f);
             } else {
-                applyImpulse(-Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE, 0f);
+                applyImpulse(-getWalkingImpulse(), 0f);
             }
         }
         // Change the facing direction of this physics box.
@@ -140,11 +140,11 @@ public class CharacterPhysicsBox extends NBPBox {
     public void moveRight() {
         // Calculate how to apply an impulse to this character so that its moving speed is defined
         // by a value lower that its max velocity. In this case, a walking speed.
-        if(this.getVelx() < Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY) {
-            if((Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY - this.getVelx()) < Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE) {
-                applyImpulse(Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY - this.getVelx(), 0f);
+        if(this.getVelx() < getMaxWalkingVelocity()) {
+            if((getMaxWalkingVelocity() - this.getVelx()) < getWalkingImpulse()) {
+                applyImpulse(getMaxWalkingVelocity() - this.getVelx(), 0f);
             } else {
-                applyImpulse(Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE, 0f);
+                applyImpulse(getWalkingImpulse(), 0f);
             }
         }
         // Change the facing direction of this physics box.
@@ -316,11 +316,20 @@ public class CharacterPhysicsBox extends NBPBox {
         }
     }
 
+    /**
+     * Get the max walking velocity of this character physics box.
+     * @return max walking velocity.
+     */
+    protected float getMaxWalkingVelocity() { return Constants.CHARACTER_PHYSICS_MAX_WALKING_VELOCITY; }
+
+    /**
+     * Get the walking impulse value of this character physics box.
+     * @return walking impulse value.
+     */
+    protected float getWalkingImpulse() { return Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE; }
+
     @Override
-    protected boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance) {
-        // Return true as we want the force to affect this character box.
-        return true;
-    }
+    protected boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance) { return true; }
 
     @Override
     protected void onCollisonWithKineticBox(NBPBox collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
