@@ -21,9 +21,8 @@ public class Constants {
     public static final int PLAYER_PHYSICS_SIZE_WIDTH           = 8;
     public static final int PLAYER_PHYSICS_SIZE_HEIGHT          = 10;
     public static final int PLAYER_ELECTRO_CHARGE_POINTS        = 10;
-    public static final int PLAYER_ELECTRO_UPDATES_PER_POINT    = 1000;
+    public static final int PLAYER_ELECTRO_UPDATES_PER_POINT    = 50;
     public static final float PLAYER_ELECTRO_WALKING_MODIFIER   = 2f;
-    public static final float PLAYER_ELECTRO_JUMPING_MODIFIER   = 2f;
 
     /* Character. */
     public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1f;

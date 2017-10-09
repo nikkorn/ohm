@@ -27,7 +27,15 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
      * Get the movement modifier for the player.
      * @return movement modifier
      */
-    private float getMovementModifier() { return player.getElectroChargeLevel().isEnabled() ? Constants.PLAYER_ELECTRO_WALKING_MODIFIER : 1f; }
+    private float getMovementModifier() {
+        ElectroChargeLevel electroChargeLevel = this.player.getElectroChargeLevel();
+        // We can run super fast if we are using electro charge! (As long as it isn't depleted)
+        if (electroChargeLevel.isEnabled() && electroChargeLevel.hasCharge()) {
+            return Constants.PLAYER_ELECTRO_WALKING_MODIFIER;
+        } else {
+            return 1f;
+        }
+    }
 
     /**
      * Get the max walking velocity of this character physics box.

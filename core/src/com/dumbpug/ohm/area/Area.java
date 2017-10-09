@@ -152,6 +152,12 @@ public class Area {
                 if (controller.getButton(Ouya.BUTTON_O)) {
                     player.jump();
                 }
+                // Are we using electro charge?
+                if (controller.getButton(Ouya.BUTTON_R1)) {
+                    player.getElectroChargeLevel().setEnabled(true);
+                } else {
+                    player.getElectroChargeLevel().setEnabled(false);
+                }
                 // Get the x axis of the left stick (movement).
                 float leftXAxis = controller.getAxis(Ouya.AXIS_LEFT_X);
                 // Maybe move left or right, based on the position of the stick.
