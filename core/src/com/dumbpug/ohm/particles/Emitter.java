@@ -85,6 +85,12 @@ public class Emitter {
 	 * @return emitter details.
 	 */
 	public IEmitterDetails getEmitterDetails() { return this.emitterDetails; }
+
+	/**
+	 * Get the particle generator.
+	 * @return particle generator..
+	 */
+	public IParticleGenerator getParticleGenerator() { return this.particleGenerator; }
 	
 	/**
 	 * Set the emitter details.

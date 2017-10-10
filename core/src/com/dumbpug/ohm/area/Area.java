@@ -182,8 +182,7 @@ public class Area {
                 player.jump();
             }
             // Are we using electro charge?
-            if (Gdx.input.isKeyPressed(Input.Keys.S))
-            {
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 player.getElectroChargeLevel().setEnabled(true);
             } else {
                 player.getElectroChargeLevel().setEnabled(false);

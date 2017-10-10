@@ -35,6 +35,7 @@ public class Constants {
 
     /** Particles. */
     public static final long PARTICLES_DEFAULT_LIFE           = 1000;
+    public static final long PARTICLES_DEFAULT_GEN_DELAY      = 50;
     public static final float PARTICLES_ELECTRO_SIZE_SMALL    = 2f;
     public static final float PARTICLES_ELECTRO_SIZE_LARGE    = 4f;
     public static final int PARTICLES_EMITTER_PARTICLE_LIMIT  = 80;

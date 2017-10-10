@@ -99,6 +99,9 @@ public class Player extends com.dumbpug.ohm.character.Character {
         this.electroEmitter.update();
         // Update the players electro charge.
         this.electroChargeLevel.update();
+        // Update the electro particle generator to let it know whether we are using electro charge.
+        boolean usingElectroCharge = electroChargeLevel.isEnabled() && electroChargeLevel.hasCharge();
+        ((ElectroParticleGenerator) this.electroEmitter.getParticleGenerator()).setElectroChargeModeEnabled(usingElectroCharge);
     }
 
     @Override

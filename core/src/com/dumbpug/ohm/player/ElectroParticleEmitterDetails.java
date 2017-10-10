@@ -18,8 +18,8 @@ public class ElectroParticleEmitterDetails implements IEmitterDetails {
     public ElectroParticleEmitterDetails(Player player) { this.player = player; }
 
     @Override
-    public float positionX() { return player.getX() + 4; }
+    public float positionX() { return player.getX() + 6; }
 
     @Override
-    public float positionY() { return player.getY() + 4; }
+    public float positionY() { return player.getY() + 6; }
 }
