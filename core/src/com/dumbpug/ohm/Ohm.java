@@ -2,8 +2,14 @@ package com.dumbpug.ohm;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dumbpug.ohm.input.IInputProvider;
+import com.dumbpug.ohm.input.KeyboardInputProvider;
+import com.dumbpug.ohm.input.OuyaInputProvider;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PlayerResources;
@@ -17,7 +23,10 @@ public class Ohm extends ApplicationAdapter {
 
 	/** The state manager. */
 	private StateManager stateManager;
-	
+
+	/** The input provider. */
+	private static IInputProvider inputProvider;
+
 	@Override
 	public void create () {
 
@@ -28,6 +37,15 @@ public class Ohm extends ApplicationAdapter {
 		AreaResources.load();
 		PlayerResources.load();
 		ParticleResources.load();
+
+		// Create the input provider specific to the system.
+		if (Ouya.isRunningOnOuya()) {
+			OuyaInputProvider provider = new OuyaInputProvider();
+			this.inputProvider         = provider;
+			Controllers.addListener(provider);
+		} else {
+			this.inputProvider = new KeyboardInputProvider();
+		}
 
 		// Create the game state manager.
 		stateManager = new StateManager();
@@ -42,6 +60,9 @@ public class Ohm extends ApplicationAdapter {
 		// Tick the game.
 		stateManager.tick();
 
+		// Reset the input provider.
+
+
 		// Clear the screen.
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -51,6 +72,12 @@ public class Ohm extends ApplicationAdapter {
 		stateManager.draw(batch);
 		batch.end();
 	}
+
+	/**
+	 * Get the input provider.
+	 * @return input provider.
+     */
+	public static IInputProvider getInputProvider() { return Ohm.inputProvider; }
 	
 	@Override
 	public void dispose () {
