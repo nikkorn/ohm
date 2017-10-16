@@ -39,4 +39,8 @@ public class Constants {
     public static final float PARTICLES_ELECTRO_SIZE_SMALL    = 2f;
     public static final float PARTICLES_ELECTRO_SIZE_LARGE    = 4f;
     public static final int PARTICLES_EMITTER_PARTICLE_LIMIT  = 80;
+
+    /** Wires. */
+    public static final float WIRE_SEGMENT_SIZE               = BLOCK_SIZE / 2f;
+    public static final float WIRE_MOVEMENT_STEP              = WIRE_SEGMENT_SIZE / 4f;
 }
