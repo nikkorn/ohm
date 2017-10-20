@@ -27,6 +27,8 @@ public class Area {
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
 
+    /** The wire block collection for this area. */
+
     /** The width of the area in blocks. */
     private int blocksWide;
 
