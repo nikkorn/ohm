@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.JsonValue;
  */
 public class Spawn {
 
-    /**  The x position of the spawn. */
+    /** The x position of the spawn. */
     private float x;
 
     /** The y position of the spawn. */

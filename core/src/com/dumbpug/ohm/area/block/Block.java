@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.area;
+package com.dumbpug.ohm.area.block;
 
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.NBPBloom;

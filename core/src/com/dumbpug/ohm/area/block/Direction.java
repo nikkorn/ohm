@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.area.wire;
+package com.dumbpug.ohm.area.block;
 
 /**
  * Directions of wire segments.

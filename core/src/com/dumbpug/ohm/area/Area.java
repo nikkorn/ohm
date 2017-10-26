@@ -27,8 +27,6 @@ public class Area {
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
 
-    /** The wire block collection for this area. */
-
     /** The width of the area in blocks. */
     private int blocksWide;
 
@@ -44,14 +42,14 @@ public class Area {
     /** The name of the next area. */
     private String area;
 
-    /** The name of the next area. */
-    private String nextArea;
-
     /** Flag defining whether this area is complete. */
     private boolean isComplete = false;
 
     /** Flag defining whether this area is failed (player died or dropped out). */
     private boolean isFailed = false;
+
+    /** The area details. */
+    private AreaDetails details;
 
     /**
      * Create a new instance of the Area class.
@@ -61,13 +59,11 @@ public class Area {
         // Set the area name.
         this.area = areaName;
         // Get the area details from disk.
-        JsonValue details = new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json"));
+        this.details = new AreaDetails(new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json")));
         // Create the physics world.
         this.createPhysicsWorld(areaName);
         // Create the player spawn.
-        this.playerSpawn = new Spawn(details.get("spawn"));
-        // Set the name of the next area.
-        this.nextArea = details.getString("nextArea");
+        this.playerSpawn = details.getSpawn();
         // Create the area camera..
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
@@ -134,7 +130,7 @@ public class Area {
      * Gets the name of the next area.
      * @return the name of the next area.
      */
-    public String getNextAreaName() { return this.nextArea; }
+    public String getNextAreaName() { return this.details.getNextAreaName(); }
 
     /**
      * Gets the name of the area.
@@ -249,11 +245,25 @@ public class Area {
                 int pixelColour = pixmap.getPixel(x, y);
                 // ... If we have a black pixel then we have a static block.
                 if (pixelColour == 255) {
-                    // Create a new static block and add it to the physics world.
-                    this.physicsWorld.addBox(new Block(x * Constants.BLOCK_SIZE, (pixmap.getHeight() - (1 + y)) * Constants.BLOCK_SIZE));
+                    // Calculate the actual y position, as reading from the pixmap is flipped.
+                    int flippedY = pixmap.getHeight() - (1 + y);
+                    // Attempt to get wire block details for the current position.
+                    JsonValue wireBlockDetails = this.details.getWireBlockDetails(x, y);
+                    // Whether we are creating a normal or wire block depends on whether there are wire details for this position.
+                    if (wireBlockDetails != null) {
+                        // Create a new static wire block and add it to the physics world.
+                        // TODO Eventually add isBlockAt(x, y) to AreaDetials so we can pass the flags to the wire block which define sides that are connected to other blocks.
+                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.WireBlock(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE));
+                    } else {
+                        // Create a new static block and add it to the physics world.
+                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.Block(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE));
+                    }
                 }
             }
         }
+
+        // If any wire blocks were defined in the area details then ... TODO
+
         // Dispose of the pixmap.
         pixmap.dispose();
         // Create a block which stops the player going left off the screen.
