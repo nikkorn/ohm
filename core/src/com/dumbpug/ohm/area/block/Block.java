@@ -12,14 +12,19 @@ import com.dumbpug.ohm.nbp.NBPSensor;
  */
 public class Block extends NBPBox {
 
+    /** The block details. */
+    protected BlockDetails details;
+
     /**
      * Creates an instance of the Block class.
      * @param x
      * @param y
+     * @param details
      */
-    public Block(float x, float y) {
+    public Block(float x, float y, BlockDetails details) {
         super(x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, NBPBoxType.STATIC);
         this.setName("Block");
+        this.details = details;
     }
 
     @Override

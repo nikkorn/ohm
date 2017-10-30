@@ -1,7 +1,5 @@
 package com.dumbpug.ohm.area.block;
 
-import com.badlogic.gdx.utils.JsonValue;
-
 import java.util.HashMap;
 
 /**
@@ -12,32 +10,15 @@ public class WireBlock extends Block {
     /** The map of passengers moving through wire segments in this block. */
     private HashMap<Passenger, com.dumbpug.ohm.area.block.WireSegmentMovement> movements = new HashMap<Passenger, com.dumbpug.ohm.area.block.WireSegmentMovement>();
 
-    /** Flags defining the entry points for the block. */
-    private boolean hasEntryLeft;
-    private boolean hasEntryTop;
-    private boolean hasEntryRight;
-    private boolean hasEntryBottom;
-
     /**
      * Create a new instance of the WireBlock class.
      * @param x
      * @param y
+     * @param details
      */
-    public WireBlock(float x, float y) {
-        super(x, y);
+    public WireBlock(float x, float y, BlockDetails details) {
+        super(x, y, details);
         this.setName("WireBlock");
-    }
-
-    /**
-     * Apply wire details to this wire block.
-     * @param wireDetails
-     * @param blockLeft
-     * @param blockAbove
-     * @param blockRight
-     * @param blockBelow
-     */
-    public void applyWireDetails(JsonValue wireDetails, boolean blockLeft, boolean blockAbove, boolean blockRight, boolean blockBelow) {
-
     }
 
     /**

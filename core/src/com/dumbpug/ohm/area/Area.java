@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.block.BlockDetails;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
@@ -59,7 +59,7 @@ public class Area {
         // Set the area name.
         this.area = areaName;
         // Get the area details from disk.
-        this.details = new AreaDetails(new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json")));
+        this.details = new AreaDetails(areaName, new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json")));
         // Create the physics world.
         this.createPhysicsWorld(areaName);
         // Create the player spawn.
@@ -241,22 +241,19 @@ public class Area {
         // Go pixel by pixel ...
         for (int y = 0; y < pixmap.getHeight(); y++) {
             for (int x = 0; x < pixmap.getWidth(); x++)  {
-                // ... Get the pixel colour ...
-                int pixelColour = pixmap.getPixel(x, y);
-                // ... If we have a black pixel then we have a static block.
-                if (pixelColour == 255) {
+                // If there is a block at this position we will need to create it.
+                if (details.isBlockAt(x, y)) {
                     // Calculate the actual y position, as reading from the pixmap is flipped.
                     int flippedY = pixmap.getHeight() - (1 + y);
-                    // Attempt to get wire block details for the current position.
-                    JsonValue wireBlockDetails = this.details.getWireBlockDetails(x, y);
-                    // Whether we are creating a normal or wire block depends on whether there are wire details for this position.
-                    if (wireBlockDetails != null) {
+                    // Attempt to get block details for the current position.
+                    BlockDetails blockDetails = this.details.getBlockDetails(x, y);
+                    // The type of block we are creating depends on whether it is a wire block.
+                    if (blockDetails.isWireBlock()) {
                         // Create a new static wire block and add it to the physics world.
-                        // TODO Eventually add isBlockAt(x, y) to AreaDetials so we can pass the flags to the wire block which define sides that are connected to other blocks.
-                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.WireBlock(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE));
+                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.WireBlock(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE, blockDetails));
                     } else {
                         // Create a new static block and add it to the physics world.
-                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.Block(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE));
+                        this.physicsWorld.addBox(new com.dumbpug.ohm.area.block.Block(x * Constants.BLOCK_SIZE, flippedY * Constants.BLOCK_SIZE, blockDetails));
                     }
                 }
             }
