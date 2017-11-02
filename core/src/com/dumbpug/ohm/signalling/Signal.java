@@ -1,8 +1,15 @@
 package com.dumbpug.ohm.signalling;
 
-/**
- * Created by nikolas.howard on 01/11/2017.
- */
+import com.dumbpug.ohm.Direction;
 
+/**
+ * Represents a signal moving through a signalling system.
+ */
 public class Signal {
+
+    /** The current direction of the signal. */
+    private Direction direction = Direction.RIGHT;
+
+    /** The current colour of the signal. */
+    private Colour colour;
 }

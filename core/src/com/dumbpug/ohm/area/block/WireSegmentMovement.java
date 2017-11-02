@@ -1,6 +1,6 @@
 package com.dumbpug.ohm.area.block;
 
-import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.*;
 
 /**
  * Represents a movement along a wire segment.
@@ -11,7 +11,7 @@ public class WireSegmentMovement {
     private float distanceRemaining = Constants.WIRE_SEGMENT_SIZE;
 
     /** The length of the path still to follow. */
-    private Direction direction;
+    private com.dumbpug.ohm.Direction direction;
 
     /** The type of wire movement. Either leaving or entering a wire block. */
     private MovementType type;
@@ -25,7 +25,7 @@ public class WireSegmentMovement {
      * @param direction
      * @param type
      */
-    public WireSegmentMovement(Passenger passenger, Direction direction, MovementType type) {
+    public WireSegmentMovement(Passenger passenger, com.dumbpug.ohm.Direction direction, MovementType type) {
         this.passenger = passenger;
         this.direction = direction;
         this.type      = type;

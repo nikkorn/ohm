@@ -24,7 +24,7 @@ public class WireBlock extends Block {
     /**
      * Add a passenger moving through this block.
      */
-    public void addPassenger(Passenger passenger, Direction directionOfEntry) {
+    public void addPassenger(Passenger passenger, com.dumbpug.ohm.Direction directionOfEntry) {
         movements.put(passenger, new com.dumbpug.ohm.area.block.WireSegmentMovement(passenger, directionOfEntry, MovementType.ENTRY));
     }
 

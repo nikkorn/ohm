@@ -1,7 +1,7 @@
-package com.dumbpug.ohm.area.block;
+package com.dumbpug.ohm;
 
 /**
- * Directions of wire segments.
+ * Directions.
  */
 public enum Direction {
     UP,

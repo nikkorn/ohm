@@ -43,4 +43,10 @@ public class Constants {
     /** Wires. */
     public static final float WIRE_SEGMENT_SIZE               = BLOCK_SIZE / 2f;
     public static final float WIRE_MOVEMENT_STEP              = WIRE_SEGMENT_SIZE / 4f;
+
+    /** Signalling. */
+    public static final int SIGNALLING_BEACON_HEIGHT          = 7;
+    public static final int SIGNALLING_BEACON_WIDTH           = 9;
+    public static final long SIGNALLING_MOVEMENT_UPDATE_MS    = 1000;
+    public static final long SIGNALLING_CREATION_UPDATE_MS    = 5000;
 }
