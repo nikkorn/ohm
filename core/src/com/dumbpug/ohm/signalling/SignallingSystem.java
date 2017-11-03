@@ -8,9 +8,22 @@ import java.util.ArrayList;
  */
 public class SignallingSystem {
 
-    /** The beacons. */
-    private ArrayList<Beacon> beacons;
-
-    /** The panels. */
+    /** The panels in the system. */
     private ArrayList<Panel> panels;
+
+    /**
+     * Update the panels in the signalling system.
+     */
+    public void update() {
+        // Update each panel in turn.
+        for (Panel panel : this.panels) {
+            panel.update();
+        }
+    }
+
+    /**
+     * Add a panel to this signalling system.
+     * @param panel
+     */
+    public void addPanel(Panel panel) { panels.add(panel); }
 }

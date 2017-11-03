@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.signalling.receivers;
 
 import com.dumbpug.ohm.signalling.Colour;
+import java.util.EnumSet;
 
 /**
  * Represents a receiver for a signal.
@@ -8,13 +9,14 @@ import com.dumbpug.ohm.signalling.Colour;
 public interface SignalReceiver {
 
     /**
-     * Called when a signal is received.
+     * Called when an accepted signal is received.
+     * @param signal
      */
-    void onSignalReceived();
+    void onSignalReceived(Colour signal);
 
     /**
-     * Get the colour of the signal that the receiver expects.
-     * @return colour
+     * Gets the set of colours of signals that the receiver accepts.
+     * @return colours
      */
-    Colour getReceiverColour();
+    EnumSet<Colour> getReceiverColours();
 }

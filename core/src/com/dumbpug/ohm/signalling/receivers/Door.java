@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.signalling.receivers;
 
 import com.dumbpug.ohm.signalling.Colour;
+import java.util.EnumSet;
 
 /**
  * Represents a door which is opened via a signal.
@@ -19,10 +20,10 @@ public class Door implements SignalReceiver {
     public Door(float x, float y, Colour colour) { this.colour = colour; }
 
     @Override
-    public void onSignalReceived() {
+    public void onSignalReceived(Colour signal) {
         // TODO Open the door for a period of time.
     }
 
     @Override
-    public Colour getReceiverColour() { return this.colour; }
+    public EnumSet<Colour> getReceiverColours() { return EnumSet.of(colour); }
 }

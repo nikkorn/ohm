@@ -47,6 +47,7 @@ public class Constants {
     /** Signalling. */
     public static final int SIGNALLING_BEACON_HEIGHT          = 7;
     public static final int SIGNALLING_BEACON_WIDTH           = 9;
+    public static final int SIGNALLING_PANEL_SIZE             = 8;
     public static final long SIGNALLING_MOVEMENT_UPDATE_MS    = 1000;
     public static final long SIGNALLING_CREATION_UPDATE_MS    = 5000;
 }

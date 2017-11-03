@@ -7,6 +7,9 @@ import com.dumbpug.ohm.Direction;
  */
 public class Signal {
 
+    /** The current x/y square position of the signal. */
+    private int x, y;
+
     /** The current direction of the signal. */
     private Direction direction = Direction.RIGHT;
 
