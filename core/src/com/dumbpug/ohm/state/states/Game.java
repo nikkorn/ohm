@@ -1,8 +1,13 @@
 package com.dumbpug.ohm.state.states;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dumbpug.ohm.Ohm;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.Transition;
+import com.dumbpug.ohm.input.Control;
+import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
@@ -55,8 +60,44 @@ public class Game implements State {
             // Add the player to the newly created area.
             this.area.addPlayer(player);
         } else {
+            // Update the area physics world.
+            this.area.updatePhysicsWorld();
+            // Tick the player.
+            player.tick();
+            // Process input.
+            processInput();
             // Tick the area.
             this.area.tick();
+        }
+    }
+
+    /**
+     * Process user input.
+     */
+    private void processInput() {
+        // Get the application input provider.
+        IInputProvider inputProvider = Ohm.getInputProvider();
+        // Are we running?
+        if (inputProvider.isControlPressed(Control.LEFT)) {
+            // We are running left.
+            player.moveLeft();
+        } else if (inputProvider.isControlPressed(Control.RIGHT)) {
+            // We are running right.
+            player.moveRight();
+        }
+        // Are we jumping?
+        if (inputProvider.isControlJustPressed(Control.JUMP)) {
+            player.jump();
+        }
+        // Are we using electro charge?
+        if (inputProvider.isControlPressed(Control.ELECTRO_CHARGE)) {
+            player.getElectroChargeLevel().setEnabled(true);
+        } else {
+            player.getElectroChargeLevel().setEnabled(false);
+        }
+        // Do we want to exit? (only desktop version)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
         }
     }
 

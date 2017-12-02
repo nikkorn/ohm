@@ -10,6 +10,7 @@ public class KeyboardInputProvider implements IInputProvider {
 
     @Override
     public boolean isControlPressed(Control control) {
+        // Determine which control we are checking the state of.
         switch (control) {
             case JUMP:
                 return Gdx.input.isButtonPressed(Input.Keys.SPACE);
@@ -25,6 +26,7 @@ public class KeyboardInputProvider implements IInputProvider {
 
     @Override
     public boolean isControlJustPressed(Control control) {
+        // Determine which control we are checking the state of.
         switch (control) {
             case JUMP:
                 return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);

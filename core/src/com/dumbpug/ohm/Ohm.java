@@ -2,7 +2,6 @@ package com.dumbpug.ohm;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.graphics.GL20;
@@ -61,7 +60,7 @@ public class Ohm extends ApplicationAdapter {
 		stateManager.tick();
 
 		// Reset the input provider.
-
+		this.inputProvider.reset();
 
 		// Clear the screen.
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -74,8 +73,8 @@ public class Ohm extends ApplicationAdapter {
 	}
 
 	/**
-	 * Get the input provider.
-	 * @return input provider.
+	 * Get the application input provider.
+	 * @return input provider
      */
 	public static IInputProvider getInputProvider() { return Ohm.inputProvider; }
 	

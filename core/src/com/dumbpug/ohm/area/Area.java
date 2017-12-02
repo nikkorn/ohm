@@ -1,10 +1,6 @@
 package com.dumbpug.ohm.area;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -64,7 +60,7 @@ public class Area {
         this.createPhysicsWorld(areaName);
         // Create the player spawn.
         this.playerSpawn = details.getSpawn();
-        // Create the area camera..
+        // Create the area camera.
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
         camera.zoom = Constants.AREA_ZOOM;
@@ -87,16 +83,18 @@ public class Area {
      * Tick the area.
      */
     public void tick() {
-        // Update the physics world.
-        physicsWorld.update();
-        // Tick the player if we have one yet.
-        if (player != null) { player.tick(); }
-        // Process input.
-        processInput();
         // Update the camera.
         updateCamera();
         // Check the status of the player.
         checkPlayerStatus();
+    }
+
+    /**
+     * Update the physics world.
+     */
+    public void updatePhysicsWorld() {
+        // Update the physics world.
+        physicsWorld.update();
     }
 
     /**
@@ -137,60 +135,6 @@ public class Area {
      * @return the name of the area.
      */
     public String getAreaName() { return this.area; }
-
-    /**
-     * Process user input.
-     */
-    private void processInput() {
-        // The way we handle input depends n whether we are running on ouya or not.
-        if (Ouya.runningOnOuya) {
-            // Handle Ouya input.
-            for (Controller controller : Controllers.getControllers()) {
-                // Are we jumping?
-                if (controller.getButton(Ouya.BUTTON_O)) {
-                    player.jump();
-                }
-                // Are we using electro charge?
-                if (controller.getButton(Ouya.BUTTON_R1)) {
-                    player.getElectroChargeLevel().setEnabled(true);
-                } else {
-                    player.getElectroChargeLevel().setEnabled(false);
-                }
-                // Get the x axis of the left stick (movement).
-                float leftXAxis = controller.getAxis(Ouya.AXIS_LEFT_X);
-                // Maybe move left or right, based on the position of the stick.
-                if (leftXAxis < -0.5) {
-                    player.moveLeft();
-                }
-                if (leftXAxis > 0.5) {
-                    player.moveRight();
-                }
-            }
-        } else {
-            // Are we running left?
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                // We are running left.
-                player.moveLeft();
-            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                // We are running right.
-                player.moveRight();
-            }
-            // Are we jumping?
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                player.jump();
-            }
-            // Are we using electro charge?
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                player.getElectroChargeLevel().setEnabled(true);
-            } else {
-                player.getElectroChargeLevel().setEnabled(false);
-            }
-            // Do we want to exit?
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                Gdx.app.exit();
-            }
-        }
-    }
 
     /**
      * Update the specified camera to reflect the players position.
