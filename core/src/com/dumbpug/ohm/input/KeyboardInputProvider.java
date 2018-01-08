@@ -13,13 +13,13 @@ public class KeyboardInputProvider implements IInputProvider {
         // Determine which control we are checking the state of.
         switch (control) {
             case JUMP:
-                return Gdx.input.isButtonPressed(Input.Keys.SPACE);
+                return Gdx.input.isKeyPressed(Input.Keys.SPACE);
             case ELECTRO_CHARGE:
-                return Gdx.input.isButtonPressed(Input.Keys.SHIFT_LEFT);
+                return Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT);
             case LEFT:
-                return Gdx.input.isButtonPressed(Input.Keys.A);
+                return Gdx.input.isKeyPressed(Input.Keys.A);
             case RIGHT:
-                return Gdx.input.isButtonPressed(Input.Keys.D);
+                return Gdx.input.isKeyPressed(Input.Keys.D);
         }
         return false;
     }
