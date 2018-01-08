@@ -1,0 +1,31 @@
+Characters can:
+
+    - JUMP:
+        Characters can jump once as long as they are standing on solid ground.
+
+    - WALL JUMP:
+        Characters can wall jump as long as they are not standing on something solid and are pressing against a wall.
+        Using the JUMP button here will launch the character from the wall.
+
+    - PULSE: 
+        Hold down the PULSE button, do NOT move, and after a second or so will cause an explosion with the character 
+        at the origin. Hurting and launching enemies. Holding pulse near some entities will trigger different actions. 
+
+    - POSSESS:
+        Pressing the POSSESS button when standing next to a knocked out enemy will let you posses them and control them
+        until the area is finished. Getting hurt while possesing an enemy kills the character. Pressing the POSSESS buttons again
+        will kick you out of the enemy and kill it.
+
+    - ATTACK: 
+        Pressing the ATTACK button does a basic attack in the characters facing direction or the direction of
+        the secondary analog.
+
+    - HOLD: 
+        Characters can hold some entities while holding the HOLD button.
+
+    - DROP:
+        Characters can drop an entiity by HOLDING it and then letting go of the HOLD button.
+        
+    - THROW:
+        Characters can throw entites by HOLDING it and then letting go of the HOLD button WHILE aiming in a direction
+        witht the secondary analog.

@@ -1,0 +1,12 @@
+- LAUNCH_PYLON:
+    A tile which can be interacted with using the PULSE button. Holding PULSE while over this tile
+    will suck the character into it. Releasing PULSE will launch the charater in the direction of the secondary analog.
+
+- WEAK_BLOCK:
+    A block which can be blown up by either a special enemy possesion or by throwing a bomb at it.
+
+- DOOR:
+    A block which corresponds with an enemy in the area. Killing this enemy will open the door. Maybe signified by colour? 
+
+- WIRE:
+    Some blocks will be entry points for wire circuits which can be travelled using PULSE. These circuits can change, maybe with spinning tiles?
