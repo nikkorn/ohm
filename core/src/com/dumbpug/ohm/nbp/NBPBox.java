@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 /**
  * Represents a box in our physics world.
- * @author nikolas.howard
- *
  */
 public abstract class NBPBox {
 	// Position
@@ -41,8 +39,7 @@ public abstract class NBPBox {
 	private NBPPoint originPoint;
 	// Last point of origin
 	private NBPPoint lastOriginPoint;
-	// Defines whether this box should be removed from the world at the end of
-	// the next physics step.
+	// Defines whether this box should be removed from the world at the end of the next physics step.
 	private boolean isMarkedForDeletion = false;
 	// Defines whether this box has been deleted.
 	private boolean isDeleted = false;

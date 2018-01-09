@@ -2,8 +2,6 @@ package com.dumbpug.ohm.nbp;
 
 /**
  * Represents a force bloom, place it anywhere in the physics world to create a force explosion.
- * @author nikolas.howard
- *
  */
 public class NBPBloom {
 	// Radius of the bloom.

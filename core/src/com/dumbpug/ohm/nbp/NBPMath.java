@@ -10,8 +10,6 @@ public class NBPMath {
 
     /**
      * Defines a direction at which a kinetic box enters a static box.
-     * @author Nikolas Howard
-     *
      */
     public enum NBPIntersectionDirection {
         SIDE_LEFT,
@@ -23,8 +21,8 @@ public class NBPMath {
     
     /**
      * Calculates whether two boxes intersect.
-     * @param box a
-     * @param box b
+     * @param a The first box.
+     * @param b The second box.
      * @return intersection exists
      */
     public static boolean doBoxesCollide(NBPBox a, NBPBox b) {
@@ -39,9 +37,9 @@ public class NBPMath {
 
     /**
      * Calculates whether a sensor and box intersect.
-     * @param sensor a
-     * @param box b
-     * @return intersection exists
+     * @param sensor The sensor.
+     * @param box The box.
+     * @return Whether an intersection exists.
      */
     public static boolean doesSensorCollideWithBox(NBPSensor sensor, NBPBox box) {
         if(sensor.getX() < (box.getX() + box.getWidth()) &&
@@ -55,9 +53,9 @@ public class NBPMath {
     
     /**
      * Handles a collision between two boxes on an axis.
-     * @param box a
-     * @param box b
-     * @param NBPCollisionAxis axis
+     * @param a The first box.
+     * @param b The second box.
+     * @param axis The axis on which to handle this collision.
      */
     public static void handleCollision(NBPBox a, NBPBox b, NBPCollisionAxis axis) {
         // Are we dealing with a Kinetic/Static collision or a Kinetic/Kinetic one?
@@ -68,42 +66,42 @@ public class NBPMath {
             NBPBox kineticBox = (a.getType() == NBPBoxType.KINETIC) ? a : b;
             // Do our collision resolution based on the specified axis.
             switch(axis) {
-			case X:
-				 if(kineticBox.getVelx() > 0) {
-	            	kineticBox.setX(staticBox.getX() - kineticBox.getWidth());
-	            	// Flip velocity
-	    			kineticBox.setVelx(-kineticBox.getVelx() * (kineticBox.getRestitution() + staticBox.getRestitution()));
-	            	// Notify boxes of collision.
-	                staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_LEFT));
-	                kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_LEFT));
-	            } else if(kineticBox.getVelx() < 0) {
-	            	kineticBox.setX(staticBox.getX() + staticBox.getWidth());
-	            	// Flip velocity
-	    			kineticBox.setVelx(-kineticBox.getVelx() * (kineticBox.getRestitution() + staticBox.getRestitution()));
-	            	// Notify boxes of collision.
-	                staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_RIGHT));
-	                kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_RIGHT));
-	            } 
-				break;
-			case Y:
-				if(kineticBox.getVely() > 0) {
-	            	kineticBox.setY(staticBox.getY() - kineticBox.getHeight());
-	            	// Flip velocity
-	    			kineticBox.setVely(-kineticBox.getVely() * (kineticBox.getRestitution() + staticBox.getRestitution()));
-	            	// Notify boxes of collision.
-	                staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.BOTTOM));
-	                kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.BOTTOM));
-	            } else if(kineticBox.getVely() < 0) {
-	            	kineticBox.setY(staticBox.getY() + staticBox.getHeight());
-	            	// Flip velocity
-	    			kineticBox.setVely(-kineticBox.getVely() * (kineticBox.getRestitution() + staticBox.getRestitution()));
-	    			// Reduce X velocity based on friction.
-	                kineticBox.setVelx(kineticBox.getVelx() * (kineticBox.getFriction() + staticBox.getFriction()));
-	            	// Notify boxes of collision.
-	                staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.TOP));
-	                kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.TOP));
-	            } 
-				break;
+                case X:
+                     if(kineticBox.getVelx() > 0) {
+                        kineticBox.setX(staticBox.getX() - kineticBox.getWidth());
+                        // Flip velocity
+                        kineticBox.setVelx(-kineticBox.getVelx() * (kineticBox.getRestitution() + staticBox.getRestitution()));
+                        // Notify boxes of collision.
+                        staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_LEFT));
+                        kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_LEFT));
+                    } else if(kineticBox.getVelx() < 0) {
+                        kineticBox.setX(staticBox.getX() + staticBox.getWidth());
+                        // Flip velocity
+                        kineticBox.setVelx(-kineticBox.getVelx() * (kineticBox.getRestitution() + staticBox.getRestitution()));
+                        // Notify boxes of collision.
+                        staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_RIGHT));
+                        kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.SIDE_RIGHT));
+                    }
+                    break;
+                case Y:
+                    if(kineticBox.getVely() > 0) {
+                        kineticBox.setY(staticBox.getY() - kineticBox.getHeight());
+                        // Flip velocity
+                        kineticBox.setVely(-kineticBox.getVely() * (kineticBox.getRestitution() + staticBox.getRestitution()));
+                        // Notify boxes of collision.
+                        staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.BOTTOM));
+                        kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.BOTTOM));
+                    } else if(kineticBox.getVely() < 0) {
+                        kineticBox.setY(staticBox.getY() + staticBox.getHeight());
+                        // Flip velocity
+                        kineticBox.setVely(-kineticBox.getVely() * (kineticBox.getRestitution() + staticBox.getRestitution()));
+                        // Reduce X velocity based on friction.
+                        kineticBox.setVelx(kineticBox.getVelx() * (kineticBox.getFriction() + staticBox.getFriction()));
+                        // Notify boxes of collision.
+                        staticBox.onCollisonWithKineticBox(kineticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.TOP));
+                        kineticBox.onCollisonWithStaticBox(staticBox, new NBPIntersectionPoint(kineticBox.getCurrentOriginPoint(), NBPIntersectionDirection.TOP));
+                    }
+                    break;
             }
         } else if (b.getType() == NBPBoxType.KINETIC && a.getType() == NBPBoxType.KINETIC) {
             // We have a Kinetic/Kinetic collision. We can't resolve this at the moment, so the best
