@@ -1,14 +1,15 @@
 package com.dumbpug.ohm.nbp.zone;
 
 import com.dumbpug.ohm.nbp.NBPBox;
+import com.dumbpug.ohm.nbp.NBPPoint;
 
 /**
  * Represents an area in a physics world where a continuous force influences overlapping kinematic objects.
  */
 public abstract class NBPZone {
 
-    /** The x/y position of the zone. */
-    private float x, y;
+    /** The position point of the zone. */
+    private NBPPoint position;
 
     /** The amount of force to apply to intersecting physics boxes. */
     private float force;
@@ -20,34 +21,15 @@ public abstract class NBPZone {
      * @param force
      */
     public NBPZone(float x, float y, float force) {
-        this.x     = x;
-        this.y     = y;
-        this.force = force;
+        this.position = new NBPPoint(x, y);
+        this.force    = force;
     }
 
     /**
-     * Get the x position of this zone.
-     * @return x position.
+     * Get the position of this zone.
+     * @return The zone position.
      */
-    public float getX() { return this.x; }
-
-    /**
-     * Set the x position of this zone.
-     * @param x The x position
-     */
-    public void setX(float x) { this.x = x; }
-
-    /**
-     * Get the y position of this zone.
-     * @return y position.
-     */
-    public float getY() { return this.y; }
-
-    /**
-     * Set the y position of this zone.
-     * @param y The y position
-     */
-    public void setY(float y) { this.y = y; }
+    public NBPPoint getPosition() { return this.position; }
 
     /**
      * Get the force that is applied to intersecting physics boxes.
@@ -60,6 +42,13 @@ public abstract class NBPZone {
      * @param force
      */
     public void setForce(float force) { this.force = force; }
+
+    /**
+     * Determine whether the specified physics box intersects with this zone of force.
+     * @param box The physics box to check for intersection.
+     * @return Whether the specified physics box intersects with this zone of force.
+     */
+    public abstract boolean intersects(NBPBox box);
 
     /**
      * Apply a force to an overlapping physics box.

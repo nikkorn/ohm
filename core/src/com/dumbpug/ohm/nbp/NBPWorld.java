@@ -1,12 +1,11 @@
 package com.dumbpug.ohm.nbp;
 
+import com.dumbpug.ohm.nbp.zone.NBPZone;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Represents our physical world.
- * @author Nikolas Howard
- *
  */
 public class NBPWorld {
 	// The world gravity.
@@ -17,6 +16,8 @@ public class NBPWorld {
 	private ArrayList<NBPBox> pendingBoxEntities;
 	// List holding any pending NBPBloom instances to be processed.
 	private ArrayList<NBPBloom> bloomList;
+	// List holding any zones of force in the physics world.
+	private ArrayList<NBPZone> zoneList;
 	// Are we currently processing a physics step.
 	private boolean inPhysicsStep = false;
 
@@ -28,6 +29,7 @@ public class NBPWorld {
 		boxEntities        = new ArrayList<NBPBox>();
 		pendingBoxEntities = new ArrayList<NBPBox>();
 		bloomList          = new ArrayList<NBPBloom>();
+		zoneList           = new ArrayList<NBPZone>();
 		this.worldGravity  = gravity;
 	}
 
@@ -62,6 +64,17 @@ public class NBPWorld {
 		}
 		// Remove processed world blooms.
 		bloomList.clear();
+		// Apply zone forces to any intersecting boxes.
+		for (NBPZone zone : zoneList) {
+			// Go over all boxes.
+			for (NBPBox box : boxEntities) {
+				// Make sure this is a kinematic box and that it actually intersects the zone.
+				if((box.getType() == NBPBoxType.KINETIC) && zone.intersects(box)) {
+					// Allow the zone of force to influence the intersecting box.
+					zone.influence(box);
+				}
+			}
+		}
 		// Do collision detection and try to handle it.
 		for (NBPBox cbox : boxEntities) {
 			cbox.onBeforeUpdate();	
@@ -164,6 +177,28 @@ public class NBPWorld {
 	 */
 	public void addBloom(NBPBloom bloom) {
 		this.bloomList.add(bloom);
+	}
+
+	/**
+	 * Add a zone of force to this physics world.
+	 * @param zone The zone of force to add.
+	 */
+	public void addZone(NBPZone zone) {
+		// Don't add a zone that already exists in this physics world.
+		if (!this.zoneList.contains(zone)){
+			this.zoneList.add(zone);
+		}
+	}
+
+	/**
+	 * Remove a zone of force from this physics world.
+	 * @param zone The zone of force to remove.
+	 */
+	public void removeZone(NBPZone zone) {
+		// Don't try to remove a zone that doesn't already exist in this physics world.
+		if (this.zoneList.contains(zone)){
+			this.zoneList.remove(zone);
+		}
 	}
 	
 	/**

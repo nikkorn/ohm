@@ -66,6 +66,11 @@ public class NBPSquareZone extends NBPZone {
     public void setDirection(NBPDirection direction) { this.direction = direction; }
 
     @Override
+    public boolean intersects(NBPBox box) {
+        return false;
+    }
+
+    @Override
     public void influence(NBPBox box) {
         // Apply the force based on the force direction.
         switch(this.direction) {
