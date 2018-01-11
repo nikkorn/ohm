@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.nbp.zone;
 
 import com.dumbpug.ohm.nbp.NBPBox;
+import com.dumbpug.ohm.nbp.NBPMath;
 
 /**
  * Represents a square zone of force pushing in a specified direction.
@@ -67,7 +68,8 @@ public class NBPSquareZone extends NBPZone {
 
     @Override
     public boolean intersects(NBPBox box) {
-        return false;
+        return NBPMath.doSquaresIntersect(box.getX(), box.getY(), box.getWidth(), box.getHeight(),
+                this.getPosition().getX(), this.getPosition().getY(), getWidth(), getHeight());
     }
 
     @Override

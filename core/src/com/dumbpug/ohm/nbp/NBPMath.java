@@ -3,36 +3,23 @@ package com.dumbpug.ohm.nbp;
 import java.util.ArrayList;
 
 /**
- * Created by Nikolas Howard on 25/02/16.
- * Class for basic box collision detection and resolution.
+ * Helper class for basic box collision detection and resolution.
  */
 public class NBPMath {
 
     /**
      * Defines a direction at which a kinetic box enters a static box.
      */
-    public enum NBPIntersectionDirection {
-        SIDE_LEFT,
-        SIDE_RIGHT,
-        TOP,
-        BOTTOM,
-        NONE
-    }
+    public enum NBPIntersectionDirection { SIDE_LEFT, SIDE_RIGHT, TOP, BOTTOM, NONE }
     
     /**
      * Calculates whether two boxes intersect.
      * @param a The first box.
      * @param b The second box.
-     * @return intersection exists
+     * @return Whether an intersection exists.
      */
     public static boolean doBoxesCollide(NBPBox a, NBPBox b) {
-        if(a.getX() < (b.getX() + b.getWidth()) &&
-                (a.getX() + a.getWidth()) > b.getX() &&
-                a.getY() < (b.getY() + b.getHeight()) &&
-                (a.getY() + a.getHeight()) > b.getY()) {
-            return true;
-        }
-        return false;
+        return doSquaresIntersect(a.getX(), a.getY(), a.getWidth(), a.getHeight(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
     }
 
     /**
@@ -42,10 +29,24 @@ public class NBPMath {
      * @return Whether an intersection exists.
      */
     public static boolean doesSensorCollideWithBox(NBPSensor sensor, NBPBox box) {
-        if(sensor.getX() < (box.getX() + box.getWidth()) &&
-                (sensor.getX() + sensor.getWidth()) > box.getX() &&
-                sensor.getY() < (box.getY() + box.getHeight()) &&
-                (sensor.getY() + sensor.getHeight()) > box.getY()) {
+        return doSquaresIntersect(sensor.getX(), sensor.getY(), sensor.getWidth(), sensor.getHeight(), box.getX(), box.getY(), box.getWidth(), box.getHeight());
+    }
+
+    /**
+     * Calculates whether two squares intersect.
+     * @param aX
+     * @param aY
+     * @param aWidth
+     * @param aHeight
+     * @param bX
+     * @param bY
+     * @param bWidth
+     * @param bHeight
+     * @return Whether an intersection exists.
+     */
+    public static boolean doSquaresIntersect(float aX, float aY, float aWidth, float aHeight,
+                                           float bX, float bY, float bWidth, float bHeight) {
+        if(aX < (bX + bWidth) && (aX + aWidth) > bX && aY < (bY + bHeight) && (aY + aHeight) > bY) {
             return true;
         }
         return false;
