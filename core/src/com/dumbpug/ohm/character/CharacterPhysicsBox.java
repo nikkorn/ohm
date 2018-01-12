@@ -9,6 +9,7 @@ import com.dumbpug.ohm.nbp.NBPSensor;
 
 /**
  * Physics box for a character.
+ * Handles basic character physics actions such as walking and jumping.
  */
 public class CharacterPhysicsBox extends NBPBox {
 
@@ -18,14 +19,8 @@ public class CharacterPhysicsBox extends NBPBox {
     /** Can the character jump? */
     private boolean canJump = false;
 
-    /** Can the character wall jump to the left? */
-    private boolean canWallJumpLeft = false;
-
-    /** Can the character wall jump to the right? */
-    private boolean canWallJumpRight = false;
-
     /** The characters facing direction.*/
-    private Direction facingDirection = Direction.RIGHT;
+    protected Direction facingDirection = Direction.RIGHT;
 
     /**
      * Creates a new instance of the CharacterPhysicsBox class.
@@ -43,56 +38,10 @@ public class CharacterPhysicsBox extends NBPBox {
         setMaxVelocityX(Constants.CHARACTER_PHYSICS_MAX_VELOCITY);
         setMaxVelocityY(Constants.CHARACTER_PHYSICS_MAX_VELOCITY * 1.5f);
         // Create a sensor and place it at the base of our character. This sensor will
-        // be used to detect when we are standing on something static, thus allowing
-        // the character to jump.
+        // be used to detect when we are standing on something static, thus allowing the character to jump.
         createBaseSensor(width, x, y);
-        // Create the wall sensors for detecting contact with walls.
-        createRightWallSensor(width, height, x, y);
-        createLeftWallSensor(width, height, x, y);
         // Grab reference to our character.
         this.character = character;
-    }
-
-    /**
-     * Create the right wall sensor.
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     */
-    private void createRightWallSensor(float width, float height, float x, float y) {
-        // Create a sensor and place it to the right of our character to detect wall contact.
-        float sensorHeight = height / 2f;
-        float sensorWidth  = 1;
-        float sensorPosX   = x + width;
-        float sensorPosY   = y + (height / 4f);
-        // Create the sensor.
-        NBPSensor rightWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
-        // Give the sensor a name, this will be checked when notified by the sensor.
-        rightWallSensor.setName("wall_sensor_right");
-        // Attach the sensor to the character box.
-        attachSensor(rightWallSensor);
-    }
-
-    /**
-     * Create the left wall sensor.
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     */
-    private void createLeftWallSensor(float width, float height, float x, float y) {
-        // Create a sensor and place it to the right of our character to detect wall contact.
-        float sensorHeight = height / 2f;
-        float sensorWidth  = 1;
-        float sensorPosX   = x - sensorWidth;
-        float sensorPosY   = y + (height / 4f);
-        // Create the sensor.
-        NBPSensor leftWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
-        // Give the sensor a name, this will be checked when notified by the sensor.
-        leftWallSensor.setName("wall_sensor_left");
-        // Attach the sensor to the character box.
-        attachSensor(leftWallSensor);
     }
 
     /**
@@ -167,33 +116,11 @@ public class CharacterPhysicsBox extends NBPBox {
             applyImpulse(0f, Constants.CHARACTER_JUMPING_IMPULSE);
             // Character was able to jump.
             return true;
-        } else {
-            // Determine whether we can wall jump instead.
-            if (this.canWallJumpLeft) {
-                this.canWallJumpLeft = false;
-                // Change the facing direction of this physics box.
-                this.facingDirection = Direction.LEFT;
-                // Do a wall jump!
-                setVelx(0);
-                setVely(0);
-                applyImpulse(-Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
-                // Character was able to jump.
-                return true;
-            } else if (this.canWallJumpRight) {
-                this.canWallJumpRight = false;
-                // Change the facing direction of this physics box.
-                this.facingDirection = Direction.RIGHT;
-                // Do a wall jump!
-                setVelx(0);
-                setVely(0);
-                applyImpulse(Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
-                // Character was able to jump.
-                return true;
-            }
         }
         // Player was not able to jump.
         return false;
     }
+
     /**
      * Get whether the character is currently idle (not moving at all)
      * @return is idle.
@@ -210,12 +137,6 @@ public class CharacterPhysicsBox extends NBPBox {
         // If the player can jump then he is touching the floor.
         return canJump;
     }
-
-    /**
-     * Get whether the character is prepped for a wall jump.
-     * @return is prepped for wall jump.
-     */
-    public boolean isPreppedForWallJump() { return (!canJump) && (this.canWallJumpLeft || this.canWallJumpRight); }
 
     /**
      * Get the facing direction of the character physics box.
@@ -236,19 +157,6 @@ public class CharacterPhysicsBox extends NBPBox {
                 }
                 // Set a flag to show that the player can now jump.
                 this.canJump = true;
-            }
-        }
-        // Check whether this is one of our wall sensors, contact with a static block means we can wall jump.
-        if(sensor.getName().equals("wall_sensor_right")) {
-            // If we are against any static block then we can wall jump off of it.
-            if(enteredBox.getType() == NBPBoxType.STATIC) {
-                this.canWallJumpLeft = true;
-            }
-        }
-        if(sensor.getName().equals("wall_sensor_left")) {
-            // If we are against any static block then we can wall jump off of it.
-            if(enteredBox.getType() == NBPBoxType.STATIC) {
-                this.canWallJumpRight = true;
             }
         }
     }
@@ -274,44 +182,6 @@ public class CharacterPhysicsBox extends NBPBox {
                 }
                 // Set the flag to show whether we can still jump.
                 this.canJump = isRestingOnStaticBox;
-            }
-        }
-        // We have stopped being against a static block. If a wall sensor is no longer in contact
-        // with ANY static blocks then we cannot wall jump any more.
-        if(sensor.getName().equals("wall_sensor_right")) {
-            // Check that the wall sensor left a static box.
-            if(exitedBox.getType() == NBPBoxType.STATIC) {
-                // Get all other intersecting boxes for this sensor, if none are static
-                // then we can no longer jump as we are not resting on anything.
-                boolean isStillAgainstWall = false;
-                for(NBPBox box : sensor.getIntersectingBoxes()) {
-                    // Is this intersecting box static?
-                    if(box.getType() == NBPBoxType.STATIC) {
-                        // We are still against a static block!
-                        isStillAgainstWall = true;
-                        break;
-                    }
-                }
-                // Set the flag to show whether we can still wall jump.
-                this.canWallJumpLeft = isStillAgainstWall;
-            }
-        }
-        if(sensor.getName().equals("wall_sensor_left")) {
-            // Check that the wall sensor left a static box.
-            if(exitedBox.getType() == NBPBoxType.STATIC) {
-                // Get all other intersecting boxes for this sensor, if none are static
-                // then we can no longer jump as we are not resting on anything.
-                boolean isStillAgainstWall = false;
-                for(NBPBox box : sensor.getIntersectingBoxes()) {
-                    // Is this intersecting box static?
-                    if(box.getType() == NBPBoxType.STATIC) {
-                        // We are still against a static block!
-                        isStillAgainstWall = true;
-                        break;
-                    }
-                }
-                // Set the flag to show whether we can still wall jump.
-                this.canWallJumpRight = isStillAgainstWall;
             }
         }
     }
