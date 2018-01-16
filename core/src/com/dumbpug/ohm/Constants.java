@@ -33,6 +33,9 @@ public class Constants {
     public static final float CHARACTER_PHYSICS_RESTITUTION             = 0f;
     public static final float CHARACTER_WALL_JUMP_X_OFFSET              = 0.3f;
 
+    /* Enemy. */
+    public static final float ENEMY_HORIZONTAL_SENSOR_WIDTH    = 6f;
+
     /** Particles. */
     public static final long PARTICLES_DEFAULT_LIFE           = 1000;
     public static final long PARTICLES_DEFAULT_GEN_DELAY      = 50;

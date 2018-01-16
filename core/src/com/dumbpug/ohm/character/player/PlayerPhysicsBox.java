@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.player;
+package com.dumbpug.ohm.character.player;
 
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.CharacterPhysicsBox;
@@ -124,7 +124,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
      * @return movement modifier
      */
     private float getMovementModifier() {
-        ElectroChargeLevel electroChargeLevel = this.player.getElectroChargeLevel();
+        com.dumbpug.ohm.character.player.ElectroChargeLevel electroChargeLevel = this.player.getElectroChargeLevel();
         // We can run super fast if we are using electro charge! (As long as it isn't depleted)
         if (electroChargeLevel.isEnabled() && electroChargeLevel.hasCharge()) {
             return Constants.PLAYER_ELECTRO_WALKING_MODIFIER;

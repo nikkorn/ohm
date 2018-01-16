@@ -49,6 +49,12 @@ public class AreaDetails {
     public int getHeight() { return this.blockPixmap.getHeight(); }
 
     /**
+     * Get the area name.
+     * @return area name
+     */
+    public String getAreaName() { return this.areaName; }
+
+    /**
      * Get the next area name.
      * @return next area name
      */

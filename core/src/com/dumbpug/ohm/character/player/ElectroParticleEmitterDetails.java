@@ -1,6 +1,5 @@
-package com.dumbpug.ohm.player;
+package com.dumbpug.ohm.character.player;
 
-import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.particles.IEmitterDetails;
 
 /**

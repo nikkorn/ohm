@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.block.BlockDetails;
 import com.dumbpug.ohm.nbp.NBPWorld;
-import com.dumbpug.ohm.player.Player;
+import com.dumbpug.ohm.character.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
 
 /**
@@ -23,20 +23,11 @@ public class Area {
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
 
-    /** The width of the area in blocks. */
-    private int blocksWide;
-
     /** The area overlay. */
     private Texture overlay;
 
     /** The player. */
     private Player player;
-
-    /** The player spawn. */
-    private Spawn playerSpawn;
-
-    /** The name of the next area. */
-    private String area;
 
     /** Flag defining whether this area is complete. */
     private boolean isComplete = false;
@@ -52,14 +43,10 @@ public class Area {
      * @param areaName
      */
     public Area(String areaName) {
-        // Set the area name.
-        this.area = areaName;
         // Get the area details from disk.
         this.details = new AreaDetails(areaName, new JsonReader().parse(Gdx.files.internal("areas/" + areaName + "/details.json")));
         // Create the physics world.
         this.createPhysicsWorld(areaName);
-        // Create the player spawn.
-        this.playerSpawn = details.getSpawn();
         // Create the area camera.
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
@@ -76,8 +63,14 @@ public class Area {
     public void addPlayer(Player player) {
         // Add player to this area at the player spawn.
         this.player = player;
-        player.addToPhysicsWorld(this.physicsWorld, this.playerSpawn.getX(), this.playerSpawn.getY());
+        player.addToPhysicsWorld(this.physicsWorld, this.details.getSpawn().getX(), this.details.getSpawn().getY());
     }
+
+    /**
+     * Get the details of the area.
+     * @return The area details.
+     */
+    public AreaDetails getDetails() { return this.details; }
 
     /**
      * Tick the area.
@@ -125,24 +118,12 @@ public class Area {
     public boolean isFailed() { return this.isFailed; }
 
     /**
-     * Gets the name of the next area.
-     * @return the name of the next area.
-     */
-    public String getNextAreaName() { return this.details.getNextAreaName(); }
-
-    /**
-     * Gets the name of the area.
-     * @return the name of the area.
-     */
-    public String getAreaName() { return this.area; }
-
-    /**
      * Update the specified camera to reflect the players position.
      */
     private void updateCamera() {
         // Calculate the min/max horizontal camera positions.
         float minCameraPosX = (Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2f;
-        float maxCameraPosX = (this.blocksWide * Constants.BLOCK_SIZE) - ((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2f);
+        float maxCameraPosX = (this.details.getWidth() * Constants.BLOCK_SIZE) - ((Gdx.graphics.getWidth() * Constants.AREA_ZOOM) / 2f);
         // Set the cameras position to match the players.
         float x = this.player.getX();
         // Clamp the camera horizontally to the screen.
@@ -165,7 +146,7 @@ public class Area {
             this.isFailed = true;
         }
         // Has the player made it through to the right of the area (completed).
-        if (player.getX() > (Constants.BLOCK_SIZE * this.blocksWide)) {
+        if (player.getX() > (Constants.BLOCK_SIZE * this.details.getWidth())) {
             // The player has made it to the right of the area! This area is complete.
             this.isComplete = true;
         }
@@ -180,8 +161,6 @@ public class Area {
         physicsWorld = new NBPWorld(Constants.PHYSICS_GRAVITY);
         // Populate the physics world with static blocks based on the area block map image.
         Pixmap pixmap = new Pixmap(Gdx.files.internal("areas/" + areaName + "/block_map.png"));
-        // Determine the block width of the area.
-        this.blocksWide = pixmap.getWidth();
         // Go pixel by pixel ...
         for (int y = 0; y < pixmap.getHeight(); y++) {
             for (int x = 0; x < pixmap.getWidth(); x++)  {
@@ -210,7 +189,6 @@ public class Area {
         // Create a block which stops the player going left off the screen.
         this.physicsWorld.addBox(new BoundaryBox(-10, 0, 10, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT));
         // Create a block which stops the player going above the screen.
-        this.physicsWorld.addBox(new BoundaryBox(0, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT,
-                Constants.BLOCK_SIZE * this.blocksWide, 10));
+        this.physicsWorld.addBox(new BoundaryBox(0, Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT, Constants.BLOCK_SIZE * this.details.getWidth(), 10));
     }
 }

@@ -8,7 +8,7 @@ import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.Transition;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
-import com.dumbpug.ohm.player.Player;
+import com.dumbpug.ohm.character.player.Player;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.StateType;
@@ -51,12 +51,12 @@ public class Game implements State {
         // Find out if the current area needs to be reset.
         if (this.area.isFailed()) {
             // Reset the current area. Set the area to be a newly created version of the same area.
-            this.area = new Area(this.area.getAreaName());
+            this.area = new Area(this.area.getDetails().getAreaName());
             // Add the player to the newly created area.
             this.area.addPlayer(player);
         } else if (this.area.isComplete()){
             // Set the area to be a newly created version of the next area.
-            this.area = new Area(this.area.getNextAreaName());
+            this.area = new Area(this.area.getDetails().getNextAreaName());
             // Add the player to the newly created area.
             this.area.addPlayer(player);
         } else {

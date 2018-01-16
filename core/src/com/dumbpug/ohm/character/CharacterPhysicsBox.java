@@ -11,10 +11,10 @@ import com.dumbpug.ohm.nbp.NBPSensor;
  * Physics box for a character.
  * Handles basic character physics actions such as walking and jumping.
  */
-public class CharacterPhysicsBox extends NBPBox {
+public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
 
     /** Reference to our Character object. */
-    protected Character character;
+    protected TCharacter character;
 
     /** Can the character jump? */
     private boolean canJump = false;
@@ -30,7 +30,7 @@ public class CharacterPhysicsBox extends NBPBox {
      * @param width
      * @param height
      */
-    public CharacterPhysicsBox(Character character, float x, float y, float width, float height) {
+    public CharacterPhysicsBox(TCharacter character, float x, float y, float width, float height) {
         super(x, y, width, height, NBPBoxType.KINETIC);
         setFriction(Constants.CHARACTER_PHYSICS_FRICTION);
         setRestitution(Constants.CHARACTER_PHYSICS_RESTITUTION);

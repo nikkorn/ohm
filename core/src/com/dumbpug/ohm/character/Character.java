@@ -3,7 +3,7 @@ package com.dumbpug.ohm.character;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * An enemy.
+ * A character.
  */
 public abstract class Character {
 
