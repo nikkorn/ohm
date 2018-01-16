@@ -1,0 +1,1 @@
+A little enemy who wanders back and forth (as long as there is no drop) but will charge at the player when in range.
