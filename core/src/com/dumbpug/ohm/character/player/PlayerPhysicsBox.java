@@ -12,64 +12,25 @@ import com.dumbpug.ohm.nbp.NBPSensor;
  * Handles basic character physics actions such as walking and jumping, but includes ability to wall jump.
  */
 public class PlayerPhysicsBox extends CharacterPhysicsBox {
-
-    /** The player. */
-    private Player player;
-
     /** Can the character wall jump to the left? */
     private boolean canWallJumpLeft = false;
-
     /** Can the character wall jump to the right? */
     private boolean canWallJumpRight = false;
+    /** Whether the player is being speedy. */
+    private boolean isSpeedy = false;
 
     /**
      * Creates a new instance of the PlayerPhysicsBox class.
-     * @param player
      * @param x
      * @param y
      */
-    public PlayerPhysicsBox(Player player, float x, float y) {
-        super(player, x, y, Constants.PLAYER_PHYSICS_SIZE_WIDTH, Constants.PLAYER_PHYSICS_SIZE_HEIGHT);
-        this.player = player;
+    public PlayerPhysicsBox(float x, float y) {
+        super(x, y, Constants.PLAYER_PHYSICS_SIZE_WIDTH, Constants.PLAYER_PHYSICS_SIZE_HEIGHT);
         // Create the wall sensors for detecting contact with walls.
         createRightWallSensor();
         createLeftWallSensor();
         // Give the player physics box a name.
         this.setName("PLAYER");
-    }
-
-    /**
-     * Create the right wall sensor.
-     */
-    private void createRightWallSensor() {
-        // Create a sensor and place it to the right of our character to detect wall contact.
-        float sensorHeight = Constants.PLAYER_PHYSICS_SIZE_WIDTH / 2f;
-        float sensorWidth  = 1;
-        float sensorPosX   = this.getX() + Constants.PLAYER_PHYSICS_SIZE_WIDTH;
-        float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
-        // Create the sensor.
-        NBPSensor rightWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
-        // Give the sensor a name, this will be checked when notified by the sensor.
-        rightWallSensor.setName("wall_sensor_right");
-        // Attach the sensor to the character box.
-        attachSensor(rightWallSensor);
-    }
-
-    /**
-     * Create the left wall sensor.
-     */
-    private void createLeftWallSensor() {
-        // Create a sensor and place it to the right of our character to detect wall contact.
-        float sensorHeight = Constants.PLAYER_PHYSICS_SIZE_WIDTH / 2f;
-        float sensorWidth  = 1;
-        float sensorPosX   = this.getX() - sensorWidth;
-        float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
-        // Create the sensor.
-        NBPSensor leftWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
-        // Give the sensor a name, this will be checked when notified by the sensor.
-        leftWallSensor.setName("wall_sensor_left");
-        // Attach the sensor to the character box.
-        attachSensor(leftWallSensor);
     }
 
     /**
@@ -120,18 +81,10 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
     }
 
     /**
-     * Get the movement modifier for the player.
-     * @return movement modifier
+     * Set whether this player is currently being speedy.
+     * @param isSpeedy Whether this player is currently being speedy.
      */
-    private float getMovementModifier() {
-        com.dumbpug.ohm.character.player.ElectroChargeLevel electroChargeLevel = this.player.getElectroChargeLevel();
-        // We can run super fast if we are using electro charge! (As long as it isn't depleted)
-        if (electroChargeLevel.isEnabled() && electroChargeLevel.hasCharge()) {
-            return Constants.PLAYER_ELECTRO_WALKING_MODIFIER;
-        } else {
-            return 1f;
-        }
-    }
+    public void setSpeedy(boolean isSpeedy) { this.isSpeedy = isSpeedy; }
 
     @Override
     public void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {
@@ -193,6 +146,46 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
             }
         }
     }
+
+    /**
+     * Create the right wall sensor.
+     */
+    private void createRightWallSensor() {
+        // Create a sensor and place it to the right of our character to detect wall contact.
+        float sensorHeight = Constants.PLAYER_PHYSICS_SIZE_WIDTH / 2f;
+        float sensorWidth  = 1;
+        float sensorPosX   = this.getX() + Constants.PLAYER_PHYSICS_SIZE_WIDTH;
+        float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
+        // Create the sensor.
+        NBPSensor rightWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
+        // Give the sensor a name, this will be checked when notified by the sensor.
+        rightWallSensor.setName("wall_sensor_right");
+        // Attach the sensor to the character box.
+        attachSensor(rightWallSensor);
+    }
+
+    /**
+     * Create the left wall sensor.
+     */
+    private void createLeftWallSensor() {
+        // Create a sensor and place it to the right of our character to detect wall contact.
+        float sensorHeight = Constants.PLAYER_PHYSICS_SIZE_WIDTH / 2f;
+        float sensorWidth  = 1;
+        float sensorPosX   = this.getX() - sensorWidth;
+        float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
+        // Create the sensor.
+        NBPSensor leftWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
+        // Give the sensor a name, this will be checked when notified by the sensor.
+        leftWallSensor.setName("wall_sensor_left");
+        // Attach the sensor to the character box.
+        attachSensor(leftWallSensor);
+    }
+
+    /**
+     * Get the movement modifier for the player.
+     * @return movement modifier
+     */
+    private float getMovementModifier() { return this.isSpeedy ? Constants.PLAYER_ELECTRO_WALKING_MODIFIER : 1f; }
 
     /**
      * Get the max walking velocity of this character physics box.

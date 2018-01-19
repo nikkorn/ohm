@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Ohm;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.Transition;
+import com.dumbpug.ohm.character.player.PlayerPhysicsBox;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.character.player.Player;
@@ -14,16 +15,13 @@ import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.StateType;
 
 /**
- * Represents the title screen state.
+ * Represents the in-game state.
  */
 public class Game implements State {
-
     /** The current game area. */
     private Area area;
-
     /** The player. */
     private Player player;
-
     /** The area transition. */
     private Transition transition;
 
@@ -40,10 +38,9 @@ public class Game implements State {
             // TODO ... Get the last area visited from disk.
         }
         // Create the player.
-        this.player = new Player();
+        this.player = new Player(new PlayerPhysicsBox(0, 0));
         // Add the player to the area.
         this.area.addPlayer(player);
-        // TODO Create HUD.
     }
 
     @Override

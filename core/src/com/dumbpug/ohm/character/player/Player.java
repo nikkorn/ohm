@@ -3,7 +3,6 @@ package com.dumbpug.ohm.character.player;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.Direction;
-import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.particles.Emitter;
 import com.dumbpug.ohm.particles.electro.ElectroParticleGenerator;
 import com.dumbpug.ohm.resources.PlayerResources;
@@ -12,84 +11,25 @@ import com.dumbpug.ohm.resources.PlayerResources;
  * The player.
  */
 public class Player extends com.dumbpug.ohm.character.Character {
-
-    /** The players physics box. */
+    /** The player physics box. */
     private PlayerPhysicsBox physicsBox;
-
     /** The player electro particle emitter. */
     private Emitter electroEmitter;
-
     /** The player electro charge level. */
     private ElectroChargeLevel electroChargeLevel;
 
     /**
      * Initialise a new instance of the Player class.
+     * @param playerPhysicsBox The player physics box.
      */
-    public Player() {
-        // Initialise our players physics box.
-        this.physicsBox = new PlayerPhysicsBox(this, 0, 0);
+    public Player(PlayerPhysicsBox playerPhysicsBox) {
+        super(playerPhysicsBox);
+        this.physicsBox = playerPhysicsBox;
         // Create the players electro emitter.
         createElectroEmitter();
         // Create the players electro charge level.
         this.electroChargeLevel = new ElectroChargeLevel();
     }
-
-    /**
-     * Set the players position.
-     * @param x
-     * @param y
-     */
-    public void setPosition(float x, float y) {
-        this.physicsBox.setX(x);
-        this.physicsBox.setY(y);
-    }
-
-    /**
-     * Get the players X position.
-     * @return X position
-     */
-    public float getX() { return this.physicsBox.getX(); }
-
-    /**
-     * Get the players Y position.
-     * @return Y position
-     */
-    public float getY() { return this.physicsBox.getY(); }
-
-    /**
-     * Get the players electro charge level.
-     * @return electro charge level.
-     */
-    public ElectroChargeLevel getElectroChargeLevel() { return electroChargeLevel; }
-
-    /**
-     * Add the players physics box to the specified physics world.
-     * @param world
-     * @param x
-     * @param y
-     */
-    public void addToPhysicsWorld(NBPWorld world, float x, float y) {
-        // Set the position of the players physics box.
-        this.setPosition(x, y);
-        // Add the players physics box to the world.
-        world.addBox(this.physicsBox);
-    }
-
-    /**
-     * Move the character to the left.
-     */
-    public void moveLeft() { this.physicsBox.moveLeft(); }
-
-    /**
-     * Move the character to the right.
-     */
-    public void moveRight() { this.physicsBox.moveRight(); }
-
-    /**
-     * Make the character jump if he can.
-     * @return true if character was able to jump
-     */
-    public boolean jump() { return this.physicsBox.jump(); }
 
     /**
      * Tick the player.
@@ -102,6 +42,8 @@ public class Player extends com.dumbpug.ohm.character.Character {
         // Update the electro particle generator to let it know whether we are using electro charge.
         boolean usingElectroCharge = electroChargeLevel.isEnabled() && electroChargeLevel.hasCharge();
         ((ElectroParticleGenerator) this.electroEmitter.getParticleGenerator()).setElectroChargeModeEnabled(usingElectroCharge);
+        // If we are using our electro charge then our physics box will move faster.
+        this.physicsBox.setSpeedy(usingElectroCharge);
     }
 
     @Override
@@ -153,6 +95,12 @@ public class Player extends com.dumbpug.ohm.character.Character {
             }
         }
     }
+
+    /**
+     * Get the player's electro charge level.
+     * @return The player's electro charge level.
+     */
+    public ElectroChargeLevel getElectroChargeLevel() { return this.electroChargeLevel; }
 
     /**
      * Create the electro particle emitter for the player.

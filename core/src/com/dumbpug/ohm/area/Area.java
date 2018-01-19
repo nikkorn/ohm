@@ -8,39 +8,36 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.JsonReader;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.block.BlockDetails;
+import com.dumbpug.ohm.character.Character;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.character.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
+import java.util.ArrayList;
 
 /**
  * Represents an area in game.
  */
 public class Area {
-
     /** The area camera. */
     private OrthographicCamera camera;
-
     /** The physics world for this area. */
     private NBPWorld physicsWorld;
-
     /** The area overlay. */
     private Texture overlay;
-
     /** The player. */
     private Player player;
-
+    /** The characters in the area. */
+    private ArrayList<Character> characters = new ArrayList<Character>();
     /** Flag defining whether this area is complete. */
     private boolean isComplete = false;
-
     /** Flag defining whether this area is failed (player died or dropped out). */
     private boolean isFailed = false;
-
     /** The area details. */
     private AreaDetails details;
 
     /**
      * Create a new instance of the Area class.
-     * @param areaName
+     * @param areaName The name of the area.
      */
     public Area(String areaName) {
         // Get the area details from disk.
@@ -58,12 +55,25 @@ public class Area {
 
     /**
      * Add the player to the area in the starting position.
-     * @param player
+     * @param player The player.
      */
     public void addPlayer(Player player) {
         // Add player to this area at the player spawn.
         this.player = player;
         player.addToPhysicsWorld(this.physicsWorld, this.details.getSpawn().getX(), this.details.getSpawn().getY());
+    }
+
+    /**
+     * Add the character to the area in the starting position.
+     * @param character The character to add.
+     * @param x
+     * @param y
+     */
+    public void addCharacter(Character character, float x, float y) {
+        // Add the character to the area physics world.
+        character.addToPhysicsWorld(this.physicsWorld, x, y);
+        // Add the character to the list of characters in the area.
+        this.characters.add(character);
     }
 
     /**
@@ -76,6 +86,8 @@ public class Area {
      * Tick the area.
      */
     public void tick() {
+        // Tick all of the characters in this area.
+        for (Character character : this.characters) { character.tick(); }
         // Update the camera.
         updateCamera();
         // Check the status of the player.

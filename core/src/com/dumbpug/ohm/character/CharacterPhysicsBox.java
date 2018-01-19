@@ -12,25 +12,19 @@ import com.dumbpug.ohm.nbp.NBPSensor;
  * Handles basic character physics actions such as walking and jumping.
  */
 public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
-
-    /** Reference to our Character object. */
-    protected TCharacter character;
-
     /** Can the character jump? */
     private boolean canJump = false;
-
     /** The characters facing direction.*/
     protected Direction facingDirection = Direction.RIGHT;
 
     /**
      * Creates a new instance of the CharacterPhysicsBox class.
-     * @param character
      * @param x
      * @param y
      * @param width
      * @param height
      */
-    public CharacterPhysicsBox(TCharacter character, float x, float y, float width, float height) {
+    public CharacterPhysicsBox(float x, float y, float width, float height) {
         super(x, y, width, height, NBPBoxType.KINETIC);
         setFriction(Constants.CHARACTER_PHYSICS_FRICTION);
         setRestitution(Constants.CHARACTER_PHYSICS_RESTITUTION);
@@ -40,8 +34,6 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
         // Create a sensor and place it at the base of our character. This sensor will
         // be used to detect when we are standing on something static, thus allowing the character to jump.
         createBaseSensor(width, x, y);
-        // Grab reference to our character.
-        this.character = character;
     }
 
     /**
@@ -150,11 +142,6 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
         if(sensor.getName().equals("base_sensor")) {
             // If we are on any static block then we can jump off of it.
             if(enteredBox.getType() == NBPBoxType.STATIC) {
-                // If the player was previously airborne, then this is a landing.
-                if(!isTouchingFloor()) {
-                    // Let our player instance know that we have landed.
-                    character.onLanding();
-                }
                 // Set a flag to show that the player can now jump.
                 this.canJump = true;
             }

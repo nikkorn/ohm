@@ -8,22 +8,17 @@ import com.dumbpug.ohm.nbp.NBPSensor;
 /**
  * A generic physics box for enemies.
  */
-public abstract class EnemyPhysicsBox<TEnemy extends Enemy> extends CharacterPhysicsBox {
-
-    /** The enemy. */
-    private TEnemy enemy;
+public abstract class EnemyPhysicsBox extends CharacterPhysicsBox {
 
     /**
      * Creates a new instance of the EnemyPhysicsBox class.
-     * @param enemy
      * @param x
      * @param y
      * @param width
      * @param height
      */
-    public EnemyPhysicsBox(TEnemy enemy, float x, float y, float width, float height) {
-        super(enemy, x, y, width, height);
-        this.enemy = enemy;
+    public EnemyPhysicsBox(float x, float y, float width, float height) {
+        super(x, y, width, height);
         // Create the sensors for detecting contact with walls and players.
         createRightSensor();
         createLeftSensor();
