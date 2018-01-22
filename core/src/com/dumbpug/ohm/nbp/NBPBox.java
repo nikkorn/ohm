@@ -31,8 +31,6 @@ public abstract class NBPBox {
 	private float friction = 0f;
 	// Restitution
 	private float restitution = 0f;
-	// Reference of world this object is in.
-	private NBPWorld wrappingWorld = null;
 	// List of sensors that are attached to this box.
 	private ArrayList<NBPSensor> attachedSensors;
 	// Point of origin
@@ -47,7 +45,7 @@ public abstract class NBPBox {
 	private boolean isAffectedByGravity = true;
 
 	/**
-	 * Creates an instance of the NBPBox class.
+	 * Creates a new instance of the NBPBox class.
 	 * @param x
 	 * @param y
 	 * @param width
@@ -82,10 +80,22 @@ public abstract class NBPBox {
 
 	/**
 	 * Do our physics update along the X axis.
+	 * @param gravity The gravity to apply.
 	 */
-	public void updateAxisX() {
+	public void updateAxisX(NBPGravity gravity) {
 		// If this box is static then do nothing!
 		if (this.type == NBPBoxType.KINETIC) {
+			// Add our gravity to X velocity only if this box is affected by gravity.
+			if(this.isAffectedByGravity && gravity != null) {
+				switch(gravity.getDirection()) {
+					case RIGHT:
+						this.velx += gravity.getForce();
+						break;
+					case LEFT:
+						this.velx -= gravity.getForce();
+						break;
+				}
+			}
 			// If the velocity is a super small number (between -0.0005 and 0.0005)
 			// just set it to zero to stop our boxes infinitely floating around.
 			if (velx > -0.0005 && velx < 0.0005) {
@@ -97,16 +107,24 @@ public abstract class NBPBox {
 			this.setX(this.x + velx);
 		}
 	}
-	
+
 	/**
 	 * Do our physics update along the Y axis.
+	 * @param gravity The gravity to apply.
 	 */
-	public void updateAxisY() {
+	public void updateAxisY(NBPGravity gravity) {
 		// If this box is static then do nothing!
 		if (this.type == NBPBoxType.KINETIC) {
 			// Add our gravity to Y velocity only if this box is affected by gravity.
-			if(this.isAffectedByGravity) {
-				this.vely -= wrappingWorld.getWorldGravity();
+			if(this.isAffectedByGravity && gravity != null) {
+				switch(gravity.getDirection()) {
+					case UP:
+						this.vely += gravity.getForce();
+						break;
+					case DOWN:
+						this.vely -= gravity.getForce();
+						break;
+				}
 			}
 			// If the velocity is a super small number (between -0.0005 and 0.0005)
 			// just set it to zero to stop our boxes infinitely floating around.
@@ -173,33 +191,6 @@ public abstract class NBPBox {
 			vely = this.getMaxVelocityY();
 		}
 	}
-
-	// ----------------------------------------------------------------
-	// ------------- Methods that the user should override ------------
-	protected abstract void onCollisonWithKineticBox(NBPBox collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision);
-
-	protected abstract void onCollisonWithStaticBox(NBPBox collidingBox, NBPIntersectionPoint originAtCollision);
-
-	protected abstract void onSensorEntry(NBPSensor sensor, NBPBox enteredBox);
-	
-	protected abstract void onSensorExit(NBPSensor sensor, NBPBox exitedBox);
-	
-	/**
-	 * @param bloom
-	 * @param angleOfForce
-	 * @param force
-	 * @param distance
-	 * @return whether our box should be affected by this bloom.
-	 */
-	protected abstract boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance);
-	
-	protected abstract void onBeforeUpdate();
-	
-	protected abstract void onAfterUpdate();
-
-	protected abstract void onDeletion();
-	// ----------------------------------------------------------------
-	// ----------------------------------------------------------------
 	
 	/**
 	 * Make this a ghost box.
@@ -257,7 +248,7 @@ public abstract class NBPBox {
 
 	/**
 	 * Set the X position of this box.
-	 * @param x position
+	 * @param newX position
 	 */
 	public void setX(float newX) {
 		// Move attached sensors along with this box.
@@ -271,7 +262,7 @@ public abstract class NBPBox {
 			}
 		}
 		this.lastPosX = x;
-		this.x = newX;
+		this.x        = newX;
 	}
 
 	/**
@@ -284,7 +275,7 @@ public abstract class NBPBox {
 
 	/**
 	 * Set the Y position of this box.
-	 * @param y position
+	 * @param newY position
 	 */
 	public void setY(float newY) {
 		// Move attached sensors along with this box.
@@ -298,7 +289,7 @@ public abstract class NBPBox {
 			}
 		}
 		this.lastPosY = y;
-		this.y = newY;
+		this.y        = newY;
 	}
 
 	/**
@@ -313,9 +304,7 @@ public abstract class NBPBox {
 	 * Sets whether this box is affected by gravity.
 	 * @param isAffectedByGravity
 	 */
-	public void setAffectedByGravity(boolean isAffectedByGravity) {
-		this.isAffectedByGravity = isAffectedByGravity;
-	}
+	public void setAffectedByGravity(boolean isAffectedByGravity) { this.isAffectedByGravity = isAffectedByGravity; }
 
 	public float getVelx() {
 		return this.velx;
@@ -393,14 +382,6 @@ public abstract class NBPBox {
 		this.maxVelY = maxVelY;
 	}
 
-	public NBPWorld getWrappingWorld() {
-		return wrappingWorld;
-	}
-
-	public void setWrappingWorld(NBPWorld wrappingWorld) {
-		this.wrappingWorld = wrappingWorld;
-	}
-
 	public float getFriction() {
 		return friction;
 	}
@@ -410,7 +391,7 @@ public abstract class NBPBox {
 		if (friction < 0) {
 			this.friction = 0f;
 		} else if (friction > 1f) {
-			this.friction = 0f;
+			this.friction = 1f;
 		} else {
 			this.friction = friction;
 		}
@@ -425,21 +406,52 @@ public abstract class NBPBox {
 		if (restitution < 0) {
 			this.restitution = 0f;
 		} else if (restitution > 1f) {
-			this.restitution = 0f;
+			this.restitution = 1f;
 		} else {
 			this.restitution = restitution;
 		}
 	}
 
+	/**
+	 * Get the current origin point of this box.
+	 * @return The current origin point of this box.
+	 */
 	public NBPPoint getCurrentOriginPoint() {
 		originPoint.setX(this.x + (width / 2));
 		originPoint.setY(this.y + (height / 2));
 		return originPoint;
 	}
 
+	/**
+	 * Get the last origin point of this box.
+	 * @return The last origin point of this box.
+	 */
 	public NBPPoint getLastOriginPoint() {
 		lastOriginPoint.setX(this.lastPosX + (width / 2));
 		lastOriginPoint.setY(this.lastPosY + (height / 2));
 		return lastOriginPoint;
 	}
+
+	protected abstract void onCollisonWithKineticBox(NBPBox collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision);
+
+	protected abstract void onCollisonWithStaticBox(NBPBox collidingBox, NBPIntersectionPoint originAtCollision);
+
+	protected abstract void onSensorEntry(NBPSensor sensor, NBPBox enteredBox);
+
+	protected abstract void onSensorExit(NBPSensor sensor, NBPBox exitedBox);
+
+	/**
+	 * @param bloom
+	 * @param angleOfForce
+	 * @param force
+	 * @param distance
+	 * @return whether our box should be affected by this bloom.
+	 */
+	protected abstract boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance);
+
+	protected abstract void onBeforeUpdate();
+
+	protected abstract void onAfterUpdate();
+
+	protected abstract void onDeletion();
 }

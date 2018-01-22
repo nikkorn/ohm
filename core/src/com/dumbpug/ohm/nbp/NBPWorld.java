@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class NBPWorld {
 	// The world gravity.
-	private float worldGravity;
+	private NBPGravity gravity;
 	// The box entities that are in our physics world.
 	private ArrayList<NBPBox> boxEntities;
 	// The box entities waiting to be added to our world (added during physics update)
@@ -22,16 +22,21 @@ public class NBPWorld {
 	private boolean inPhysicsStep = false;
 
 	/**
-	 * Create a new instance of the NBPWorld class.
-	 * @param gravity
+	 * Create a new instance of the NBPWorld class with gravity.
+	 * @param gravity The world gravity.
 	 */
-	public NBPWorld(float gravity) {
+	public NBPWorld(NBPGravity gravity) {
 		boxEntities        = new ArrayList<NBPBox>();
 		pendingBoxEntities = new ArrayList<NBPBox>();
 		bloomList          = new ArrayList<NBPBloom>();
 		zoneList           = new ArrayList<NBPZone>();
-		this.worldGravity  = gravity;
+		this.gravity       = gravity;
 	}
+
+	/**
+	 * Create a new instance of the NBPWorld class.
+	 */
+	public NBPWorld() { this(null); }
 
 	/**
 	 * Update the box entities in our world.
@@ -76,37 +81,38 @@ public class NBPWorld {
 			}
 		}
 		// Do collision detection and try to handle it.
-		for (NBPBox cbox : boxEntities) {
-			cbox.onBeforeUpdate();	
+		for (NBPBox currentBox : boxEntities) {
+            currentBox.onBeforeUpdate();
 			// Update this box on the X axis.
-			cbox.updateAxisX();
-			if (cbox.getType() == NBPBoxType.KINETIC) {
+            currentBox.updateAxisX(this.gravity);
+            // Resolve collisions on the X axis.
+			if (currentBox.getType() == NBPBoxType.KINETIC) {
 				// Get colliding boxes
-				for (NBPBox tbox : boxEntities) {
+				for (NBPBox targetBox : boxEntities) {
 					// Are these boxes different and do they collide?
-					if ((cbox != tbox) && NBPMath.doBoxesCollide(cbox, tbox)) {
-						NBPMath.handleCollision(tbox, cbox, NBPCollisionAxis.X);
+					if ((currentBox != targetBox) && NBPMath.doBoxesCollide(currentBox, targetBox)) {
+						NBPMath.handleCollision(targetBox, currentBox, NBPCollisionAxis.X);
 					}
 				}
 			}
 			// Update this box on the Y axis.
-			cbox.updateAxisY();
-			if (cbox.getType() == NBPBoxType.KINETIC) {
+            currentBox.updateAxisY(this.gravity);
+            // Resolve collisions on the X axis.
+			if (currentBox.getType() == NBPBoxType.KINETIC) {
 				// Get colliding boxes
-				for (NBPBox tbox : boxEntities) {
+				for (NBPBox targetBox : boxEntities) {
 					// Are these boxes different and do they collide?
-					if ((cbox != tbox) && NBPMath.doBoxesCollide(cbox, tbox)) {
-						NBPMath.handleCollision(tbox, cbox, NBPCollisionAxis.Y);
+					if ((currentBox != targetBox) && NBPMath.doBoxesCollide(currentBox, targetBox)) {
+						NBPMath.handleCollision(targetBox, currentBox, NBPCollisionAxis.Y);
 					}
 				}
 			}
 			// Process the sensors attached to the current box.
-			for (NBPSensor sensor : cbox.getAttachedSensors()) {
+			for (NBPSensor sensor : currentBox.getAttachedSensors()) {
 				sensor.reviewIntersections(boxEntities);
 			}
-			cbox.onAfterUpdate();
+            currentBox.onAfterUpdate();
 		}
-		
 		// Mark the end of the physics step.
 		inPhysicsStep = false;
 		// Any boxes that were added as part of this physics step should be added to our actual entity list now.
@@ -122,7 +128,7 @@ public class NBPWorld {
 
 	/**
 	 * Add a Static/Kinematic box to the world.
-	 * @param box
+	 * @param box The box to add.
 	 */
 	public void addBox(NBPBox box) {
 		// If this addition is taking place during a physics update, then it should be queued for later addition.
@@ -131,19 +137,17 @@ public class NBPWorld {
 		} else {
 			if (!boxEntities.contains(box)) {
 				boxEntities.add(box);
-				box.setWrappingWorld(this);
 			}
 		}
 	}
 
 	/**
 	 * Remove a Static/Kinematic box from the world.
-	 * @param box
+	 * @param box The box to remove.
 	 */
 	public void removeBox(NBPBox box) {
 		if (boxEntities.contains(box)) {
 			boxEntities.remove(box);
-			box.setWrappingWorld(null);
 		}
 	}
 
@@ -157,23 +161,23 @@ public class NBPWorld {
 
 	/**
 	 * Get the world gravity.
-	 * @return gravity
+	 * @return gravity The world gravity.
 	 */
-	public float getWorldGravity() {
-		return worldGravity;
+	public NBPGravity getGravity() {
+		return this.gravity;
 	}
 
 	/**
 	 * Set the world gravity.
-	 * @param worldGravity
+	 * @param gravity The world gravity.
 	 */
-	public void setWorldGravity(float worldGravity) {
-		this.worldGravity = worldGravity;
+	public void setGravity(NBPGravity gravity) {
+		this.gravity = gravity;
 	}
 	
 	/**
 	 * Add a bloom to this world.
-	 * @param bloom
+	 * @param bloom The bloom to add.
 	 */
 	public void addBloom(NBPBloom bloom) {
 		this.bloomList.add(bloom);

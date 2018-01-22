@@ -1,7 +1,6 @@
 package com.dumbpug.ohm.nbp.zone;
 
-import com.dumbpug.ohm.nbp.NBPBox;
-import com.dumbpug.ohm.nbp.NBPMath;
+import com.dumbpug.ohm.nbp.*;
 
 /**
  * Represents a square zone of force pushing in a specified direction.
@@ -12,7 +11,7 @@ public class NBPSquareZone extends NBPZone {
     private float width, height;
 
     /** The direction of the force. */
-    private NBPDirection direction;
+    private com.dumbpug.ohm.nbp.NBPDirection direction;
 
     /**
      * Create a new instance of the NBPSquareZone class.
@@ -23,7 +22,7 @@ public class NBPSquareZone extends NBPZone {
      * @param force
      * @param direction
      */
-    public NBPSquareZone(float x, float y, float width, float height, float force, NBPDirection direction) {
+    public NBPSquareZone(float x, float y, float width, float height, float force, com.dumbpug.ohm.nbp.NBPDirection direction) {
         super(x, y, force);
         this.width     = width;
         this.height    = height;
@@ -58,13 +57,13 @@ public class NBPSquareZone extends NBPZone {
      * Get the direction of the force to be applied.
      * @return The direction of the force to be applied.
      */
-    public NBPDirection getDirection() { return direction; }
+    public com.dumbpug.ohm.nbp.NBPDirection getDirection() { return direction; }
 
     /**
      * Set the direction of the force to be applied.
      * @param direction The direction of the force to be applied.
      */
-    public void setDirection(NBPDirection direction) { this.direction = direction; }
+    public void setDirection(com.dumbpug.ohm.nbp.NBPDirection direction) { this.direction = direction; }
 
     @Override
     public boolean intersects(NBPBox box) {

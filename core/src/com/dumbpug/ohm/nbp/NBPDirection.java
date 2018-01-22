@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.nbp.zone;
+package com.dumbpug.ohm.nbp;
 
 /**
  * Represents a direction.
