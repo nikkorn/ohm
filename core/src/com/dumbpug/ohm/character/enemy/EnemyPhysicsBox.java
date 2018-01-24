@@ -2,7 +2,7 @@ package com.dumbpug.ohm.character.enemy;
 
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.CharacterPhysicsBox;
-import com.dumbpug.ohm.nbp.NBPBox;
+import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.NBPSensor;
 
 /**
@@ -59,12 +59,12 @@ public abstract class EnemyPhysicsBox extends CharacterPhysicsBox {
     }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {
+    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
         super.onSensorEntry(sensor, enteredBox);
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, NBPBox exitedBox) {
+    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
         super.onSensorExit(sensor, exitedBox);
     }
 }

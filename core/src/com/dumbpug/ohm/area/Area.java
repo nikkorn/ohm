@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.block.BlockDetails;
 import com.dumbpug.ohm.character.Character;
-import com.dumbpug.ohm.nbp.NBPDirection;
-import com.dumbpug.ohm.nbp.NBPGravity;
+import com.dumbpug.ohm.nbp.Direction;
+import com.dumbpug.ohm.nbp.Gravity;
 import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.character.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
@@ -172,7 +172,7 @@ public class Area {
      */
     private void createPhysicsWorld(String areaName) {
         // Create the physics world.
-        physicsWorld = new NBPWorld(new NBPGravity(NBPDirection.DOWN, Constants.PHYSICS_GRAVITY));
+        physicsWorld = new NBPWorld(new Gravity(Direction.DOWN, Constants.PHYSICS_GRAVITY));
         // Populate the physics world with static blocks based on the area block map image.
         Pixmap pixmap = new Pixmap(Gdx.files.internal("areas/" + areaName + "/block_map.png"));
         // Go pixel by pixel ...

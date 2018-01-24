@@ -60,7 +60,7 @@ public class Player extends com.dumbpug.ohm.character.Character {
                     batch.draw(PlayerResources.ohm_wall_jumping_right, x, this.physicsBox.getY());
                 } else {
                     // If our player is airborne, then draw airborne body based on whether we are ascending or descending
-                    if (physicsBox.getVely() > 0) {
+                    if (physicsBox.getVelY() > 0) {
                         batch.draw(PlayerResources.ohm_jumping_left, x, this.physicsBox.getY());
                     } else {
                         batch.draw(PlayerResources.ohm_falling_left, x, this.physicsBox.getY());
@@ -80,7 +80,7 @@ public class Player extends com.dumbpug.ohm.character.Character {
                     batch.draw(PlayerResources.ohm_wall_jumping_left, x, this.physicsBox.getY());
                 } else {
                     // If our player is airborne, then draw airborne body based on whether we are ascending or descending
-                    if (physicsBox.getVely() > 0) {
+                    if (physicsBox.getVelY() > 0) {
                         batch.draw(PlayerResources.ohm_jumping_right, x, this.physicsBox.getY());
                     } else {
                         batch.draw(PlayerResources.ohm_falling_right, x, this.physicsBox.getY());

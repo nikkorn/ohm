@@ -9,13 +9,13 @@ public class NBPSensor {
     /* The name of the sensor. */
     private String name;
     /* The box that this sensor is attached to. */
-    private NBPBox parent;
+    private Box parent;
     /* The sensor position. */
     private float x, y;
     /* The sensor size. */
     private float width, height;
     /* The list of intersecting boxes. */
-    private ArrayList<NBPBox> intersectingBoxes;
+    private ArrayList<Box> intersectingBoxes;
 
     /**
      * Creates a new instance of the NBPSensor class.
@@ -29,15 +29,15 @@ public class NBPSensor {
         this.y            = y;
         this.width        = width;
         this.height       = height;
-        intersectingBoxes = new ArrayList<NBPBox>();
+        intersectingBoxes = new ArrayList<Box>();
     }
 
     /**
      * Takes a list of all world boxes and reviews intersections.
      * @param worldBoxes
      */
-    public void reviewIntersections(ArrayList<NBPBox> worldBoxes) {
-        for(NBPBox box : worldBoxes) {
+    public void reviewIntersections(ArrayList<Box> worldBoxes) {
+        for(Box box : worldBoxes) {
             // Ignore this sensors parent.
             if(box != parent) {
                 // Does this sensor intersect with the box?
@@ -67,7 +67,7 @@ public class NBPSensor {
      * @return Whether this sensor is intersecting a box with the specified name.
      */
     public boolean isIntersecting(String boxName) {
-        for(NBPBox box : this.intersectingBoxes) {
+        for(Box box : this.intersectingBoxes) {
             if(box.getName().equals(boxName)) {
                 return true;
             }
@@ -80,13 +80,13 @@ public class NBPSensor {
      * Get all of the boxes that are currently intersecting with the sensor.
      * @return The boxes which are intersecting with the sensor.
      */
-    public ArrayList<NBPBox> getIntersectingBoxes() { return this.intersectingBoxes; }
+    public ArrayList<Box> getIntersectingBoxes() { return this.intersectingBoxes; }
 
     /**
      * Set the box that this sensor is attached to.
      * @param parent The box that this sensor is attached to.
      */
-    public void setParent(NBPBox parent) { this.parent = parent; }
+    public void setParent(Box parent) { this.parent = parent; }
 
     /**
      * Get the sensor name.

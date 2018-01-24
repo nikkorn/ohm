@@ -1,9 +1,9 @@
 package com.dumbpug.ohm.signalling.transmitters;
 
 import com.dumbpug.ohm.Constants;
-import com.dumbpug.ohm.nbp.NBPBloom;
-import com.dumbpug.ohm.nbp.NBPBox;
-import com.dumbpug.ohm.nbp.NBPBoxType;
+import com.dumbpug.ohm.nbp.Bloom;
+import com.dumbpug.ohm.nbp.Box;
+import com.dumbpug.ohm.nbp.BoxType;
 import com.dumbpug.ohm.nbp.NBPIntersectionPoint;
 import com.dumbpug.ohm.nbp.NBPSensor;
 import com.dumbpug.ohm.signalling.Colour;
@@ -12,7 +12,7 @@ import java.util.EnumSet;
 /**
  * A beacon which emits a signal.
  */
-public class Beacon extends NBPBox implements SignalTransmitter {
+public class Beacon extends Box implements SignalTransmitter {
 
     /** The colour of the beacon. */
     private Colour colour;
@@ -28,7 +28,7 @@ public class Beacon extends NBPBox implements SignalTransmitter {
      * @param isTransmitting
      */
     public Beacon(float x, float y, Colour colour, boolean isTransmitting) {
-        super(x, y, Constants.SIGNALLING_BEACON_WIDTH, Constants.SIGNALLING_BEACON_HEIGHT, NBPBoxType.GHOST);
+        super(x, y, Constants.SIGNALLING_BEACON_WIDTH, Constants.SIGNALLING_BEACON_HEIGHT, BoxType.GHOST);
         this.colour         = colour;
         this.isTransmitting = isTransmitting;
     }
@@ -54,19 +54,19 @@ public class Beacon extends NBPBox implements SignalTransmitter {
     public Colour getColour() { return colour; }
 
     @Override
-    protected void onCollisonWithKineticBox(NBPBox collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
+    protected void onCollisonWithKineticBox(Box collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
 
     @Override
-    protected void onCollisonWithStaticBox(NBPBox collidingBox, NBPIntersectionPoint originAtCollision) {}
+    protected void onCollisonWithStaticBox(Box collidingBox, NBPIntersectionPoint originAtCollision) {}
 
     @Override
-    protected void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {}
+    protected void onSensorEntry(NBPSensor sensor, Box enteredBox) {}
 
     @Override
-    protected void onSensorExit(NBPSensor sensor, NBPBox exitedBox) {}
+    protected void onSensorExit(NBPSensor sensor, Box exitedBox) {}
 
     @Override
-    protected boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance) {
+    protected boolean onBloomPush(Bloom bloom, float angleOfForce, float force, float distance) {
         // TODO Handle a bloom which represents a shock from ohm.
         // This will update the active state of this beacon.
         return false;

@@ -1,9 +1,9 @@
 package com.dumbpug.ohm.character;
 
 import com.dumbpug.ohm.Constants;
-import com.dumbpug.ohm.nbp.NBPBloom;
-import com.dumbpug.ohm.nbp.NBPBox;
-import com.dumbpug.ohm.nbp.NBPBoxType;
+import com.dumbpug.ohm.nbp.Bloom;
+import com.dumbpug.ohm.nbp.Box;
+import com.dumbpug.ohm.nbp.BoxType;
 import com.dumbpug.ohm.nbp.NBPIntersectionPoint;
 import com.dumbpug.ohm.nbp.NBPSensor;
 
@@ -11,7 +11,7 @@ import com.dumbpug.ohm.nbp.NBPSensor;
  * Physics box for a character.
  * Handles basic character physics actions such as walking and jumping.
  */
-public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
+public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
     /** Can the character jump? */
     private boolean canJump = false;
     /** The characters facing direction.*/
@@ -25,7 +25,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
      * @param height
      */
     public CharacterPhysicsBox(float x, float y, float width, float height) {
-        super(x, y, width, height, NBPBoxType.KINETIC);
+        super(x, y, width, height, BoxType.KINETIC);
         setFriction(Constants.CHARACTER_PHYSICS_FRICTION);
         setRestitution(Constants.CHARACTER_PHYSICS_RESTITUTION);
         // Set max velocity for this character.
@@ -64,9 +64,9 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
     public void moveLeft() {
         // Calculate how to apply an impulse to this character so that its moving speed is defined
         // by a value lower that its max velocity. In this case, a walking speed.
-        if(this.getVelx() > -getMaxWalkingVelocity()) {
-            if((-getMaxWalkingVelocity() - this.getVelx()) > getWalkingImpulse()) {
-                applyImpulse(-getMaxWalkingVelocity() + this.getVelx(), 0f);
+        if(this.getVelX() > -getMaxWalkingVelocity()) {
+            if((-getMaxWalkingVelocity() - this.getVelX()) > getWalkingImpulse()) {
+                applyImpulse(-getMaxWalkingVelocity() + this.getVelX(), 0f);
             } else {
                 applyImpulse(-getWalkingImpulse(), 0f);
             }
@@ -81,9 +81,9 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
     public void moveRight() {
         // Calculate how to apply an impulse to this character so that its moving speed is defined
         // by a value lower that its max velocity. In this case, a walking speed.
-        if(this.getVelx() < getMaxWalkingVelocity()) {
-            if((getMaxWalkingVelocity() - this.getVelx()) < getWalkingImpulse()) {
-                applyImpulse(getMaxWalkingVelocity() - this.getVelx(), 0f);
+        if(this.getVelX() < getMaxWalkingVelocity()) {
+            if((getMaxWalkingVelocity() - this.getVelX()) < getWalkingImpulse()) {
+                applyImpulse(getMaxWalkingVelocity() - this.getVelX(), 0f);
             } else {
                 applyImpulse(getWalkingImpulse(), 0f);
             }
@@ -103,7 +103,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
         // if you are already ascending. This fixes the issue where
         // sometimes the characters base sensor will intersect with a
         // static box while ascending upwards against it.
-        if(canJump && this.getVely() <= 0) {
+        if(canJump && this.getVelY() <= 0) {
             // Apply a vertical impulse.
             applyImpulse(0f, Constants.CHARACTER_JUMPING_IMPULSE);
             // Character was able to jump.
@@ -118,7 +118,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
      * @return is idle.
      */
     public boolean isIdle() {
-        return (getVelx() < 0.2f && getVelx() > -0.2f) && (getVely() < 0.2f && getVely() > -0.2f);
+        return (getVelX() < 0.2f && getVelX() > -0.2f) && (getVelY() < 0.2f && getVelY() > -0.2f);
     }
 
     /**
@@ -137,11 +137,11 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
     public Direction getFacingDirection() { return this.facingDirection; }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {
+    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
         // Check that this sensor is the one we have placed at the bottom of the box.
         if(sensor.getName().equals("base_sensor")) {
             // If we are on any static block then we can jump off of it.
-            if(enteredBox.getType() == NBPBoxType.STATIC) {
+            if(enteredBox.getType() == BoxType.STATIC) {
                 // Set a flag to show that the player can now jump.
                 this.canJump = true;
             }
@@ -149,19 +149,19 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, NBPBox exitedBox) {
+    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
         // We have lifted off of a box, if this is a static box then check whether the sensor is
         // now not intersecting with any static boxes. if not then the player can no longer jump.
         // Firstly, make sure that this is the sensor that we placed at the base of the player.
         if(sensor.getName().equals("base_sensor")) {
             // Check that the sensor left a static box.
-            if(exitedBox.getType() == NBPBoxType.STATIC) {
+            if(exitedBox.getType() == BoxType.STATIC) {
                 // Get all other intersecting boxes for this sensor, if none are static
                 // then we can no longer jump as we are not resting on anything.
                 boolean isRestingOnStaticBox = false;
-                for(NBPBox box : sensor.getIntersectingBoxes()) {
+                for(Box box : sensor.getIntersectingBoxes()) {
                     // Is this intersecting box static?
-                    if(box.getType() == NBPBoxType.STATIC) {
+                    if(box.getType() == BoxType.STATIC) {
                         // We are still standing on a static box so we can still jump.
                         isRestingOnStaticBox = true;
                         break;
@@ -186,13 +186,13 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends NBPBox {
     protected float getWalkingImpulse() { return Constants.CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE; }
 
     @Override
-    protected boolean onBloomPush(NBPBloom bloom, float angleOfForce, float force, float distance) { return true; }
+    protected boolean onBloomPush(Bloom bloom, float angleOfForce, float force, float distance) { return true; }
 
     @Override
-    protected void onCollisonWithKineticBox(NBPBox collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
+    protected void onCollisonWithKineticBox(Box collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
 
     @Override
-    protected void onCollisonWithStaticBox(NBPBox collidingBox, NBPIntersectionPoint originAtCollision) {}
+    protected void onCollisonWithStaticBox(Box collidingBox, NBPIntersectionPoint originAtCollision) {}
 
     @Override
     protected void onBeforeUpdate() {}

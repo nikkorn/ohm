@@ -3,8 +3,8 @@ package com.dumbpug.ohm.character.player;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.CharacterPhysicsBox;
 import com.dumbpug.ohm.character.Direction;
-import com.dumbpug.ohm.nbp.NBPBox;
-import com.dumbpug.ohm.nbp.NBPBoxType;
+import com.dumbpug.ohm.nbp.Box;
+import com.dumbpug.ohm.nbp.BoxType;
 import com.dumbpug.ohm.nbp.NBPSensor;
 
 /**
@@ -55,8 +55,8 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
                 // Change the facing direction of this physics box.
                 this.facingDirection = Direction.LEFT;
                 // Do a wall jump!
-                setVelx(0);
-                setVely(0);
+                setVelX(0);
+                setVelY(0);
                 applyImpulse(-Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
                 // Character was able to jump.
                 return true;
@@ -65,8 +65,8 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
                 // Change the facing direction of this physics box.
                 this.facingDirection = Direction.RIGHT;
                 // Do a wall jump!
-                setVelx(0);
-                setVely(0);
+                setVelX(0);
+                setVelY(0);
                 applyImpulse(Constants.CHARACTER_WALL_JUMP_X_OFFSET, Constants.CHARACTER_JUMPING_IMPULSE);
                 // Character was able to jump.
                 return true;
@@ -87,37 +87,37 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
     public void setSpeedy(boolean isSpeedy) { this.isSpeedy = isSpeedy; }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, NBPBox enteredBox) {
+    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
         super.onSensorEntry(sensor, enteredBox);
         // Check whether this is one of our wall sensors, contact with a static block means we can wall jump.
         if(sensor.getName().equals("wall_sensor_right")) {
             // If we are against any static block then we can wall jump off of it.
-            if(enteredBox.getType() == NBPBoxType.STATIC) {
+            if(enteredBox.getType() == BoxType.STATIC) {
                 this.canWallJumpLeft = true;
             }
         }
         if(sensor.getName().equals("wall_sensor_left")) {
             // If we are against any static block then we can wall jump off of it.
-            if(enteredBox.getType() == NBPBoxType.STATIC) {
+            if(enteredBox.getType() == BoxType.STATIC) {
                 this.canWallJumpRight = true;
             }
         }
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, NBPBox exitedBox) {
+    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
         super.onSensorExit(sensor, exitedBox);
         // We have stopped being against a static block. If a wall sensor is no longer in contact
         // with ANY static blocks then we cannot wall jump any more.
         if(sensor.getName().equals("wall_sensor_right")) {
             // Check that the wall sensor left a static box.
-            if(exitedBox.getType() == NBPBoxType.STATIC) {
+            if(exitedBox.getType() == BoxType.STATIC) {
                 // Get all other intersecting boxes for this sensor, if none are static
                 // then we can no longer jump as we are not resting on anything.
                 boolean isStillAgainstWall = false;
-                for(NBPBox box : sensor.getIntersectingBoxes()) {
+                for(Box box : sensor.getIntersectingBoxes()) {
                     // Is this intersecting box static?
-                    if(box.getType() == NBPBoxType.STATIC) {
+                    if(box.getType() == BoxType.STATIC) {
                         // We are still against a static block!
                         isStillAgainstWall = true;
                         break;
@@ -129,13 +129,13 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
         }
         if(sensor.getName().equals("wall_sensor_left")) {
             // Check that the wall sensor left a static box.
-            if(exitedBox.getType() == NBPBoxType.STATIC) {
+            if(exitedBox.getType() == BoxType.STATIC) {
                 // Get all other intersecting boxes for this sensor, if none are static
                 // then we can no longer jump as we are not resting on anything.
                 boolean isStillAgainstWall = false;
-                for(NBPBox box : sensor.getIntersectingBoxes()) {
+                for(Box box : sensor.getIntersectingBoxes()) {
                     // Is this intersecting box static?
-                    if(box.getType() == NBPBoxType.STATIC) {
+                    if(box.getType() == BoxType.STATIC) {
                         // We are still against a static block!
                         isStillAgainstWall = true;
                         break;
