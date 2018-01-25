@@ -4,8 +4,8 @@ import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
-import com.dumbpug.ohm.nbp.NBPIntersectionPoint;
-import com.dumbpug.ohm.nbp.NBPSensor;
+import com.dumbpug.ohm.nbp.Sensor;
+import com.dumbpug.ohm.nbp.point.IntersectionPoint;
 
 /**
  * Physics box for a character.
@@ -51,7 +51,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
         float sensorPosX   = x;
         float sensorPosY   = y - sensorHeight;
         // Create the sensor.
-        NBPSensor baseSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
+        Sensor baseSensor = new Sensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
         // Give the sensor a name, this will be checked when notified by the sensor.
         baseSensor.setName("base_sensor");
         // Attach the sensor to the character box.
@@ -137,7 +137,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
     public Direction getFacingDirection() { return this.facingDirection; }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
+    public void onSensorEntry(Sensor sensor, Box enteredBox) {
         // Check that this sensor is the one we have placed at the bottom of the box.
         if(sensor.getName().equals("base_sensor")) {
             // If we are on any static block then we can jump off of it.
@@ -149,7 +149,7 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
+    public void onSensorExit(Sensor sensor, Box exitedBox) {
         // We have lifted off of a box, if this is a static box then check whether the sensor is
         // now not intersecting with any static boxes. if not then the player can no longer jump.
         // Firstly, make sure that this is the sensor that we placed at the base of the player.
@@ -189,10 +189,10 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
     protected boolean onBloomPush(Bloom bloom, float angleOfForce, float force, float distance) { return true; }
 
     @Override
-    protected void onCollisonWithKineticBox(Box collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
+    protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {}
 
     @Override
-    protected void onCollisonWithStaticBox(Box collidingBox, NBPIntersectionPoint originAtCollision) {}
+    protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {}
 
     @Override
     protected void onBeforeUpdate() {}

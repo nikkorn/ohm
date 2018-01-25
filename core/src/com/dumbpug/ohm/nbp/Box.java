@@ -1,9 +1,11 @@
 package com.dumbpug.ohm.nbp;
 
+import com.dumbpug.ohm.nbp.point.IntersectionPoint;
+import com.dumbpug.ohm.nbp.point.Point;
 import java.util.ArrayList;
 
 /**
- * Represents a box in our physics world.
+ * Represents a box in a physics environment.
  */
 public abstract class Box {
     /**
@@ -45,13 +47,13 @@ public abstract class Box {
     /**
      * The point of origin.
      */
-    private NBPPoint originPoint;
+    private Point originPoint;
     /**
      * The point of origin of this box before the most recent position update.
      */
-    private NBPPoint lastOriginPoint;
+    private Point lastOriginPoint;
     /**
-     * Defines whether this box should be removed from the world at the end of the next physics step.
+     * Defines whether this box should be removed from the environment at the end of the next physics step.
      */
     private boolean isMarkedForDeletion = false;
     /**
@@ -65,7 +67,7 @@ public abstract class Box {
     /**
      * The list of sensors that are attached to this box.
      */
-    private ArrayList<NBPSensor> attachedSensors;
+    private ArrayList<Sensor> attachedSensors;
 
     /**
      * Creates a new instance of the Box class.
@@ -84,15 +86,15 @@ public abstract class Box {
         this.width           = width;
         this.height          = height;
         this.type            = type;
-        this.originPoint     = new NBPPoint(x + (width / 2), y + (height / 2));
-        this.lastOriginPoint = new NBPPoint(lastPosX + (width / 2), y + (height / 2));
-        attachedSensors      = new ArrayList<NBPSensor>();
+        this.originPoint     = new Point(x + (width / 2), y + (height / 2));
+        this.lastOriginPoint = new Point(lastPosX + (width / 2), y + (height / 2));
+        attachedSensors      = new ArrayList<Sensor>();
     }
 
     /**
      * Apply an impulse to this box.
-     * @param x
-     * @param y
+     * @param x The amount of velocity to apply on the X axis.
+     * @param y The amount of velocity to apply on the Y axis.
      */
     public void applyImpulse(float x, float y) {
         this.velX += x;
@@ -177,8 +179,8 @@ public abstract class Box {
      * @param bloom The bloom to apply.
      */
     public void applyBloom(Bloom bloom) {
-        // Get the point of the bloom as a NBPPoint object.
-        NBPPoint bloomPoint = new NBPPoint(bloom.getX(), bloom.getY());
+        // Get the point of the bloom as a Point object.
+        Point bloomPoint = new Point(bloom.getX(), bloom.getY());
         // Get the distance between the bloom and this box.
         float distance = NBPMath.getDistanceBetweenPoints(bloomPoint, getCurrentOriginPoint());
         // Check to see if the box is even in the range of the bloom.
@@ -221,7 +223,7 @@ public abstract class Box {
      * Get all attached sensors.
      * @return sensors The list of attached sensors.
      */
-    public ArrayList<NBPSensor> getAttachedSensors() {
+    public ArrayList<Sensor> getAttachedSensors() {
         return this.attachedSensors;
     }
 
@@ -229,7 +231,7 @@ public abstract class Box {
      * Attach a sensor.
      * @param sensor The sensor to attach.
      */
-    public void attachSensor(NBPSensor sensor) {
+    public void attachSensor(Sensor sensor) {
         // Do not bother if the sensor is already attached to this box.
         if (!attachedSensors.contains(sensor)) {
             attachedSensors.add(sensor);
@@ -242,7 +244,7 @@ public abstract class Box {
      * Remove a sensor.
      * @param sensor The sensor to remove.
      */
-    public void removeSensor(NBPSensor sensor) {
+    public void removeSensor(Sensor sensor) {
         // Make sure that this sensor is attached.
         if (attachedSensors.contains(sensor)) {
             attachedSensors.remove(sensor);
@@ -264,11 +266,11 @@ public abstract class Box {
     public void setX(float newX) {
         // Move attached sensors along with this box.
         if (newX > this.x) {
-            for (NBPSensor sensor : this.attachedSensors) {
+            for (Sensor sensor : this.attachedSensors) {
                 sensor.setX(sensor.getX() + (newX - this.x));
             }
         } else if (newX < this.x) {
-            for (NBPSensor sensor : this.attachedSensors) {
+            for (Sensor sensor : this.attachedSensors) {
                 sensor.setX(sensor.getX() - (this.x - newX));
             }
         }
@@ -291,11 +293,11 @@ public abstract class Box {
     public void setY(float newY) {
         // Move attached sensors along with this box.
         if (newY > this.y) {
-            for (NBPSensor sensor : this.attachedSensors) {
+            for (Sensor sensor : this.attachedSensors) {
                 sensor.setY(sensor.getY() + (newY - this.y));
             }
         } else if (newY < this.y) {
-            for (NBPSensor sensor : this.attachedSensors) {
+            for (Sensor sensor : this.attachedSensors) {
                 sensor.setY(sensor.getY() - (this.y - newY));
             }
         }
@@ -453,7 +455,7 @@ public abstract class Box {
      * Get the current origin point of this box.
      * @return The current origin point of this box.
      */
-    public NBPPoint getCurrentOriginPoint() {
+    public Point getCurrentOriginPoint() {
         originPoint.setX(this.x + (width / 2));
         originPoint.setY(this.y + (height / 2));
         return originPoint;
@@ -463,19 +465,19 @@ public abstract class Box {
      * Get the last origin point of this box.
      * @return The last origin point of this box.
      */
-    public NBPPoint getLastOriginPoint() {
+    public Point getLastOriginPoint() {
         lastOriginPoint.setX(this.lastPosX + (width / 2));
         lastOriginPoint.setY(this.lastPosY + (height / 2));
         return lastOriginPoint;
     }
 
-    protected abstract void onCollisonWithKineticBox(Box collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision);
+    protected abstract void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision);
 
-    protected abstract void onCollisonWithStaticBox(Box collidingBox, NBPIntersectionPoint originAtCollision);
+    protected abstract void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision);
 
-    protected abstract void onSensorEntry(NBPSensor sensor, Box enteredBox);
+    protected abstract void onSensorEntry(Sensor sensor, Box enteredBox);
 
-    protected abstract void onSensorExit(NBPSensor sensor, Box exitedBox);
+    protected abstract void onSensorExit(Sensor sensor, Box exitedBox);
 
     /**
      * Handle having this box be affected by a bloom.

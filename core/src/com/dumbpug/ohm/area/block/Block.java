@@ -4,8 +4,8 @@ import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
-import com.dumbpug.ohm.nbp.NBPIntersectionPoint;
-import com.dumbpug.ohm.nbp.NBPSensor;
+import com.dumbpug.ohm.nbp.point.IntersectionPoint;
+import com.dumbpug.ohm.nbp.Sensor;
 
 /**
  * Represents a plain world block.
@@ -28,16 +28,16 @@ public class Block extends Box {
     }
 
     @Override
-    protected void onCollisonWithKineticBox(Box collidingBox, NBPIntersectionPoint kinematicBoxOriginAtCollision) {}
+    protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {}
 
     @Override
-    protected void onCollisonWithStaticBox(Box collidingBox, NBPIntersectionPoint originAtCollision) {}
+    protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {}
 
     @Override
-    protected void onSensorEntry(NBPSensor sensor, Box enteredBox) {}
+    protected void onSensorEntry(Sensor sensor, Box enteredBox) {}
 
     @Override
-    protected void onSensorExit(NBPSensor sensor, Box exitedBox) {}
+    protected void onSensorExit(Sensor sensor, Box exitedBox) {}
 
     @Override
     protected boolean onBloomPush(Bloom bloom, float angleOfForce, float force, float distance) { return false; }

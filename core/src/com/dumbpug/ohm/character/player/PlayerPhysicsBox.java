@@ -5,7 +5,7 @@ import com.dumbpug.ohm.character.CharacterPhysicsBox;
 import com.dumbpug.ohm.character.Direction;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
-import com.dumbpug.ohm.nbp.NBPSensor;
+import com.dumbpug.ohm.nbp.Sensor;
 
 /**
  * The physics box for the player.
@@ -87,7 +87,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
     public void setSpeedy(boolean isSpeedy) { this.isSpeedy = isSpeedy; }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
+    public void onSensorEntry(Sensor sensor, Box enteredBox) {
         super.onSensorEntry(sensor, enteredBox);
         // Check whether this is one of our wall sensors, contact with a static block means we can wall jump.
         if(sensor.getName().equals("wall_sensor_right")) {
@@ -105,7 +105,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
+    public void onSensorExit(Sensor sensor, Box exitedBox) {
         super.onSensorExit(sensor, exitedBox);
         // We have stopped being against a static block. If a wall sensor is no longer in contact
         // with ANY static blocks then we cannot wall jump any more.
@@ -157,7 +157,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
         float sensorPosX   = this.getX() + Constants.PLAYER_PHYSICS_SIZE_WIDTH;
         float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
         // Create the sensor.
-        NBPSensor rightWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
+        Sensor rightWallSensor = new Sensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
         // Give the sensor a name, this will be checked when notified by the sensor.
         rightWallSensor.setName("wall_sensor_right");
         // Attach the sensor to the character box.
@@ -174,7 +174,7 @@ public class PlayerPhysicsBox extends CharacterPhysicsBox {
         float sensorPosX   = this.getX() - sensorWidth;
         float sensorPosY   = this.getY() + (Constants.PLAYER_PHYSICS_SIZE_WIDTH / 4f);
         // Create the sensor.
-        NBPSensor leftWallSensor = new NBPSensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
+        Sensor leftWallSensor = new Sensor(sensorPosX, sensorPosY, sensorWidth, sensorHeight);
         // Give the sensor a name, this will be checked when notified by the sensor.
         leftWallSensor.setName("wall_sensor_left");
         // Attach the sensor to the character box.

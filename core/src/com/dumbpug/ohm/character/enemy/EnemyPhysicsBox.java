@@ -3,7 +3,7 @@ package com.dumbpug.ohm.character.enemy;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.CharacterPhysicsBox;
 import com.dumbpug.ohm.nbp.Box;
-import com.dumbpug.ohm.nbp.NBPSensor;
+import com.dumbpug.ohm.nbp.Sensor;
 
 /**
  * A generic physics box for enemies.
@@ -35,7 +35,7 @@ public abstract class EnemyPhysicsBox extends CharacterPhysicsBox {
         float sensorPosX   = this.getX() + this.getWidth();
         float sensorPosY   = this.getY() + (this.getWidth() / 4f);
         // Create the sensor.
-        NBPSensor rightSensor = new NBPSensor(sensorPosX, sensorPosY, Constants.ENEMY_HORIZONTAL_SENSOR_WIDTH, sensorHeight);
+        Sensor rightSensor = new Sensor(sensorPosX, sensorPosY, Constants.ENEMY_HORIZONTAL_SENSOR_WIDTH, sensorHeight);
         // Give the sensor a name, this will be checked when notified by the sensor.
         rightSensor.setName("sensor_right");
         // Attach the sensor to the character box.
@@ -51,7 +51,7 @@ public abstract class EnemyPhysicsBox extends CharacterPhysicsBox {
         float sensorPosX   = this.getX() - Constants.ENEMY_HORIZONTAL_SENSOR_WIDTH;
         float sensorPosY   = this.getY() + (this.getWidth() / 4f);
         // Create the sensor.
-        NBPSensor leftSensor = new NBPSensor(sensorPosX, sensorPosY, Constants.ENEMY_HORIZONTAL_SENSOR_WIDTH, sensorHeight);
+        Sensor leftSensor = new Sensor(sensorPosX, sensorPosY, Constants.ENEMY_HORIZONTAL_SENSOR_WIDTH, sensorHeight);
         // Give the sensor a name, this will be checked when notified by the sensor.
         leftSensor.setName("sensor_left");
         // Attach the sensor to the character box.
@@ -59,12 +59,12 @@ public abstract class EnemyPhysicsBox extends CharacterPhysicsBox {
     }
 
     @Override
-    public void onSensorEntry(NBPSensor sensor, Box enteredBox) {
+    public void onSensorEntry(Sensor sensor, Box enteredBox) {
         super.onSensorEntry(sensor, enteredBox);
     }
 
     @Override
-    public void onSensorExit(NBPSensor sensor, Box exitedBox) {
+    public void onSensorExit(Sensor sensor, Box exitedBox) {
         super.onSensorExit(sensor, exitedBox);
     }
 }

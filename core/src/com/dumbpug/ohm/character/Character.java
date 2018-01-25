@@ -1,7 +1,7 @@
 package com.dumbpug.ohm.character;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.dumbpug.ohm.nbp.NBPWorld;
+import com.dumbpug.ohm.nbp.Environment;
 
 /**
  * A character.
@@ -62,7 +62,7 @@ public abstract class Character {
      * @param x
      * @param y
      */
-    public void addToPhysicsWorld(NBPWorld world, float x, float y) {
+    public void addToPhysicsWorld(Environment world, float x, float y) {
         // Set the position of the characters physics box.
         this.setPosition(x, y);
         // Add the characters physics box to the world.

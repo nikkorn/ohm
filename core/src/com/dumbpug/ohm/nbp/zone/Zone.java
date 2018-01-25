@@ -1,16 +1,16 @@
 package com.dumbpug.ohm.nbp.zone;
 
 import com.dumbpug.ohm.nbp.Box;
-import com.dumbpug.ohm.nbp.NBPPoint;
+import com.dumbpug.ohm.nbp.point.Point;
 
 /**
- * Represents an area in a physics world where a continuous force influences overlapping kinematic objects.
+ * Represents an area in a physics environment where a continuous force influences overlapping kinematic objects.
  */
 public abstract class Zone {
     /**
      * The position point of the zone.
      */
-    private NBPPoint position;
+    private Point position;
     /**
      * The amount of force to apply to intersecting physics boxes.
      */
@@ -23,7 +23,7 @@ public abstract class Zone {
      * @param force The force to apply to intersecting objects.
      */
     public Zone(float x, float y, float force) {
-        this.position = new NBPPoint(x, y);
+        this.position = new Point(x, y);
         this.force    = force;
     }
 
@@ -31,7 +31,7 @@ public abstract class Zone {
      * Get the position of this zone.
      * @return The zone position.
      */
-    public NBPPoint getPosition() {
+    public Point getPosition() {
         return this.position;
     }
 

@@ -10,8 +10,8 @@ import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.block.BlockDetails;
 import com.dumbpug.ohm.character.Character;
 import com.dumbpug.ohm.nbp.Direction;
+import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.Gravity;
-import com.dumbpug.ohm.nbp.NBPWorld;
 import com.dumbpug.ohm.character.player.Player;
 import com.dumbpug.ohm.resources.AreaResources;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Area {
     /** The area camera. */
     private OrthographicCamera camera;
     /** The physics world for this area. */
-    private NBPWorld physicsWorld;
+    private Environment physicsWorld;
     /** The area overlay. */
     private Texture overlay;
     /** The player. */
@@ -172,7 +172,7 @@ public class Area {
      */
     private void createPhysicsWorld(String areaName) {
         // Create the physics world.
-        physicsWorld = new NBPWorld(new Gravity(Direction.DOWN, Constants.PHYSICS_GRAVITY));
+        physicsWorld = new Environment(new Gravity(Direction.DOWN, Constants.PHYSICS_GRAVITY));
         // Populate the physics world with static blocks based on the area block map image.
         Pixmap pixmap = new Pixmap(Gdx.files.internal("areas/" + areaName + "/block_map.png"));
         // Go pixel by pixel ...
