@@ -74,14 +74,29 @@ public class Game implements State {
     private void processInput() {
         // Get the application input provider.
         IInputProvider inputProvider = Ohm.getInputProvider();
-        // Are we running?
+
+        // Are we moving left/right?
         if (inputProvider.isControlPressed(Control.LEFT)) {
             // We are running left.
             player.moveLeft();
         } else if (inputProvider.isControlPressed(Control.RIGHT)) {
             // We are running right.
             player.moveRight();
+        } else {
+            player.characterPhysicsBox.setVelX(0f);
+            // TODO Reduce X axis walking speed.
         }
+
+        // Are we moving up/down?
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            player.moveUp();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            player.moveDown();
+        } else {
+            player.characterPhysicsBox.setVelY(0f);
+            // TODO Reduce Y axis walking speed.
+        }
+
         // Are we jumping?
         if (inputProvider.isControlJustPressed(Control.JUMP)) {
             player.jump();

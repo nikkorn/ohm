@@ -26,6 +26,7 @@ public class Constants {
 
     /* Character. */
     public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1f;
+    public static final float CHARACTER_PHYSICS_MAX_WALKING_SLOWDOWN    = 0.2f;
     public static final float CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE   = 0.2f;
     public static final float CHARACTER_JUMPING_IMPULSE                 = 2f;
     public static final float CHARACTER_PHYSICS_MAX_VELOCITY            = 1.6f;

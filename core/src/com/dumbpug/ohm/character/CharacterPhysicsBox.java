@@ -93,6 +93,36 @@ public class CharacterPhysicsBox<TCharacter extends Character> extends Box {
     }
 
     /**
+     * Move the character down.
+     */
+    public void moveDown() {
+        // Calculate how to apply an impulse to this character so that its moving speed is defined
+        // by a value lower that its max velocity. In this case, a walking speed.
+        if(this.getVelY() > -getMaxWalkingVelocity()) {
+            if((-getMaxWalkingVelocity() - this.getVelY()) > getWalkingImpulse()) {
+                applyImpulse(0f, -getMaxWalkingVelocity() + this.getVelY());
+            } else {
+                applyImpulse(0f, -getWalkingImpulse());
+            }
+        }
+    }
+
+    /**
+     * Move the character up.
+     */
+    public void moveUp() {
+        // Calculate how to apply an impulse to this character so that its moving speed is defined
+        // by a value lower that its max velocity. In this case, a walking speed.
+        if(this.getVelY() < getMaxWalkingVelocity()) {
+            if((getMaxWalkingVelocity() - this.getVelY()) < getWalkingImpulse()) {
+                applyImpulse(0f, getMaxWalkingVelocity() - this.getVelY());
+            } else {
+                applyImpulse(0f, getWalkingImpulse());
+            }
+        }
+    }
+
+    /**
      * Make the character jump if he can.
      * @return true if character was able to jump
      */

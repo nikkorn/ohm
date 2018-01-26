@@ -29,6 +29,8 @@ public class Player extends com.dumbpug.ohm.character.Character {
         createElectroEmitter();
         // Create the players electro charge level.
         this.electroChargeLevel = new ElectroChargeLevel();
+        // Make the player float.
+        this.physicsBox.setAffectedByGravity(false);
     }
 
     /**

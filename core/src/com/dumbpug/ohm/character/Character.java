@@ -51,6 +51,16 @@ public abstract class Character {
     public void moveRight() { this.characterPhysicsBox.moveRight(); }
 
     /**
+     * Move the character up.
+     */
+    public void moveUp() { this.characterPhysicsBox.moveUp(); }
+
+    /**
+     * Move the character down.
+     */
+    public void moveDown() { this.characterPhysicsBox.moveDown(); }
+
+    /**
      * Make the character jump if he can.
      * @return Whether the character was able to jump.
      */
