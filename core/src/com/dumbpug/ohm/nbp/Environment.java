@@ -15,19 +15,19 @@ public class Environment {
     /**
      * The box entities that are in this environment.
      */
-    private ArrayList<Box> boxEntities;
+    private ArrayList<Box> boxEntities = new ArrayList<Box>();
     /**
      * The box entities waiting to be added to this environment (added during physics update).
      */
-    private ArrayList<Box> pendingBoxEntities;
+    private ArrayList<Box> pendingBoxEntities = new ArrayList<Box>();
     /**
      * List holding any pending Bloom instances to be processed.
      */
-    private ArrayList<Bloom> bloomList;
+    private ArrayList<Bloom> bloomList = new ArrayList<Bloom>();
     /**
      * List holding any zones of force in the environment.
      */
-    private ArrayList<Zone> zoneList;
+    private ArrayList<Zone> zoneList = new ArrayList<Zone>();
     /**
      * Are we currently processing a physics step.
      */
@@ -37,13 +37,7 @@ public class Environment {
      * Create a new instance of the Environment class with gravity.
      * @param gravity The environment gravity.
      */
-    public Environment(Gravity gravity) {
-        boxEntities = new ArrayList<Box>();
-        pendingBoxEntities = new ArrayList<Box>();
-        bloomList = new ArrayList<Bloom>();
-        zoneList = new ArrayList<Zone>();
-        this.gravity = gravity;
-    }
+    public Environment(Gravity gravity) { this.gravity = gravity; }
 
     /**
      * Create a new instance of the Environment class.
