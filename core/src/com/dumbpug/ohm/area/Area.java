@@ -6,6 +6,7 @@ import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.character.player.Player;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Represents an area in game.
@@ -36,6 +37,7 @@ public class Area {
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
         camera.zoom = Constants.AREA_ZOOM;
+        camera.position.set(70, 70, 0);
     }
 
     /**
@@ -45,7 +47,12 @@ public class Area {
         this.platforms = new ArrayList<Platform>();
         for (int x = 0; x < Constants.AREA_PLATFORMS_SIZE; x++) {
             for (int y = 0; y < Constants.AREA_PLATFORMS_SIZE; y++) {
-                this.platforms.add(new Platform(x, y));
+                Platform platform = new Platform(x, y);
+
+                // Lower some platforms for funsies!
+                platform.setRaised(new Random().nextBoolean());
+
+                this.platforms.add(platform);
             }
         }
     }
@@ -55,7 +62,7 @@ public class Area {
      */
     public void tick() {
         // Set the camera to look at the player.
-        camera.position.set(this.player.getX(), Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
+        // camera.position.set(this.player.getX(), Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
     }
 
     /**

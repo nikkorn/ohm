@@ -10,6 +10,7 @@ import com.dumbpug.ohm.character.player.PlayerPhysicsBox;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.character.player.Player;
+import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.StateType;
@@ -83,12 +84,6 @@ public class Game implements State {
         if (inputProvider.isControlJustPressed(Control.JUMP)) {
             player.jump();
         }
-        // Are we using electro charge?
-        if (inputProvider.isControlPressed(Control.ELECTRO_CHARGE)) {
-            player.getElectroChargeLevel().setEnabled(true);
-        } else {
-            player.getElectroChargeLevel().setEnabled(false);
-        }
         // Do we want to exit? (only desktop version)
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
@@ -100,6 +95,8 @@ public class Game implements State {
      * @param batch
      */
     public void draw(SpriteBatch batch) {
+        // Draw background.
+        batch.draw(AreaResources.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Draw the area.
         this.areaRenderer.render(batch, area);
     }

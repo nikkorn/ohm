@@ -14,11 +14,15 @@ public class AreaResources {
     /** The area transition overlay. */
     public static Texture transition_overlay;
 
+    /** The platform texture. */
+    public static Texture platform;
+
     /**
      * Load resources.
      */
     public static void load() {
         background         = new Texture(Gdx.files.internal("graphics/areas/background.png"));
+        platform           = new Texture(Gdx.files.internal("graphics/areas/platform.png"));
         transition_overlay = new Texture(Gdx.files.internal("graphics/areas/transition_overlay.png"));
     }
 }

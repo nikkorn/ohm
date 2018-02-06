@@ -12,9 +12,9 @@ public class Constants {
     public static final int AREA_TILE_HEIGHT             = 8;
     public static final long AREA_TRANSITION_DURATION_MS = 2000;
 
-    public static final int PLATFORM_SIZE                = 32;
+    public static final int PLATFORM_SIZE                = 48;
     public static final int AREA_PLATFORMS_SIZE          = 7;
-    public static final float AREA_ZOOM                  = (float)(PLATFORM_SIZE * AREA_PLATFORMS_SIZE) / Gdx.graphics.getHeight();
+    public static final float AREA_ZOOM                  = 0.5f;
 
     /** Physics. */
     public static final float PHYSICS_GRAVITY = 0.09f;
