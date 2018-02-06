@@ -6,7 +6,6 @@ import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.character.player.Player;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Represents an area in game.
@@ -47,12 +46,7 @@ public class Area {
         this.platforms = new ArrayList<Platform>();
         for (int x = 0; x < Constants.AREA_PLATFORMS_SIZE; x++) {
             for (int y = 0; y < Constants.AREA_PLATFORMS_SIZE; y++) {
-                Platform platform = new Platform(x, y);
-
-                // Lower some platforms for funsies!
-                platform.setRaised(new Random().nextBoolean());
-
-                this.platforms.add(platform);
+                this.platforms.add(new Platform(x, y));
             }
         }
     }
@@ -61,16 +55,10 @@ public class Area {
      * Tick the area.
      */
     public void tick() {
+        // Update the physics environment.
+        physicsEnvironment.update();
         // Set the camera to look at the player.
         // camera.position.set(this.player.getX(), Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
-    }
-
-    /**
-     * Update the physics world.
-     */
-    public void updatePhysicsWorld() {
-        // Update the physics world.
-        physicsEnvironment.update();
     }
 
     /**

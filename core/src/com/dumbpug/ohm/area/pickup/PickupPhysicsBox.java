@@ -1,26 +1,24 @@
-package com.dumbpug.ohm.area;
+package com.dumbpug.ohm.area.pickup;
 
+import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
-import com.dumbpug.ohm.nbp.point.IntersectionPoint;
 import com.dumbpug.ohm.nbp.Sensor;
+import com.dumbpug.ohm.nbp.point.IntersectionPoint;
 
 /**
- * A boundary box to place around the area.
+ * A physics box for a pickup.
  */
-public class BoundaryBox extends Box {
+public class PickupPhysicsBox extends Box {
 
     /**
-     * Creates an instance of the BoundaryBox class.
+     * Create a new instance of the PickupPhysicsBox class.
      * @param x
      * @param y
-     * @param width
-     * @param height
      */
-    public BoundaryBox(float x, float y, float width, float height) {
-        super(x, y, width, height, BoxType.STATIC);
-        this.setName("AreaBoundary");
+    public PickupPhysicsBox(float x, float y) {
+        super(x, y, Constants.PICKUP_SIZE, Constants.PICKUP_SIZE, BoxType.KINETIC);
     }
 
     @Override

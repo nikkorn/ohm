@@ -16,70 +16,75 @@ import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.states.Title;
 
 public class Ohm extends ApplicationAdapter {
-
-	/** The sprite batch to use throughout the game. */
-	private SpriteBatch batch;
-
-	/** The state manager. */
-	private StateManager stateManager;
-
-	/** The input provider. */
-	private static IInputProvider inputProvider;
-
-	@Override
-	public void create () {
-
-		// Create the game sprite batch.
-		batch = new SpriteBatch();
-
-		// Load the game resources.
-		AreaResources.load();
-		PlayerResources.load();
-		ParticleResources.load();
-
-		// Create the input provider specific to the system.
-		if (Ouya.isRunningOnOuya()) {
-			OuyaInputProvider provider = new OuyaInputProvider();
-			this.inputProvider         = provider;
-			Controllers.addListener(provider);
-		} else {
-			this.inputProvider = new KeyboardInputProvider();
-		}
-
-		// Create the game state manager.
-		stateManager = new StateManager();
-
-		// Set the initial game state.
-		stateManager.setState(new Title());
-	}
-
-	@Override
-	public void render () {
-
-		// Tick the game.
-		stateManager.tick();
-
-		// Reset the input provider.
-		this.inputProvider.reset();
-
-		// Clear the screen.
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-		// Draw the game.
-		batch.begin();
-		stateManager.draw(batch);
-		batch.end();
-	}
-
-	/**
-	 * Get the application input provider.
-	 * @return input provider
+    /**
+     * The sprite batch to use throughout the game.
      */
-	public static IInputProvider getInputProvider() { return Ohm.inputProvider; }
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-	}
+    private SpriteBatch batch;
+    /**
+     * The state manager.
+     */
+    private StateManager stateManager;
+    /**
+     * The input provider.
+     */
+    private static IInputProvider inputProvider;
+
+    @Override
+    public void create() {
+
+        // Create the game sprite batch.
+        batch = new SpriteBatch();
+
+        // Load the game resources.
+        AreaResources.load();
+        PlayerResources.load();
+        ParticleResources.load();
+
+        // Create the input provider specific to the system.
+        if (Ouya.isRunningOnOuya()) {
+            OuyaInputProvider provider = new OuyaInputProvider();
+            this.inputProvider = provider;
+            Controllers.addListener(provider);
+        } else {
+            this.inputProvider = new KeyboardInputProvider();
+        }
+
+        // Create the game state manager.
+        stateManager = new StateManager();
+
+        // Set the initial game state.
+        stateManager.setState(new Title());
+    }
+
+    @Override
+    public void render() {
+
+        // Tick the game.
+        stateManager.tick();
+
+        // Reset the input provider.
+        this.inputProvider.reset();
+
+        // Clear the screen.
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        // Draw the game.
+        batch.begin();
+        stateManager.draw(batch);
+        batch.end();
+    }
+
+    /**
+     * Get the application input provider.
+     * @return input provider
+     */
+    public static IInputProvider getInputProvider() {
+        return Ohm.inputProvider;
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
 }

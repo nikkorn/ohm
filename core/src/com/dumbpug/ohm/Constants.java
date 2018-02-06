@@ -16,6 +16,9 @@ public class Constants {
     public static final int AREA_PLATFORMS_SIZE          = 7;
     public static final float AREA_ZOOM                  = 0.5f;
 
+    /** Pickups. */
+    public static final int PICKUP_SIZE = 12;
+
     /** Physics. */
     public static final float PHYSICS_GRAVITY = 0.09f;
 

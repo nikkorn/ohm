@@ -19,18 +19,23 @@ import com.dumbpug.ohm.state.StateType;
  * Represents the in-game state.
  */
 public class Game implements State {
-    /** The current game area. */
+    /**
+     * The current game area.
+     */
     private Area area;
-    /** The renderer for areas. */
+    /**
+     * The renderer for areas.
+     */
     private AreaRenderer areaRenderer;
-    /** The player. */
+    /**
+     * The player.
+     */
     private Player player;
 
     /**
      * Create a new instance of the Game class.
-     * @param isNewGame
      */
-    public Game(boolean isNewGame) {
+    public Game() {
         // Create the player.
         this.player = new Player(new PlayerPhysicsBox(0, 0));
         // Create the area.
@@ -39,14 +44,16 @@ public class Game implements State {
         this.areaRenderer = new AreaRenderer();
     }
 
+    /**
+     * Tick the Game state.
+     * @param manager The state manager.
+     */
     @Override
     public void tick(StateManager manager) {
-        // Update the area physics world.
-        this.area.updatePhysicsWorld();
-        // Tick the player.
-        player.tick();
         // Process input.
         processInput();
+        // Tick the player.
+        this.player.tick();
         // Tick the area.
         this.area.tick();
     }
@@ -92,7 +99,7 @@ public class Game implements State {
 
     /**
      * Draw the area.
-     * @param batch
+     * @param batch The sprite batch.
      */
     public void draw(SpriteBatch batch) {
         // Draw background.
@@ -102,5 +109,7 @@ public class Game implements State {
     }
 
     @Override
-    public StateType getStateType() { return StateType.GAME; }
+    public StateType getStateType() {
+        return StateType.GAME;
+    }
 }
