@@ -3,20 +3,45 @@ package com.dumbpug.ohm.area.pickup;
 /**
  * Represents a pickup.
  */
-public abstract class Pickup {
+public class Pickup {
+    /**
+     * The Type of the pickup.
+     */
+    private PickupType type;
     /**
      * The physics box for the pickup.
      */
     private PickupPhysicsBox physicsBox;
+    /**
+     * The capacity of the pickup. (e.g. Ammo)
+     */
+    private int capacity = 0;
 
     /**
      * Create a new instance of the Pickup class.
+     * @param type The type of the pickup.
      * @param x
      * @param y
      */
-    public Pickup(float x, float y) {
+    public Pickup(PickupType type, float x, float y) {
         // Create the physics box for this pickup.
         physicsBox = new PickupPhysicsBox(x, y);
+    }
+
+    /**
+     * Get the capacity of this pickup.
+     * @return The capacity of this pickup.
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * Set the capacity of this pickup.
+     * @param capacity The capacity of this pickup.
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     /**
@@ -31,5 +56,7 @@ public abstract class Pickup {
      * Get the type of the pickup.
      * @return The pickup type.
      */
-    public abstract PickupType getType();
+    public PickupType getType() {
+        return this.type;
+    }
 }
