@@ -3,6 +3,7 @@ package com.dumbpug.ohm.character.player;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.character.Direction;
+import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.PlayerResources;
 
 /**
@@ -11,6 +12,8 @@ import com.dumbpug.ohm.resources.PlayerResources;
 public class Player extends com.dumbpug.ohm.character.Character {
     /** The player physics box. */
     private PlayerPhysicsBox physicsBox;
+    /** The player angle of aim. */
+    private float angleOfAim = 0f;
 
     /**
      * Initialise a new instance of the Player class.
@@ -21,6 +24,14 @@ public class Player extends com.dumbpug.ohm.character.Character {
         this.physicsBox = playerPhysicsBox;
         // Make the player float.
         this.physicsBox.setAffectedByGravity(false);
+    }
+
+    public float getAngleOfAim() {
+        return angleOfAim;
+    }
+
+    public void setAngleOfAim(float angleOfAim) {
+        this.angleOfAim = angleOfAim;
     }
 
     /**
@@ -50,5 +61,9 @@ public class Player extends com.dumbpug.ohm.character.Character {
                 batch.draw(PlayerResources.ohm_walking_right.getCurrentFrame(true), x, this.physicsBox.getY());
             }
         }
+        // Draw target based on the angle of aim.
+        float targetPointX = this.physicsBox.getX() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float)Math.cos(this.getAngleOfAim());
+        float targetPointY = this.physicsBox.getY() - Constants.PLAYER_AIM_TARGET_DISTANCE * (float)Math.sin(this.getAngleOfAim());
+        batch.draw(AreaResources.target, targetPointX, targetPointY);
     }
 }

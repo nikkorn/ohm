@@ -78,19 +78,26 @@ public class Game implements State {
         }
 
         // Are we moving up/down?
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (inputProvider.isControlPressed(Control.UP)) {
             player.moveUp();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        } else if (inputProvider.isControlPressed(Control.DOWN)) {
             player.moveDown();
         } else {
             player.characterPhysicsBox.setVelY(0f);
             // TODO Reduce Y axis walking speed.
         }
 
-        // Are we jumping?
-        if (inputProvider.isControlJustPressed(Control.JUMP)) {
-            player.jump();
+        // Get our angle of aim for the player.
+        float angleOfAim = inputProvider.getAngleOfAim();
+        if (angleOfAim != -1) {
+            player.setAngleOfAim(angleOfAim);
         }
+
+        // Are we accepting something?
+        if (inputProvider.isControlJustPressed(Control.ACCEPT)) {
+            // TODO Are we able to accept something?
+        }
+
         // Do we want to exit? (only desktop version)
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();

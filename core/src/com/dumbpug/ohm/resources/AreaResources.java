@@ -17,12 +17,16 @@ public class AreaResources {
     /** The platform texture. */
     public static Texture platform;
 
+    /** The target texture. */
+    public static Texture target;
+
     /**
      * Load resources.
      */
     public static void load() {
         background         = new Texture(Gdx.files.internal("graphics/areas/background.png"));
         platform           = new Texture(Gdx.files.internal("graphics/areas/platform.png"));
+        target             = new Texture(Gdx.files.internal("graphics/areas/target.png"));
         transition_overlay = new Texture(Gdx.files.internal("graphics/areas/transition_overlay.png"));
     }
 }

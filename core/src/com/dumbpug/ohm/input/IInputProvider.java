@@ -20,6 +20,12 @@ public interface IInputProvider {
     boolean isControlJustPressed(Control control);
 
     /**
+     * Get the current angle of aim.
+     * @return The current angle of aim.
+     */
+    float getAngleOfAim();
+
+    /**
      * Reset the input.
      */
     void reset();
