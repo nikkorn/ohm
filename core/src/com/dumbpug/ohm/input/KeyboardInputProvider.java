@@ -10,6 +10,12 @@ import com.dumbpug.ohm.nbp.point.Point;
  */
 public class KeyboardInputProvider implements IInputProvider {
 
+    private AimBuffer aimBuffer;
+
+    public KeyboardInputProvider() {
+        this.aimBuffer = new AimBuffer();
+    }
+
     @Override
     public boolean isControlPressed(Control control) {
         // Determine which control we are checking the state of.
@@ -54,12 +60,13 @@ public class KeyboardInputProvider implements IInputProvider {
     public float getAngleOfAim() {
         float xDelta = Gdx.input.getDeltaX();
         float yDelta = Gdx.input.getDeltaY();
-        // We don't want to count tiny movements on the stick.
-        if (xDelta > 2 || xDelta < -2 || yDelta > 2 || yDelta < -2) {
-            return NBPMath.getAngleBetweenPoints(new Point(0, 0), new Point(xDelta, yDelta));
+
+        // Don't add tiny mouse movements to the aim buffer.
+        if (xDelta > 5 || xDelta < -5 || yDelta > 5 || yDelta < -5) {
+            aimBuffer.update(xDelta, yDelta);
         }
-        // We cannot get our angle of aim.
-        return -1;
+
+        return aimBuffer.getAngleOfAim();
     }
 
     @Override

@@ -1,1 +1,0 @@
-An enemy who fires projectiles at players who are in sight (check out https://github.com/stackgl/ray-aabb-intersection) but runs from players when they are too close.

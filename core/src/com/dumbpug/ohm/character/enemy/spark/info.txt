@@ -1,1 +1,0 @@
-A patrolling enemy who can teleport right next to or above the player and attacks.

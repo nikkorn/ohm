@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Ohm;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.AreaRenderer;
-import com.dumbpug.ohm.character.player.PlayerPhysicsBox;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
-import com.dumbpug.ohm.character.player.Player;
+import com.dumbpug.ohm.player.Player;
+import com.dumbpug.ohm.player.PlayerPhysicsBox;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
@@ -73,7 +73,7 @@ public class Game implements State {
             // We are running right.
             player.moveRight();
         } else {
-            player.characterPhysicsBox.setVelX(0f);
+            player.getPlayerPhysicsBox().setVelX(0f);
             // TODO Reduce X axis walking speed.
         }
 
@@ -83,7 +83,7 @@ public class Game implements State {
         } else if (inputProvider.isControlPressed(Control.DOWN)) {
             player.moveDown();
         } else {
-            player.characterPhysicsBox.setVelY(0f);
+            player.getPlayerPhysicsBox().setVelY(0f);
             // TODO Reduce Y axis walking speed.
         }
 

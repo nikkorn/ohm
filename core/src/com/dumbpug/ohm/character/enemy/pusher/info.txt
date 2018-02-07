@@ -1,1 +1,0 @@
-An enemy that walks back and forth, if a player is in its line of sight and in range will let out a blast of force to knock players off of platforms or into traps.

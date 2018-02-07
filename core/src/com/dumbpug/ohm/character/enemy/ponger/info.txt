@@ -1,1 +1,0 @@
-An enemy who, when they spot the player, will launch themselves in that direction and will bounce from static objects or damage the player if they hit them.

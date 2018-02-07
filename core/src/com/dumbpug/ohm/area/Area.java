@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Environment;
-import com.dumbpug.ohm.character.player.Player;
+import com.dumbpug.ohm.player.Player;
 import java.util.ArrayList;
 
 /**

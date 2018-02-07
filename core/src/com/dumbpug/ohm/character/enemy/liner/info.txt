@@ -1,1 +1,0 @@
-An enemy who has no awareness of the player and just moves between two points in the air.

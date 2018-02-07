@@ -2,6 +2,7 @@ package com.dumbpug.ohm;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.graphics.GL20;
@@ -58,6 +59,11 @@ public class Ohm extends ApplicationAdapter {
 
     @Override
     public void render() {
+
+        // Toggle whether the system cursor is captured.
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
+        }
 
         // Tick the game.
         stateManager.tick();
