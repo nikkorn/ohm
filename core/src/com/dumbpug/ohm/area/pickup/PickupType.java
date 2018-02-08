@@ -5,5 +5,20 @@ package com.dumbpug.ohm.area.pickup;
  */
 public enum PickupType {
     AMMO,
-    PISTOL
+
+    // Weapons
+    PISTOL,
+    SHOTGUN,
+    GRENADE,
+    UZI,
+    SNIPER,
+    ROCKET_LAUNCHER,
+    REMOTE_ROCKET_LAUNCHER,
+    AUTO_TURRET,
+
+    // Powers
+    SHIELD,
+    CHARGE,
+    BUILDER,
+    REFLECT
 }

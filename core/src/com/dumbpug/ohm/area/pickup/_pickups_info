@@ -1,0 +1,37 @@
+Pickups
+=======
+
+Weapons
+=======
+
+Pistol: Shoots average speed bullets with considerable cool-down. Infinite ammo.
+
+Shotgun: Shoots multiple average speed bullets with average cool-down at very randomised
+angles simultaneously. Magazine: 5 (shots, not pellets).
+
+Grenade: Throws average speed grenades with average cool-down. Big explosion with force push! Magazine: 3.
+
+Uzi: Shoots average speed bullets with very little cool-down but at slightly randomised angles. Magazine 25.
+
+Sniper: Shoots fast speed bullets with very considerable cool-down. Magazine 5.
+
+Rocket Launcher: Shoots slow speed bullets with with very considerable cool-down but grenade
+sized explosion on impact. Magazine 5.
+
+Remote Rocket Launcher: Shoots controllable slow speed bullets with with very considerable cool-down but grenade
+sized explosion on impact or remote detonation. Magazine 3.
+
+Auto Turret: Stand alone turret which can be thrown anywhere and will fire pistol type shots at
+enemies in proximity. Magazine 1.
+
+
+Powers
+======
+
+Shield: Reduces damage and push force taken.
+
+Charge: Makes user run super fast in one direction for a split second, knocking anything in their way hard.
+
+Builder: Can place or remove protective blocks on platforms.
+
+Reflect: Send out a split second wave which pushes projectiles in opposite direction.
