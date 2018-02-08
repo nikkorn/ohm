@@ -1,9 +1,12 @@
 package com.dumbpug.ohm.area.pickup;
 
+import com.dumbpug.ohm.area.IPhysicsEntity;
+import com.dumbpug.ohm.nbp.Box;
+
 /**
  * Represents a pickup.
  */
-public class Pickup {
+public class Pickup implements IPhysicsEntity {
     /**
      * The Type of the pickup.
      */
@@ -45,18 +48,24 @@ public class Pickup {
     }
 
     /**
-     * Get the physics box for this pickup.
-     * @return The physics box for this pickup.
-     */
-    public PickupPhysicsBox getPhysicsBox() {
-        return physicsBox;
-    }
-
-    /**
      * Get the type of the pickup.
      * @return The pickup type.
      */
     public PickupType getType() {
         return this.type;
     }
+
+    /**
+     * Get the physics box of the entity.
+     * @return The physics box of the entity.
+     */
+    @Override
+    public Box getPhysicsBox() { return this.physicsBox; }
+
+    /**
+     * Whether the entity is airborne.
+     * @return Whether the entity is airborne.
+     */
+    @Override
+    public boolean isAirborne() { return false; }
 }

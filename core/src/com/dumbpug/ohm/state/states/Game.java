@@ -73,7 +73,7 @@ public class Game implements State {
             // We are running right.
             player.moveRight();
         } else {
-            player.getPlayerPhysicsBox().setVelX(0f);
+            player.getPhysicsBox().setVelX(0f);
             // TODO Reduce X axis walking speed.
         }
 
@@ -83,7 +83,7 @@ public class Game implements State {
         } else if (inputProvider.isControlPressed(Control.DOWN)) {
             player.moveDown();
         } else {
-            player.getPlayerPhysicsBox().setVelY(0f);
+            player.getPhysicsBox().setVelY(0f);
             // TODO Reduce Y axis walking speed.
         }
 

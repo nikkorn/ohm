@@ -56,7 +56,7 @@ public class AreaRenderer {
      */
     private Platform getPlatformAt(ArrayList<Platform> platforms, int x, int y) {
         for (Platform platform : platforms) {
-            if (platform.getX() == x && platform.getY() == y) {
+            if (platform.getPlatformPositionX() == x && platform.getPlatformPositionY() == y) {
                 return platform;
             }
         }

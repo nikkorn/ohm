@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Environment;
+import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.Player;
 import java.util.ArrayList;
 
@@ -57,8 +58,38 @@ public class Area {
     public void tick() {
         // Update the physics environment.
         physicsEnvironment.update();
-        // Set the camera to look at the player.
-        // camera.position.set(this.player.getX(), Constants.BLOCK_SIZE * Constants.AREA_TILE_HEIGHT / 2, 0);
+        // Process fall-outs.
+        CheckForFallOuts();
+    }
+
+    /**
+     * Check for fall-outs (player, pickup, projectile)
+     */
+    private void CheckForFallOuts() {
+        // TODO Check for whether players have fallen out.
+        // TODO Check for whether projectiles have fallen out.
+        // TODO Check for whether pickups have fallen out.
+    }
+
+    /**
+     * Whether the specified entity should fall out of the area.
+     * This will happen when the entity is not over ground (e.g. platform) and is not airborne.
+     * @param entity The entity to check.
+     * @return Whether the specified entity should fall out of the area.
+     */
+    private boolean shouldFallOut(IPhysicsEntity entity) {
+        // An airborne entity cannot fall out.
+        if (entity.isAirborne()) {
+            return false;
+        }
+        // The entity should be on the ground, check to make sure it is on a platform.
+        for (Platform platform : platforms) {
+            if (NBPMath.doBoxesCollide(platform, entity.getPhysicsBox())) {
+                return false;
+            }
+        }
+        // We could not find any piece of ground that the entity is standing on.
+        return true;
     }
 
     /**

@@ -2,6 +2,8 @@ package com.dumbpug.ohm.player;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.IPhysicsEntity;
+import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.PlayerResources;
@@ -9,7 +11,7 @@ import com.dumbpug.ohm.resources.PlayerResources;
 /**
  * The player.
  */
-public class Player {
+public class Player implements IPhysicsEntity {
     /**
      * The player physics box.
      */
@@ -62,6 +64,20 @@ public class Player {
     }
 
     /**
+     * Get the physics box of the entity.
+     * @return The physics box of the entity.
+     */
+    @Override
+    public Box getPhysicsBox() { return this.physicsBox; }
+
+    /**
+     * Whether the entity is airborne.
+     * @return Whether the entity is airborne.
+     */
+    @Override
+    public boolean isAirborne() { return false; }
+
+    /**
      * Set the character position.
      * @param x
      * @param y
@@ -110,14 +126,6 @@ public class Player {
         this.setPosition(x, y);
         // Add the characters physics box to the world.
         world.addBox(this.physicsBox);
-    }
-
-    /**
-     * Get the player physics box.
-     * @return The player physics box.
-     */
-    public PlayerPhysicsBox getPlayerPhysicsBox() {
-        return this.physicsBox;
     }
 
     /**
