@@ -19,6 +19,9 @@ public class Constants {
     /** Pickups. */
     public static final int PICKUP_SIZE = 12;
 
+    /** Projectiles. */
+    public static final float PROJECTILE_BULLET_SIZE = 6;
+
     /** Physics. */
     public static final float PHYSICS_GRAVITY = 0.09f;
 

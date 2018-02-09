@@ -13,6 +13,7 @@ import com.dumbpug.ohm.input.OuyaInputProvider;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PlayerResources;
+import com.dumbpug.ohm.resources.WeaponResources;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.states.Title;
 
@@ -40,6 +41,7 @@ public class Ohm extends ApplicationAdapter {
         AreaResources.load();
         PlayerResources.load();
         ParticleResources.load();
+        WeaponResources.load();
 
         // Create the input provider specific to the system.
         if (Ouya.isRunningOnOuya()) {

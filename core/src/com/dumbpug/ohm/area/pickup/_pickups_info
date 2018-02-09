@@ -18,7 +18,7 @@ Sniper: Shoots fast speed bullets with very considerable cool-down. Magazine 5.
 Rocket Launcher: Shoots slow speed bullets with with very considerable cool-down but grenade
 sized explosion on impact. Magazine 5.
 
-Remote Rocket Launcher: Shoots controllable slow speed bullets with with very considerable cool-down but grenade
+Tracking Rocket Launcher: Shoots tracking (via projectile sensor) slow speed bullets with with very considerable cool-down but grenade
 sized explosion on impact or remote detonation. Magazine 3.
 
 Auto Turret: Stand alone turret which can be thrown anywhere and will fire pistol type shots at
