@@ -34,6 +34,7 @@ public class Constants {
     public static final float PLAYER_ELECTRO_WALKING_MODIFIER   = 2f;
 
     public static final float PLAYER_AIM_TARGET_DISTANCE  = PLAYER_SIZE * 2;
+    public static final int PLAYER_LIFE                   = 10;
 
     /* Character. */
     public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1f;

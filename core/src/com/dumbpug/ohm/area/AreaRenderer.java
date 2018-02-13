@@ -25,7 +25,10 @@ public class AreaRenderer {
         batch.setProjectionMatrix(camera.combined);
         // Draw the platforms.
         drawPlatforms(batch, area.getPlatforms());
-        // Draw player.
+
+        // TODO Draw players, projectiles and pickups in Y order.
+
+        // Draw player(s).
         area.getPlayer().draw(batch);
     }
 

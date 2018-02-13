@@ -3,9 +3,11 @@ package com.dumbpug.ohm.area;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.pickup.Pickup;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.Player;
+import com.dumbpug.ohm.projectiles.Projectile;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +20,10 @@ public class Area {
     private Environment physicsEnvironment;
     /** The platforms that make up this area. */
     private ArrayList<Platform> platforms;
+    /** The projectiles in this area. */
+    private ArrayList<Projectile> projectiles;
+    /** The pickups in this area. */
+    private ArrayList<Pickup> pickups;
     /** The player for the area. */
     private Player player;
 
@@ -90,6 +96,22 @@ public class Area {
         }
         // We could not find any piece of ground that the entity is standing on.
         return true;
+    }
+
+    /**
+     * Get the projectiles in this area.
+     * @return The projectiles in this area.
+     */
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    /**
+     * Get the pickups in this area.
+     * @return The pickups in this area.
+     */
+    public ArrayList<Pickup> getPickups() {
+        return pickups;
     }
 
     /**
