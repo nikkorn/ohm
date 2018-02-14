@@ -7,7 +7,9 @@ import com.dumbpug.ohm.area.pickup.Pickup;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.Player;
+import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
 
 /**
@@ -36,9 +38,10 @@ public class Area {
         this.physicsEnvironment = new Environment();
         // Create the platforms.
         createPlatforms();
-        // Add player to this area at the player spawn.
+        // Add player to this area at the player spawn and prep with new status.
         this.player = player;
         player.addToPhysicsWorld(this.physicsEnvironment, 50, 50);
+        player.setStatus(new Status());
         // Create the area camera.
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
@@ -64,8 +67,26 @@ public class Area {
     public void tick() {
         // Update the physics environment.
         physicsEnvironment.update();
+        // Determine whether any players have generated any projectiles.
+        CheckForGeneratedProjectiles();
         // Process fall-outs.
         CheckForFallOuts();
+    }
+
+    /**
+     * Check whether any players have generated any projectiles.
+     */
+    private void CheckForGeneratedProjectiles() {
+        // Get the player's current weapon (if any).
+        Weapon activeWeapon = this.player.getStatus().getEquippedWeapon();
+        // Do we have an equipped weapon?
+        if (activeWeapon != null) {
+            // Has this weapon generated any projectiles?
+            for (Projectile projectile : activeWeapon.getNewProjectiles()) {
+                // TODO Apply the rotation/position of the player to the projectile.
+                // TODO Add the projectile to the area.
+            }
+        }
     }
 
     /**
