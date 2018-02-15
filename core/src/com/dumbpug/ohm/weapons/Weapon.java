@@ -58,7 +58,6 @@ public abstract class Weapon {
 
     /**
      * Get the ammo count
-     *
      * @return The ammo count.
      */
     public int getAmmo() {

@@ -1,8 +1,10 @@
 package com.dumbpug.ohm.area;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.projectiles.Projectile;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.PlayerResources;
 
@@ -27,10 +29,13 @@ public class AreaRenderer {
         drawPlatforms(batch, area.getPlatforms());
 
         // TODO Draw players, projectiles and pickups in Y order.
-
+        // Draw the projectiles.
+        drawProjectiles(batch, area.getProjectiles());
         // Draw player(s).
         area.getPlayer().draw(batch);
     }
+
+
 
     /**
      * Draw the platforms.
@@ -47,6 +52,24 @@ public class AreaRenderer {
                     batch.draw(AreaResources.platform, x * Constants.PLATFORM_SIZE, y * Constants.PLATFORM_SIZE);
                 }
             }
+        }
+    }
+
+    /**
+     * Draw the projectiles.
+     * @param batch
+     * @param projectiles
+     */
+    private void drawProjectiles(SpriteBatch batch, ArrayList<Projectile> projectiles) {
+        for (Projectile projectile : projectiles) {
+            // Get the sprite for this projectile.
+            Sprite projectileSprite = projectile.getSprite();
+            // Set the correct position of the sprite.
+            projectileSprite.setX(projectile.getPhysicsBox().getX());
+            projectileSprite.setY(projectile.getPhysicsBox().getY());
+            projectileSprite.setRotation(0 /** TODO Set this based on directional velocity of projectile.*/);
+            // Draw the sprite.
+            projectileSprite.draw(batch);
         }
     }
 

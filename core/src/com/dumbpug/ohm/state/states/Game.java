@@ -10,6 +10,7 @@ import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.player.PlayerPhysicsBox;
+import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
@@ -93,9 +94,17 @@ public class Game implements State {
             player.setAngleOfAim(angleOfAim);
         }
 
-        // Are we accepting something?
+        // Are we trying to fire a weapon we may or may not have?
         if (inputProvider.isControlJustPressed(Control.ACCEPT)) {
-            // TODO Are we able to accept something?
+            Status playerStatus = player.getStatus();
+            // Does the player have a status yet?
+            if (playerStatus != null) {
+                // Attempt to use our weapon if we have one.
+                if (playerStatus.getEquippedWeapon() != null) {
+                    // Use our weapon!
+                    playerStatus.getEquippedWeapon().use();
+                }
+            }
         }
 
         // Do we want to exit? (only desktop version)

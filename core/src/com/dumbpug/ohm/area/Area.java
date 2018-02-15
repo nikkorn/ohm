@@ -9,6 +9,7 @@ import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
 
@@ -23,9 +24,9 @@ public class Area {
     /** The platforms that make up this area. */
     private ArrayList<Platform> platforms;
     /** The projectiles in this area. */
-    private ArrayList<Projectile> projectiles;
+    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     /** The pickups in this area. */
-    private ArrayList<Pickup> pickups;
+    private ArrayList<Pickup> pickups = new ArrayList<Pickup>();
     /** The player for the area. */
     private Player player;
 
@@ -42,6 +43,8 @@ public class Area {
         this.player = player;
         player.addToPhysicsWorld(this.physicsEnvironment, 50, 50);
         player.setStatus(new Status());
+        // TODO REmove! Give the player a pistol!
+        player.getStatus().setEquippedWeapon(new Pistol());
         // Create the area camera.
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
@@ -83,8 +86,12 @@ public class Area {
         if (activeWeapon != null) {
             // Has this weapon generated any projectiles?
             for (Projectile projectile : activeWeapon.getNewProjectiles()) {
-                // TODO Apply the rotation/position of the player to the projectile.
-                // TODO Add the projectile to the area.
+                // Apply the rotation/position of the player to the projectile.
+                projectile.fireAt(player.getX(), player.getY(), player.getAngleOfAim());
+                // Add the projectile to the area.
+                this.projectiles.add(projectile);
+                // Add the projectile physics box to the physics environment.
+                this.physicsEnvironment.addBox(projectile.getPhysicsBox());
             }
         }
     }
