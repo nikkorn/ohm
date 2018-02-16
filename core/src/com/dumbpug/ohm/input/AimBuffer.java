@@ -48,7 +48,7 @@ public class AimBuffer {
      * @return The smoothed angle of aim.
      */
     public float getAngleOfAim() {
-        return NBPMath.getAngleBetweenPoints(this.getTrailingPoint(), this.getLatestPoint());
+        return NBPMath.getAngleBetweenPoints(this.getTrailingPoint(), this.getLatestPoint(), true, false);
     }
 
     /**

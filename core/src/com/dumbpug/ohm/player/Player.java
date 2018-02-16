@@ -180,8 +180,8 @@ public class Player implements IPhysicsEntity {
             }
         }
         // Draw target based on the angle of aim.
-        float targetPointX = this.physicsBox.getX() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.cos(this.getAngleOfAim());
-        float targetPointY = this.physicsBox.getY() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.sin(this.getAngleOfAim());
+        float targetPointX = this.physicsBox.getX() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.cos(Math.toRadians(this.getAngleOfAim()));
+        float targetPointY = this.physicsBox.getY() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.sin(Math.toRadians(this.getAngleOfAim()));
         batch.draw(AreaResources.target, targetPointX, targetPointY);
     }
 }
