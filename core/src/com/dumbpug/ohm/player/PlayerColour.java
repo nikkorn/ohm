@@ -1,8 +1,6 @@
 package com.dumbpug.ohm.player;
 
 /**
- * Created by nikolas.howard on 19/02/2018.
+ * Enumeration of player colours.
  */
-
-public enum PlayerColour {
-}
+public enum PlayerColour { RED, BLUE, GREEN, YELLOW }

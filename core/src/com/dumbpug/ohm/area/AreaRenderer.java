@@ -4,10 +4,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.projectiles.Projectile;
 import com.dumbpug.ohm.resources.AreaResources;
-import com.dumbpug.ohm.resources.PlayerResources;
-
 import java.util.ArrayList;
 
 /**
@@ -31,11 +30,11 @@ public class AreaRenderer {
         // TODO Draw players, projectiles and pickups in Y order.
         // Draw the projectiles.
         drawProjectiles(batch, area.getProjectiles());
-        // Draw player(s).
-        area.getPlayer().draw(batch);
+        // Draw players.
+        for (IngamePlayer player : area.getIngamePlayers()) {
+            player.getPlayer().draw(batch);
+        }
     }
-
-
 
     /**
      * Draw the platforms.

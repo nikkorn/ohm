@@ -20,10 +20,6 @@ public class Player implements IPhysicsEntity {
      * The player angle of aim.
      */
     private float angleOfAim = 0f;
-    /**
-     * The play status of the player.
-     */
-    private Status status;
 
     /**
      * Initialise a new instance of the Player class.
@@ -65,22 +61,6 @@ public class Player implements IPhysicsEntity {
      */
     public float getY() {
         return this.physicsBox.getY();
-    }
-
-    /**
-     * Get the player status.
-     * @return The player status.
-     */
-    public Status getStatus() {
-        return status;
-    }
-
-    /**
-     * Set the player status.
-     * @param status The player status.
-     */
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     /**

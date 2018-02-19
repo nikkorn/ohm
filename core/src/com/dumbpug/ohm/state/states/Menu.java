@@ -14,8 +14,8 @@ public class Menu implements State {
 
     @Override
     public void tick(StateManager manager) {
-        // Go straight to a new game.
-        manager.setState(new Game());
+        // Go straight to player selection.
+        manager.setState(new PlayerSelection());
     }
 
     public void draw(SpriteBatch batch) {

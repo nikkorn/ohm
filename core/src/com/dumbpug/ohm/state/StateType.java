@@ -6,5 +6,6 @@ package com.dumbpug.ohm.state;
 public enum StateType {
     TITLE,
     MENU,
+    PLAYER_SELECTION,
     GAME
 }

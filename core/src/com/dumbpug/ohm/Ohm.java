@@ -62,6 +62,11 @@ public class Ohm extends ApplicationAdapter {
     @Override
     public void render() {
 
+        // Do we want to exit? (only desktop version)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
+
         // Toggle whether the system cursor is captured.
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
