@@ -1,10 +1,13 @@
 package com.dumbpug.ohm.projectiles;
 
+import com.dumbpug.ohm.area.pickup.PickupPhysicsBox;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
+import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.nbp.Sensor;
 import com.dumbpug.ohm.nbp.point.IntersectionPoint;
+import com.dumbpug.ohm.player.PlayerPhysicsBox;
 
 /**
  * A physics box for a projectile.
@@ -13,16 +16,46 @@ public class ProjectilePhysicsBox extends Box {
 
     /**
      * Create a new instance of the ProjectilePhysicsBox class.
+     * @param size The size of the physics box.
      */
     public ProjectilePhysicsBox(float size) {
         super(0, 0, size, size, BoxType.KINETIC);
     }
 
-    @Override
-    protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {}
+    /**
+     * Handle this projectile colliding with a player physics box.
+     * @param playerPhysicsBox The player physics box.
+     */
+    private void handlePlayerCollision(PlayerPhysicsBox playerPhysicsBox) {
+        System.out.println("Hit player!");
+        // Push the player a tad! TODO Remove!
+        playerPhysicsBox.applyVelocityInDirection(NBPMath.getAngleBetweenPoints(this.getLastOriginPoint(), this.getCurrentOriginPoint()), 2.0f);
+    }
+
+    /**
+     * Handle this projectile colliding with a pickup physics box.
+     * @param pickupPhysicsBox The pickup physics box.
+     */
+    private void handlePickupCollision(PickupPhysicsBox pickupPhysicsBox) {
+        System.out.println("Hit pickup!");
+    }
 
     @Override
-    protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {}
+    protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {
+        // How we handle this collision depends on the type of physics box we have hit.
+        if (collidingBox.getName().equals("PLAYER")) {
+            handlePlayerCollision((PlayerPhysicsBox)collidingBox);
+        } else if (collidingBox.getName().equals("PICKUP")) {
+            handlePickupCollision((PickupPhysicsBox)collidingBox);
+        } else {
+            // TODO Handle collision with other entities.
+        }
+    }
+
+    @Override
+    protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {
+        // We hit something hard eh?
+    }
 
     @Override
     protected void onSensorEntry(Sensor sensor, Box enteredBox) {}

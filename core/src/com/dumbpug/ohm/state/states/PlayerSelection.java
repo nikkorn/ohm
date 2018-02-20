@@ -26,7 +26,7 @@ public class PlayerSelection implements State {
         final IngamePlayer ingamePlayer1 = new IngamePlayer(player1, Ohm.getInputProvider(), PlayerColour.BLUE);
 
         Player player2 = new Player(new PlayerPhysicsBox(0, 0));
-        final IngamePlayer ingamePlayer2 = new IngamePlayer(player2, Ohm.getInputProvider(), PlayerColour.RED);
+        final IngamePlayer ingamePlayer2 = new IngamePlayer(player2, null, PlayerColour.RED);
 
         // Go straight to a new game.
         manager.setState(new Game(new ArrayList<IngamePlayer>() {{

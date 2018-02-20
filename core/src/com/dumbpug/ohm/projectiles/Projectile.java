@@ -23,6 +23,8 @@ public abstract class Projectile implements IPhysicsEntity {
     public Projectile() {
         // Create the physics box for this projectile.
         physicsBox = new ProjectilePhysicsBox(this.getSize());
+        // Give the physics box a name to identify it.
+        physicsBox.setName("PROJECTILE");
     }
 
     /**

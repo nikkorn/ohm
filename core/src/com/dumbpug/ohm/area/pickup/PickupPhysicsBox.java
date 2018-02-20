@@ -19,6 +19,7 @@ public class PickupPhysicsBox extends Box {
      */
     public PickupPhysicsBox(float x, float y) {
         super(x, y, Constants.PICKUP_SIZE, Constants.PICKUP_SIZE, BoxType.KINETIC);
+        this.setName("PICKUP");
     }
 
     @Override

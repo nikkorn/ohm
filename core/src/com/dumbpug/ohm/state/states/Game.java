@@ -70,6 +70,10 @@ public class Game implements State {
             Player player = ingamePlayer.getPlayer();
             // Get the actual Player instance.
             IInputProvider inputProvider = ingamePlayer.getInputProvider();
+            // Do nothing if this player has no input provider.
+            if (inputProvider == null) {
+                return;
+            }
             // Are we moving left/right?
             if (inputProvider.isControlPressed(Control.LEFT)) {
                 // We are running left.

@@ -29,7 +29,7 @@ public class AreaRenderer {
 
         // TODO Draw players, projectiles and pickups in Y order.
         // Draw the projectiles.
-        drawProjectiles(batch, area.getProjectiles());
+        drawProjectiles(batch, area.getProjectilePool().getProjectiles());
         // Draw players.
         for (IngamePlayer player : area.getIngamePlayers()) {
             player.getPlayer().draw(batch);

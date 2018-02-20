@@ -9,6 +9,7 @@ import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class Area {
     private Environment physicsEnvironment;
     /** The platforms that make up this area. */
     private ArrayList<Platform> platforms;
-    /** The projectiles in this area. */
-    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    /** The pool of projectiles in this area. */
+    private ProjectilePool projectiles;
     /** The pickups in this area. */
     private ArrayList<Pickup> pickups = new ArrayList<Pickup>();
     /** The in-game players. */
@@ -37,6 +38,8 @@ public class Area {
     public Area(ArrayList<IngamePlayer> players) {
         // Create the physics world.
         this.physicsEnvironment = new Environment();
+        // Create the pool of projectiles for this area.
+        this.projectiles = new ProjectilePool(this.physicsEnvironment);
         // Create the platforms.
         createPlatforms();
         // Prepare the players that have been added to the area.
@@ -144,10 +147,10 @@ public class Area {
     }
 
     /**
-     * Get the projectiles in this area.
-     * @return The projectiles in this area.
+     * Get the pool of projectiles in this area.
+     * @return The pool of projectiles in this area.
      */
-    public ArrayList<Projectile> getProjectiles() {
+    public ProjectilePool getProjectilePool() {
         return projectiles;
     }
 
