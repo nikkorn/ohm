@@ -30,9 +30,24 @@ public class IngamePlayer {
      * @param colour        The colour of the player.
      */
     public IngamePlayer(Player player, IInputProvider inputProvider, PlayerColour colour) {
-        this.player = player;
+        this.player        = player;
         this.inputProvider = inputProvider;
-        this.playerColour = colour;
+        this.playerColour  = colour;
+        this.player.getPhysicsBox().setUserData(this);
+    }
+
+    /**
+     * Apply damage to the in-game player.
+     * @param damage The damage to apply.
+     */
+    public void applyDamage(int damage) {
+        // We can only apply damage if we have player status.
+        if (this.status != null) {
+            // Get the player life after damage is applied.
+            int newLife = this.getStatus().getLife() - damage;
+            // Set the players life, not going below zero.
+            this.getStatus().setLife(newLife < 0 ? 0 : newLife);
+        }
     }
 
     /**

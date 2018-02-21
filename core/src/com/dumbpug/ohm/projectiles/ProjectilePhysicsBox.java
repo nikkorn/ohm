@@ -4,9 +4,9 @@ import com.dumbpug.ohm.area.pickup.PickupPhysicsBox;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
-import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.nbp.Sensor;
 import com.dumbpug.ohm.nbp.point.IntersectionPoint;
+import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.PlayerPhysicsBox;
 
 /**
@@ -27,9 +27,10 @@ public class ProjectilePhysicsBox extends Box {
      * @param playerPhysicsBox The player physics box.
      */
     private void handlePlayerCollision(PlayerPhysicsBox playerPhysicsBox) {
-        System.out.println("Hit player!");
-        // Push the player a tad! TODO Remove!
-        playerPhysicsBox.applyVelocityInDirection(NBPMath.getAngleBetweenPoints(this.getLastOriginPoint(), this.getCurrentOriginPoint()), 2.0f);
+        // Get the projectile that this physics box represents.
+        Projectile projectile = (Projectile)this.getUserData();
+        // Projectiles should handle player collisions.
+        projectile.onPlayerHit((IngamePlayer)playerPhysicsBox.getUserData());
     }
 
     /**
@@ -47,14 +48,12 @@ public class ProjectilePhysicsBox extends Box {
             handlePlayerCollision((PlayerPhysicsBox)collidingBox);
         } else if (collidingBox.getName().equals("PICKUP")) {
             handlePickupCollision((PickupPhysicsBox)collidingBox);
-        } else {
-            // TODO Handle collision with other entities.
         }
     }
 
     @Override
     protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {
-        // We hit something hard eh?
+        // TODO We hit something hard eh?
     }
 
     @Override

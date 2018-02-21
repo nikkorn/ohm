@@ -29,6 +29,8 @@ public class Pickup implements IPhysicsEntity {
     public Pickup(PickupType type, float x, float y) {
         // Create the physics box for this pickup.
         physicsBox = new PickupPhysicsBox(x, y);
+        // Set the user data of the physics box to be the pickup.
+        physicsBox.setUserData(this);
     }
 
     /**

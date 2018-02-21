@@ -3,6 +3,7 @@ package com.dumbpug.ohm.projectiles;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dumbpug.ohm.area.IPhysicsEntity;
 import com.dumbpug.ohm.nbp.Box;
+import com.dumbpug.ohm.player.IngamePlayer;
 
 /**
  * Represents a projectile.
@@ -23,6 +24,8 @@ public abstract class Projectile implements IPhysicsEntity {
     public Projectile() {
         // Create the physics box for this projectile.
         physicsBox = new ProjectilePhysicsBox(this.getSize());
+        // Set the user data of the physics box to be the projectile.
+        physicsBox.setUserData(this);
         // Give the physics box a name to identify it.
         physicsBox.setName("PROJECTILE");
     }
@@ -42,6 +45,15 @@ public abstract class Projectile implements IPhysicsEntity {
     }
 
     /**
+     * Called when this projectile hits an in-game player.
+     * @param ingamePlayer The in-game player.
+     */
+    public void onPlayerHit(IngamePlayer ingamePlayer) {
+        System.out.println("Hit Player for " + this.getDamage() + " damage!!!!");
+        ingamePlayer.applyDamage(this.getDamage());
+    }
+
+    /**
      * Get the size of the projectile.
      * @return The projectile size.
      */
@@ -52,6 +64,12 @@ public abstract class Projectile implements IPhysicsEntity {
      * @return The velocity of this projectile at the point of it firing.
      */
     public abstract float getFireVelocity();
+
+    /**
+     * Get the amount of damage dealt on a hit.
+     * @return The amount of damage dealt on a hit.
+     */
+    public abstract int getDamage();
 
     /**
      * Get the sprite for this projectile.

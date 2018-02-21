@@ -26,6 +26,7 @@ public class Player implements IPhysicsEntity {
      * @param playerPhysicsBox The player physics box.
      */
     public Player(PlayerPhysicsBox playerPhysicsBox) {
+        // Create the physics box for this player.
         this.physicsBox = playerPhysicsBox;
         // Make the player float.
         this.physicsBox.setAffectedByGravity(false);

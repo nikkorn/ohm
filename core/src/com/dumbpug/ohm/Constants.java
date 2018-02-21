@@ -1,7 +1,5 @@
 package com.dumbpug.ohm;
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * Game constants.
  */
@@ -24,8 +22,14 @@ public class Constants {
     public static final float PROJECTILE_BULLET_FIRE_VELOCITY = 2;
 
     /** Weapons. */
+    public static final int PROJECTILE_BASIC_BULLET_DAMAGE    = 1;
+    public static final int PROJECTILE_SNIPER_BULLET_DAMAGE   = 4;
+
     public static final long PROJECTILE_PISTOL_COOL_DOWN = 500l;
     public static final int PROJECTILE_PISTOL_MAX_AMMO   = 6;
+
+    public static final long PROJECTILE_SNIPER_COOL_DOWN = 1500l;
+    public static final int PROJECTILE_SNIPER_MAX_AMMO   = 3;
 
     /** Player. */
     public static final int PLAYER_SIZE                         = 14;

@@ -43,4 +43,13 @@ public class Bullet extends Projectile {
     public float getFireVelocity() {
         return Constants.PROJECTILE_BULLET_FIRE_VELOCITY;
     }
+
+    /**
+     * Get the amount of damage dealt on a hit.
+     * @return The amount of damage dealt on a hit.
+     */
+    @Override
+    public int getDamage() {
+        return Constants.PROJECTILE_BASIC_BULLET_DAMAGE;
+    }
 }
