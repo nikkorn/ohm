@@ -31,6 +31,8 @@ public class Pickup implements IPhysicsEntity {
         physicsBox = new PickupPhysicsBox(x, y);
         // Set the user data of the physics box to be the pickup.
         physicsBox.setUserData(this);
+        // Set the type of the pickup.
+        this.type = type;
     }
 
     /**

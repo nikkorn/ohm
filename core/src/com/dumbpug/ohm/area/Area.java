@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.pickup.Pickup;
+import com.dumbpug.ohm.area.pickup.PickupType;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.IngamePlayer;
@@ -49,6 +50,9 @@ public class Area {
         camera.setToOrtho(false);
         camera.zoom = Constants.AREA_ZOOM;
         camera.position.set(70, 70, 0);
+
+        // TODO REMOVE!
+        this.pickups.add(new Pickup(PickupType.PISTOL, 60, 40));
     }
 
     /**
