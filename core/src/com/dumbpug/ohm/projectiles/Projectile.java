@@ -87,6 +87,15 @@ public abstract class Projectile implements IPhysicsEntity {
     }
 
     /**
+     * Gets whether this projectile is stale.
+     * This means that it has hit or has gone well out of the bounds of the screen.
+     * @return Whether this projectile is stale.
+     */
+    public boolean isStale() {
+        return this.physicsBox.isStale();
+    }
+
+    /**
      * Fire the projectile from the specified position, aiming in the specified direction.
      * @param x     The initial x position.
      * @param y     The initial y position.

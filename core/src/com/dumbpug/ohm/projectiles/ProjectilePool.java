@@ -4,6 +4,7 @@ import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * The pool of projectiles within an area.
@@ -43,8 +44,6 @@ public class ProjectilePool {
         checkForProjectilesPrimedForOwnerHit();
         // Check whether any players have generated any projectiles and adds them to the pool.
         checkForPlayerGeneratedProjectiles(players);
-        // Check for projectile collisions with other entities.
-        checkForCollisions();
         // Remove stale projectiles.
         removeStaleProjectiles();
     }
@@ -84,12 +83,20 @@ public class ProjectilePool {
     }
 
     /**
-     * Check for projectile collisions.
+     * Remove any stale projectiles from the pool, and their physics boxes from the environment.
      */
-    private void checkForCollisions() {}
-
-    /**
-     * Remove any stale projectiles.
-     */
-    private void removeStaleProjectiles() {}
+    private void removeStaleProjectiles() {
+        Iterator<Projectile> iterator = projectiles.iterator();
+        while (iterator.hasNext()) {
+            // Get the next projectile from the iterator.
+            Projectile projectile = iterator.next();
+            // Check whether it is stale.
+            if (projectile.isStale()) {
+                // Remove the current projectile from the pool.
+                iterator.remove();
+                // Mark the projectile physics box as 'to be deleted' by the physics engine.
+                projectile.getPhysicsBox().markForDeletion();
+            }
+        }
+    }
 }

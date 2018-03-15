@@ -17,6 +17,10 @@ public class ProjectilePhysicsBox extends Box {
      * Whether the projectile can hit its owner.
      */
     private boolean canHitOwner = false;
+    /**
+     * Whether the projectile physics box is stale.
+     */
+    private boolean isStale = false;
 
     /**
      * Create a new instance of the ProjectilePhysicsBox class.
@@ -24,6 +28,15 @@ public class ProjectilePhysicsBox extends Box {
      */
     public ProjectilePhysicsBox(float size) {
         super(0, 0, size, size, BoxType.KINETIC);
+    }
+
+    /**
+     * Gets whether this projectile is stale.
+     * This means that it has hit or has gone well out of the bounds of the screen.
+     * @return Whether this projectile is stale.
+     */
+    public boolean isStale() {
+        return isStale;
     }
 
     /**
@@ -62,6 +75,8 @@ public class ProjectilePhysicsBox extends Box {
         }
         // Projectiles should handle player collisions.
         projectile.onPlayerHit(player);
+        // This projectile has hit a player and is now stale.
+        this.isStale = true;
     }
 
     /**
@@ -70,6 +85,8 @@ public class ProjectilePhysicsBox extends Box {
      */
     private void handlePickupCollision(PickupPhysicsBox pickupPhysicsBox) {
         System.out.println("Hit pickup!");
+        // This projectile has hit a pickup and is now stale.
+        this.isStale = true;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class Area {
         camera.position.set(70, 70, 0);
 
         // TODO REMOVE!
-        this.pickups.add(new Pickup(PickupType.PISTOL, 60, 40));
+        this.pickups.add(new Pickup(PickupType.PISTOL, 70, 50));
     }
 
     /**
