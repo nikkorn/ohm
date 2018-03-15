@@ -13,6 +13,10 @@ import com.dumbpug.ohm.player.PlayerPhysicsBox;
  * A physics box for a projectile.
  */
 public class ProjectilePhysicsBox extends Box {
+    /**
+     * Whether the projectile can hit its owner.
+     */
+    private boolean canHitOwner = false;
 
     /**
      * Create a new instance of the ProjectilePhysicsBox class.
@@ -23,14 +27,41 @@ public class ProjectilePhysicsBox extends Box {
     }
 
     /**
+     * Gets whether this projectile can hit its owner.
+     * A projectile wont be able to hit its owner until it
+     * initially stops overlapping the player physics box.
+     * @return Whether this projectile can hit its owner.
+     */
+    public boolean canHitOwner() {
+        return canHitOwner;
+    }
+
+    /**
+     * Sets whether this projectile can hit its owner.
+     * A projectile wont be able to hit its owner until it
+     * initially stops overlapping the player physics box.
+     * @param canHitOwner Whether this projectile can hit its owner.
+     */
+    public void setCanHitOwner(boolean canHitOwner) {
+        this.canHitOwner = canHitOwner;
+    }
+
+    /**
      * Handle this projectile colliding with a player physics box.
      * @param playerPhysicsBox The player physics box.
      */
     private void handlePlayerCollision(PlayerPhysicsBox playerPhysicsBox) {
+        // Get the player that we have collided with.
+        IngamePlayer player = (IngamePlayer)playerPhysicsBox.getUserData();
         // Get the projectile that this physics box represents.
         Projectile projectile = (Projectile)this.getUserData();
+        // Check whether the colliding player is the owner of the projectile.
+        // If so, we will have to do nothing unless we can hit them yet.
+        if (!this.canHitOwner && projectile.getOwner() == player.getPlayer()) {
+            return;
+        }
         // Projectiles should handle player collisions.
-        projectile.onPlayerHit((IngamePlayer)playerPhysicsBox.getUserData());
+        projectile.onPlayerHit(player);
     }
 
     /**
@@ -47,7 +78,7 @@ public class ProjectilePhysicsBox extends Box {
         if (collidingBox.getName().equals("PLAYER")) {
             handlePlayerCollision((PlayerPhysicsBox)collidingBox);
         } else if (collidingBox.getName().equals("PICKUP")) {
-            handlePickupCollision((PickupPhysicsBox)collidingBox);
+            handlePickupCollision((PickupPhysicsBox) collidingBox);
         }
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dumbpug.ohm.area.IPhysicsEntity;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.player.IngamePlayer;
+import com.dumbpug.ohm.player.Player;
 
 /**
  * Represents a projectile.
@@ -17,6 +18,11 @@ public abstract class Projectile implements IPhysicsEntity {
      * The angle of offset for the firing angle of the projectile.
      */
     private float angleOfFireOffset = 0f;
+    /**
+     * The owner of this projectile.
+     * This will most likely be the player that fired it.
+     */
+    private Player owner = null;
 
     /**
      * Create a new instance of the Projectile class.
@@ -31,26 +37,21 @@ public abstract class Projectile implements IPhysicsEntity {
     }
 
     /**
-     * Fire the projectile from the specified position, aiming in the specified direction.
-     * @param x     The initial x position.
-     * @param y     The initial y position.
-     * @param angle The angle of fire.
+     * Get the owner of this projectile.
+     * This will most likely be the player that fired it.
+     * @return The owner of this projectile.
      */
-    public void fireAt(float x, float y, float angle) {
-        this.physicsBox.setX(x);
-        this.physicsBox.setY(y);
-        // Simulate shooting this projectile in the physics environment
-        // We are also applying the projectiles own angle of fire offset.
-        this.physicsBox.applyVelocityInDirection(angle, this.getFireVelocity());
+    public Player getOwner() {
+        return owner;
     }
 
     /**
-     * Called when this projectile hits an in-game player.
-     * @param ingamePlayer The in-game player.
+     * Set the owner of this projectile.
+     * This will most likely be the player that fired it.
+     * @param owner The owner of this projectile.
      */
-    public void onPlayerHit(IngamePlayer ingamePlayer) {
-        System.out.println("Hit Player for " + this.getDamage() + " damage!!!!");
-        ingamePlayer.applyDamage(this.getDamage());
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     /**
@@ -83,6 +84,29 @@ public abstract class Projectile implements IPhysicsEntity {
      */
     public void setAngleOfFireOffset(float angleOfFireOffset) {
         this.angleOfFireOffset = angleOfFireOffset;
+    }
+
+    /**
+     * Fire the projectile from the specified position, aiming in the specified direction.
+     * @param x     The initial x position.
+     * @param y     The initial y position.
+     * @param angle The angle of fire.
+     */
+    public void fireAt(float x, float y, float angle) {
+        this.physicsBox.setX(x);
+        this.physicsBox.setY(y);
+        // Simulate shooting this projectile in the physics environment
+        // We are also applying the projectiles own angle of fire offset.
+        this.physicsBox.applyVelocityInDirection(angle, this.getFireVelocity());
+    }
+
+    /**
+     * Called when this projectile hits an in-game player.
+     * @param ingamePlayer The in-game player.
+     */
+    public void onPlayerHit(IngamePlayer ingamePlayer) {
+        System.out.println("Hit Player for " + this.getDamage() + " damage!!!!");
+        ingamePlayer.applyDamage(this.getDamage());
     }
 
     /**

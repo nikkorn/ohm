@@ -9,10 +9,8 @@ import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Status;
-import com.dumbpug.ohm.projectiles.Projectile;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Pistol;
-import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
 
 /**
@@ -67,7 +65,8 @@ public class Area {
             ingamePlayer.getPlayer().addToPhysicsWorld(this.physicsEnvironment, players.indexOf(ingamePlayer) * 50, 50);
             // Prepare the player with a fresh new status.
             ingamePlayer.setStatus(new Status());
-            // TODO REmove! Give the player a pistol!
+
+            // TODO Remove! Give the player a pistol!
             ingamePlayer.getStatus().setEquippedWeapon(new Pistol());
         }
         this.players = players;
@@ -91,34 +90,12 @@ public class Area {
     public void tick() {
         // Update the physics environment.
         physicsEnvironment.update();
-        // Determine whether any players have generated any projectiles.
-        CheckForGeneratedProjectiles();
+        // Update the projectiles pool.
+        projectiles.tick(this.players);
         // Process fall-outs.
         CheckForFallOuts();
     }
 
-    /**
-     * Check whether any players have generated any projectiles.
-     */
-    private void CheckForGeneratedProjectiles() {
-        // Check each player in turn.
-        for (IngamePlayer player : players) {
-            // Get the player's current weapon (if any).
-            Weapon activeWeapon = player.getStatus().getEquippedWeapon();
-            // Do we have an equipped weapon?
-            if (activeWeapon != null) {
-                // Has this weapon generated any projectiles?
-                for (Projectile projectile : activeWeapon.getNewProjectiles()) {
-                    // Apply the rotation/position of the player to the projectile.
-                    projectile.fireAt(player.getPlayer().getX(), player.getPlayer().getY(), player.getPlayer().getAngleOfAim());
-                    // Add the projectile to the area.
-                    this.projectiles.add(projectile);
-                    // Add the projectile physics box to the physics environment.
-                    this.physicsEnvironment.addBox(projectile.getPhysicsBox());
-                }
-            }
-        }
-    }
 
     /**
      * Check for fall-outs (player, pickup, projectile)

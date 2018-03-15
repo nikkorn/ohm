@@ -1,6 +1,8 @@
 package com.dumbpug.ohm.projectiles;
 
 import com.dumbpug.ohm.nbp.Environment;
+import com.dumbpug.ohm.player.IngamePlayer;
+import com.dumbpug.ohm.weapons.Weapon;
 import java.util.ArrayList;
 
 /**
@@ -25,24 +27,6 @@ public class ProjectilePool {
     }
 
     /**
-     * Tick the projectiles pool.
-     */
-    public void tick() {
-        // Check for projectile collisions with other entities.
-        checkForCollisions();
-        // Remove stale projectiles.
-        removeStaleProjectiles();
-    }
-
-    /**
-     * Add a projectile to this pool.
-     * @param projectile The projectile to add.
-     */
-    public void add(Projectile projectile) {
-        this.projectiles.add(projectile);
-    }
-
-    /**
      * Get the projectiles in this pool.
      * @return The projectiles in this pool.
      */
@@ -51,12 +35,61 @@ public class ProjectilePool {
     }
 
     /**
-     *
+     * Tick the projectiles pool.
+     * @param players The in-game players who can generate projectiles.
      */
-    private void checkForCollisions() {
-
+    public void tick(ArrayList<IngamePlayer> players) {
+        // Check for whether any projectiles have not left their owner players box.
+        checkForProjectilesPrimedForOwnerHit();
+        // Check whether any players have generated any projectiles and adds them to the pool.
+        checkForPlayerGeneratedProjectiles(players);
+        // Check for projectile collisions with other entities.
+        checkForCollisions();
+        // Remove stale projectiles.
+        removeStaleProjectiles();
     }
 
-    private void removeStaleProjectiles() {
+    /**
+     * Check for whether any projectiles have not left their owner players box.
+     */
+    private void checkForProjectilesPrimedForOwnerHit() {
+        // TODO Check for any projectiles that cannot hit their owner.
+        // TODO If that projectile is NOT intersecting their owners physics box then make it so they can.
     }
+
+    /**
+     * Check whether any players have generated any projectiles and adds them to the pool.
+     * @param players The in-game players who can generate projectiles.
+     */
+    private void checkForPlayerGeneratedProjectiles(ArrayList<IngamePlayer> players) {
+        // Check each player in turn.
+        for (IngamePlayer player : players) {
+            // Get the player's current weapon (if any).
+            Weapon activeWeapon = player.getStatus().getEquippedWeapon();
+            // Do we have an equipped weapon?
+            if (activeWeapon != null) {
+                // Has this weapon generated any projectiles?
+                for (Projectile projectile : activeWeapon.getNewProjectiles()) {
+                    // Set the owner of the projectile to be the player who fired it.
+                    projectile.setOwner(player.getPlayer());
+                    // Apply the rotation/position of the player to the projectile.
+                    projectile.fireAt(player.getPlayer().getX(), player.getPlayer().getY(), player.getPlayer().getAngleOfAim());
+                    // Add the projectile to the pool.
+                    this.projectiles.add(projectile);
+                    // Add the projectile physics box to the physics environment.
+                    this.physicsEnvironment.addBox(projectile.getPhysicsBox());
+                }
+            }
+        }
+    }
+
+    /**
+     * Check for projectile collisions.
+     */
+    private void checkForCollisions() {}
+
+    /**
+     * Remove any stale projectiles.
+     */
+    private void removeStaleProjectiles() {}
 }
