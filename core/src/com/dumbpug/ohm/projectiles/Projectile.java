@@ -114,7 +114,7 @@ public abstract class Projectile implements IPhysicsEntity {
      * @param ingamePlayer The in-game player.
      */
     public void onPlayerHit(IngamePlayer ingamePlayer) {
-        System.out.println("Hit Player for " + this.getDamage() + " damage!!!!");
+        System.out.println("Hit Player " + ingamePlayer.getPlayer() + "for " + this.getDamage() + " damage!!!!");
         ingamePlayer.applyDamage(this.getDamage());
     }
 

@@ -106,4 +106,10 @@ public abstract class Weapon {
      * @return The maximum amount of ammo for this weapon.
      */
     public abstract int getMaxAmmoAmount();
+
+    /**
+     * Gets the type of the weapon.
+     * @return The type of the weapon.
+     */
+    public abstract WeaponType getType();
 }

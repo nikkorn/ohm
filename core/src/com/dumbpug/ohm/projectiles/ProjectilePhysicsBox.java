@@ -21,6 +21,10 @@ public class ProjectilePhysicsBox extends Box {
      * Whether the projectile physics box is stale.
      */
     private boolean isStale = false;
+    /**
+     * Whether the projectile has already hit something.
+     */
+    private boolean hasHitSomething = false;
 
     /**
      * Create a new instance of the ProjectilePhysicsBox class.
@@ -77,6 +81,8 @@ public class ProjectilePhysicsBox extends Box {
         projectile.onPlayerHit(player);
         // This projectile has hit a player and is now stale.
         this.isStale = true;
+        // This projectile has hit something.
+        this.hasHitSomething = true;
     }
 
     /**
@@ -87,10 +93,17 @@ public class ProjectilePhysicsBox extends Box {
         System.out.println("Hit pickup!");
         // This projectile has hit a pickup and is now stale.
         this.isStale = true;
+        // This projectile has hit something.
+        this.hasHitSomething = true;
     }
 
     @Override
     protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {
+        // No need to handle collisions if we have already hit something.
+        if (this.hasHitSomething) {
+            // TODO Remove when we figure out how this can happen twice when hitting a player sometimes.
+            return;
+        }
         // How we handle this collision depends on the type of physics box we have hit.
         if (collidingBox.getName().equals("PLAYER")) {
             handlePlayerCollision((PlayerPhysicsBox)collidingBox);

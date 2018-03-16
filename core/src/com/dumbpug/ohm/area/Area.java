@@ -54,80 +54,6 @@ public class Area {
     }
 
     /**
-     * Prepare players for a game in this area.
-     * @param players The players to prepare.
-     */
-    private void preparePlayers(ArrayList<IngamePlayer> players) {
-        // Prepare each player.
-        for(IngamePlayer ingamePlayer : players) {
-            // Add player to this area at the player spawn and
-            // Set the player at a free spawn. TODO Add correct positions.
-            ingamePlayer.getPlayer().addToPhysicsWorld(this.physicsEnvironment, players.indexOf(ingamePlayer) * 50, 50);
-            // Prepare the player with a fresh new status.
-            ingamePlayer.setStatus(new Status());
-
-            // TODO Remove! Give the player a pistol!
-            ingamePlayer.getStatus().setEquippedWeapon(new Pistol());
-        }
-        this.players = players;
-    }
-
-    /**
-     * Create the area platforms.
-     */
-    private void createPlatforms() {
-        this.platforms = new ArrayList<Platform>();
-        for (int x = 0; x < Constants.AREA_PLATFORMS_SIZE; x++) {
-            for (int y = 0; y < Constants.AREA_PLATFORMS_SIZE; y++) {
-                this.platforms.add(new Platform(x, y));
-            }
-        }
-    }
-
-    /**
-     * Tick the area.
-     */
-    public void tick() {
-        // Update the physics environment.
-        physicsEnvironment.update();
-        // Update the projectiles pool.
-        projectiles.tick(this.players);
-        // Process fall-outs.
-        CheckForFallOuts();
-    }
-
-
-    /**
-     * Check for fall-outs (player, pickup, projectile)
-     */
-    private void CheckForFallOuts() {
-        // TODO Check for whether players have fallen out.
-        // TODO Check for whether projectiles have fallen out.
-        // TODO Check for whether pickups have fallen out.
-    }
-
-    /**
-     * Whether the specified entity should fall out of the area.
-     * This will happen when the entity is not over ground (e.g. platform) and is not airborne.
-     * @param entity The entity to check.
-     * @return Whether the specified entity should fall out of the area.
-     */
-    private boolean shouldFallOut(IPhysicsEntity entity) {
-        // An airborne entity cannot fall out.
-        if (entity.isAirborne()) {
-            return false;
-        }
-        // The entity should be on the ground, check to make sure it is on a platform.
-        for (Platform platform : platforms) {
-            if (NBPMath.doBoxesCollide(platform, entity.getPhysicsBox())) {
-                return false;
-            }
-        }
-        // We could not find any piece of ground that the entity is standing on.
-        return true;
-    }
-
-    /**
      * Get the pool of projectiles in this area.
      * @return The pool of projectiles in this area.
      */
@@ -160,4 +86,79 @@ public class Area {
      * @return The platforms in this area.
      */
     public ArrayList<Platform> getPlatforms() { return this.platforms; }
+
+    /**
+     * Tick the area.
+     */
+    public void tick() {
+        // Update the physics environment.
+        physicsEnvironment.update();
+        // Update the projectiles pool.
+        projectiles.tick(this.players);
+        // Process fall-outs.
+        CheckForFallOuts();
+    }
+
+    /**
+     * Create the area platforms.
+     */
+    private void createPlatforms() {
+        this.platforms = new ArrayList<Platform>();
+        for (int x = 0; x < Constants.AREA_PLATFORMS_SIZE; x++) {
+            for (int y = 0; y < Constants.AREA_PLATFORMS_SIZE; y++) {
+                this.platforms.add(new Platform(x, y));
+            }
+        }
+    }
+
+    /**
+     * Prepare players for a game in this area.
+     * @param players The players to prepare.
+     */
+    private void preparePlayers(ArrayList<IngamePlayer> players) {
+        // Prepare each player.
+        for(IngamePlayer ingamePlayer : players) {
+            // Add player to this area at the player spawn and
+            // Set the player at a free spawn. TODO Add correct positions.
+            ingamePlayer.getPlayer().setPosition(players.indexOf(ingamePlayer) * 50, 50);
+            // Add the characters physics box to the world.
+            physicsEnvironment.addBox(ingamePlayer.getPlayer().getPhysicsBox());
+            // Prepare the player with a fresh new status.
+            ingamePlayer.setStatus(new Status());
+
+            // TODO Remove! Give the player a pistol!
+            ingamePlayer.getStatus().setEquippedWeapon(new Pistol());
+        }
+        this.players = players;
+    }
+
+    /**
+     * Check for fall-outs (player, pickup, projectile)
+     */
+    private void CheckForFallOuts() {
+        // TODO Check for whether players have fallen out.
+        // TODO Check for whether projectiles have fallen out.
+        // TODO Check for whether pickups have fallen out.
+    }
+
+    /**
+     * Whether the specified entity should fall out of the area.
+     * This will happen when the entity is not over ground (e.g. platform) and is not airborne.
+     * @param entity The entity to check.
+     * @return Whether the specified entity should fall out of the area.
+     */
+    private boolean shouldFallOut(IPhysicsEntity entity) {
+        // An airborne entity cannot fall out.
+        if (entity.isAirborne()) {
+            return false;
+        }
+        // The entity should be on the ground, check to make sure it is on a platform.
+        for (Platform platform : platforms) {
+            if (NBPMath.doBoxesCollide(platform, entity.getPhysicsBox())) {
+                return false;
+            }
+        }
+        // We could not find any piece of ground that the entity is standing on.
+        return true;
+    }
 }

@@ -52,10 +52,6 @@ public class Game implements State {
     public void tick(StateManager manager) {
         // Process player input.
         processPlayerInput();
-        // Tick the players.
-        for (IngamePlayer player : players) {
-            player.getPlayer().tick();
-        }
         // Tick the area.
         this.area.tick();
     }

@@ -44,4 +44,13 @@ public class Pistol extends Weapon {
     public int getMaxAmmoAmount() {
         return Constants.PROJECTILE_PISTOL_MAX_AMMO * 10000;
     }
+
+    /**
+     * Gets the type of the weapon.
+     * @return The type of the weapon.
+     */
+    @Override
+    public WeaponType getType() {
+        return WeaponType.PISTOL;
+    }
 }

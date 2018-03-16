@@ -5,15 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.pickup.Pickup;
-import com.dumbpug.ohm.area.pickup.PickupPhysicsBox;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.player.IngamePlayer;
+import com.dumbpug.ohm.player.PlayerRenderer;
 import com.dumbpug.ohm.projectiles.Projectile;
-import com.dumbpug.ohm.resources.Animation;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.PickupResources;
-import com.dumbpug.ohm.resources.PlayerResources;
-
 import java.util.ArrayList;
 
 /**
@@ -23,6 +20,7 @@ public class AreaRenderer {
 
     /**
      * Render an area.
+     * @param batch The sprite batch.
      * @param area The area to render.
      */
     public void render(SpriteBatch batch, Area area) {
@@ -33,22 +31,20 @@ public class AreaRenderer {
         batch.setProjectionMatrix(camera.combined);
         // Draw the platforms.
         drawPlatforms(batch, area.getPlatforms());
-
-        // TODO Draw players, projectiles and pickups in Y order.
         // Draw the projectiles.
         drawProjectiles(batch, area.getProjectilePool().getProjectiles());
         // Draw the pickups.
         drawPickups(batch, area.getPickups());
-        // Draw players.
-        for (IngamePlayer player : area.getIngamePlayers()) {
-            player.getPlayer().draw(batch);
+        // Draw the players.
+        for (IngamePlayer ingamePlayer : area.getIngamePlayers()) {
+            PlayerRenderer.render(batch, ingamePlayer);
         }
     }
 
     /**
      * Draw the platforms.
-     * @param batch
-     * @param platforms
+     * @param batch The sprite batch.
+     * @param platforms The platforms.
      */
     private void drawPlatforms(SpriteBatch batch, ArrayList<Platform> platforms) {
         for (int y = Constants.AREA_PLATFORMS_SIZE - 1; y >= 0; y--) {
@@ -65,8 +61,8 @@ public class AreaRenderer {
 
     /**
      * Draw the projectiles.
-     * @param batch
-     * @param projectiles
+     * @param batch The sprite batch.
+     * @param projectiles The projectiles.
      */
     private void drawProjectiles(SpriteBatch batch, ArrayList<Projectile> projectiles) {
         for (Projectile projectile : projectiles) {
@@ -83,8 +79,8 @@ public class AreaRenderer {
 
     /**
      * Draw the pickups.
-     * @param batch
-     * @param pickups
+     * @param batch The sprite batch.
+     * @param pickups The pickups to draw.
      */
     private void drawPickups(SpriteBatch batch, ArrayList<Pickup> pickups) {
         for (Pickup pickup : pickups) {
@@ -98,10 +94,10 @@ public class AreaRenderer {
 
     /**
      * Get the platform at the x/y position.
-     * @param platforms
-     * @param x
-     * @param y
-     * @return
+     * @param platforms The platforms.
+     * @param x The x position.
+     * @param y The y position.
+     * @return The platform at the x/y position.
      */
     private Platform getPlatformAt(ArrayList<Platform> platforms, int x, int y) {
         for (Platform platform : platforms) {
