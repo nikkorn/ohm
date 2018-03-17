@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.pickup.Pickup;
+import com.dumbpug.ohm.area.pickup.PickupPool;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.PlayerRenderer;
@@ -34,7 +35,7 @@ public class AreaRenderer {
         // Draw the projectiles.
         drawProjectiles(batch, area.getProjectilePool().getProjectiles());
         // Draw the pickups.
-        drawPickups(batch, area.getPickups());
+        drawPickups(batch, area.getPickupPool());
         // Draw the players.
         for (IngamePlayer ingamePlayer : area.getIngamePlayers()) {
             PlayerRenderer.render(batch, ingamePlayer);
@@ -80,10 +81,10 @@ public class AreaRenderer {
     /**
      * Draw the pickups.
      * @param batch The sprite batch.
-     * @param pickups The pickups to draw.
+     * @param pickupPool The pool of pickups to draw.
      */
-    private void drawPickups(SpriteBatch batch, ArrayList<Pickup> pickups) {
-        for (Pickup pickup : pickups) {
+    private void drawPickups(SpriteBatch batch, PickupPool pickupPool) {
+        for (Pickup pickup : pickupPool.getPickups()) {
             // Get the physics box of the pickup.
             Box pickupPhysicsBox = pickup.getPhysicsBox();
             // Get the current frame of the pickup animation.

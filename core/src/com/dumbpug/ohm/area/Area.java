@@ -4,13 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.pickup.Pickup;
+import com.dumbpug.ohm.area.pickup.PickupCategory;
+import com.dumbpug.ohm.area.pickup.PickupPool;
 import com.dumbpug.ohm.area.pickup.PickupType;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;
+import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.player.IngamePlayer;
+import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Pistol;
+import com.dumbpug.ohm.weapons.WeaponFactory;
+
 import java.util.ArrayList;
 
 /**
@@ -20,13 +26,13 @@ public class Area {
     /** The area camera. */
     private OrthographicCamera camera;
     /** The physics world for this area. */
-    private Environment physicsEnvironment;
+    private AreaEnvironment physicsEnvironment;
     /** The platforms that make up this area. */
     private ArrayList<Platform> platforms;
-    /** The pool of projectiles in this area. */
-    private ProjectilePool projectiles;
-    /** The pickups in this area. */
-    private ArrayList<Pickup> pickups = new ArrayList<Pickup>();
+    /** The pool of projectilePool in this area. */
+    private ProjectilePool projectilePool;
+    /** The ppool of pickups in this area. */
+    private PickupPool pickupPool;
     /** The in-game players. */
     private ArrayList<IngamePlayer> players;
 
@@ -36,9 +42,11 @@ public class Area {
      */
     public Area(ArrayList<IngamePlayer> players) {
         // Create the physics world.
-        this.physicsEnvironment = new Environment();
+        this.physicsEnvironment = new AreaEnvironment();
         // Create the pool of projectiles for this area.
-        this.projectiles = new ProjectilePool(this.physicsEnvironment);
+        this.projectilePool = new ProjectilePool(this.physicsEnvironment);
+        // Create the pool of pickups for this area.
+        this.pickupPool = new PickupPool(this.physicsEnvironment);
         // Create the platforms.
         createPlatforms();
         // Prepare the players that have been added to the area.
@@ -50,23 +58,23 @@ public class Area {
         camera.position.set(70, 70, 0);
 
         // TODO REMOVE!
-        this.pickups.add(new Pickup(PickupType.PISTOL, 70, 50));
+        this.pickupPool.drop(new Point(70, 50), new Pistol());
     }
 
     /**
-     * Get the pool of projectiles in this area.
+     * Gets the pool of projectiles in this area.
      * @return The pool of projectiles in this area.
      */
     public ProjectilePool getProjectilePool() {
-        return projectiles;
+        return projectilePool;
     }
 
     /**
-     * Get the pickups in this area.
-     * @return The pickups in this area.
+     * Gets the pool of pickups in this area.
+     * @return The pool of pickups in this area.
      */
-    public ArrayList<Pickup> getPickups() {
-        return pickups;
+    public PickupPool getPickupPool() {
+        return pickupPool;
     }
 
     /**
@@ -93,8 +101,8 @@ public class Area {
     public void tick() {
         // Update the physics environment.
         physicsEnvironment.update();
-        // Update the projectiles pool.
-        projectiles.tick(this.players);
+        // Update the projectilePool pool.
+        projectilePool.tick(this.players);
         // Process fall-outs.
         CheckForFallOuts();
     }
@@ -137,7 +145,7 @@ public class Area {
      */
     private void CheckForFallOuts() {
         // TODO Check for whether players have fallen out.
-        // TODO Check for whether projectiles have fallen out.
+        // TODO Check for whether projectilePool have fallen out.
         // TODO Check for whether pickups have fallen out.
     }
 
@@ -160,5 +168,60 @@ public class Area {
         }
         // We could not find any piece of ground that the entity is standing on.
         return true;
+    }
+
+    /**
+     * Handles a player request to pick up a weapon.
+     * This can only happen if the player is standing over a weapon pickup.
+     * @param ingamePlayer The player requesting to pick up a weapon.
+     */
+    public void pickUpPlayerWeapon(IngamePlayer ingamePlayer) {
+        // Get all pickups in the area that the player is standing over.
+        ArrayList<Pickup> closePickups = this.physicsEnvironment.getPickupsTouchingPlayer(ingamePlayer.getPlayer());
+        // Pick up the first one we are standing over that is a weapon.
+        for (Pickup pickup : closePickups) {
+            // We only care about weapon pickups.
+            if (pickup.getCategory() == PickupCategory.WEAPON) {
+                // Remove this pickup from the pickup pool.
+                this.pickupPool.remove(pickup);
+                // Give the player the weapon that this pickup represents.
+                ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(pickup));
+                // We only want to pick up one weapon.
+                return;
+            }
+        }
+    }
+
+    /**
+     * Handles a plyer requesting
+     * @param ingamePlayer
+     */
+    public void swapOrDropPlayerWeapon(IngamePlayer ingamePlayer) {
+        // Get all pickups in the area that the player is standing over.
+        ArrayList<Pickup> closePickups = this.physicsEnvironment.getPickupsTouchingPlayer(ingamePlayer.getPlayer());
+        // Try to find a weapon pickup that the player is standing over.
+        // If there is one then we are dropping the player's current
+        // weapon and picking up the one we are standing over.
+        Pickup closeWeaponPickup = null;
+        // Try to find a weapon pickup we are close enough to grab.
+        for (Pickup pickup : closePickups) {
+            // We only care about weapon pickups.
+            if (pickup.getCategory() == PickupCategory.WEAPON) {
+                // We have found a close weapon pickup to swap with our current weapon.
+                closeWeaponPickup = pickup;
+                // We only want to pick up one weapon.
+                break;
+            }
+        }
+        // Whether we are droppng/swapping deepends on whether we have a weapon to swap with.
+        if (closeWeaponPickup != null) {
+            // TODO Do the swap!
+        } else {
+            // Just drop the current weapon.
+            this.pickupPool.drop(new Point(ingamePlayer.getPlayer().getX(),
+                    ingamePlayer.getPlayer().getY()), ingamePlayer.getStatus().getEquippedWeapon());
+            // Un-equip the current weapon.
+            ingamePlayer.getStatus().setEquippedWeapon(null);
+        }
     }
 }

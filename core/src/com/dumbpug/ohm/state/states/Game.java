@@ -108,6 +108,19 @@ public class Game implements State {
                     }
                 }
             }
+            // Has the player tried to drop/swap their current weapon?
+            if (inputProvider.isControlJustPressed(Control.SECONDARY)) {
+                // What we do here depends on whether the player is already holding a weapon.
+                if (ingamePlayer.getStatus().getEquippedWeapon() != null) {
+                    // The player wants to swap their weapon for a weapon pickup
+                    // if they are standing over one. Or drop their weapon if
+                    // they are not standing over a weapon pickup.
+                    area.swapOrDropPlayerWeapon(ingamePlayer);
+                } else {
+                    // The player has no weapon but is trying to pick one up.
+                    area.pickUpPlayerWeapon(ingamePlayer);
+                }
+            }
         }
     }
 

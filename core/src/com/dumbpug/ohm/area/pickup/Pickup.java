@@ -60,6 +60,34 @@ public class Pickup implements IPhysicsEntity {
     }
 
     /**
+     * Gets the category of this pickup.
+     * @return The category of this pickup.
+     */
+    public PickupCategory getCategory() {
+        // The category of this pickup depends on its type.
+        switch (this.type) {
+            case PISTOL:
+            case SHOTGUN:
+            case GRENADE:
+            case UZI:
+            case SNIPER:
+            case ROCKET_LAUNCHER:
+            case REMOTE_ROCKET_LAUNCHER:
+            case AUTO_TURRET:
+                return PickupCategory.WEAPON;
+            case SHIELD:
+            case CHARGE:
+            case BUILDER:
+            case REFLECT:
+                return PickupCategory.POWER;
+            case AMMO:
+                return PickupCategory.AMMO;
+            default:
+                throw new RuntimeException("Unknown weapon type: " + this.type);
+        }
+    }
+
+    /**
      * Get the physics box of the entity.
      * @return The physics box of the entity.
      */

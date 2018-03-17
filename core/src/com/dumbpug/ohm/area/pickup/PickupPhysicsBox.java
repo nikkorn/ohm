@@ -6,6 +6,9 @@ import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
 import com.dumbpug.ohm.nbp.Sensor;
 import com.dumbpug.ohm.nbp.point.IntersectionPoint;
+import com.dumbpug.ohm.player.Player;
+
+import java.util.ArrayList;
 
 /**
  * A physics box for a pickup.
