@@ -213,15 +213,17 @@ public class Area {
                 break;
             }
         }
-        // Whether we are droppng/swapping deepends on whether we have a weapon to swap with.
+        // Just drop the current weapon.
+        this.pickupPool.drop(new Point(ingamePlayer.getPlayer().getX(),
+                ingamePlayer.getPlayer().getY()), ingamePlayer.getStatus().getEquippedWeapon());
+        // Un-equip the current weapon.
+        ingamePlayer.getStatus().setEquippedWeapon(null);
+        // Whether we are swapping depends on whether we have a weapon to swap with.
         if (closeWeaponPickup != null) {
-            // TODO Do the swap!
-        } else {
-            // Just drop the current weapon.
-            this.pickupPool.drop(new Point(ingamePlayer.getPlayer().getX(),
-                    ingamePlayer.getPlayer().getY()), ingamePlayer.getStatus().getEquippedWeapon());
-            // Un-equip the current weapon.
-            ingamePlayer.getStatus().setEquippedWeapon(null);
+            // Remove this pickup from the pickup pool.
+            this.pickupPool.remove(closeWeaponPickup);
+            // Give the player the weapon that this pickup represents.
+            ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(closeWeaponPickup));
         }
     }
 }

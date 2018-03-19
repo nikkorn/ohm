@@ -85,6 +85,8 @@ public class PickupPool {
         pickup.setCapacity(weapon.getAmmo());
         // Add the pickup to this pool.
         this.pickups.add(pickup);
+        // Add the pickup physics box to the physics environment.
+        this.physicsEnvironment.addBox(pickup.getPhysicsBox());
     }
 
     /**
@@ -101,6 +103,9 @@ public class PickupPool {
      * @param pickup The pickup to remove.
      */
     public void remove(Pickup pickup) {
+        // Remove the pickup from the pool.
         this.pickups.remove(pickup);
+        // Mark the pickup physics box to be deleted from the physics environment.
+        pickup.getPhysicsBox().markForDeletion();
     }
 }
