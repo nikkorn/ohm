@@ -42,6 +42,14 @@ public class Status {
     }
 
     /**
+     * Gets whether the player is dead.
+     * @return Whether the player is dead.
+     */
+    public boolean isDead() {
+        return this.life <= 0;
+    }
+
+    /**
      * Get whether the player has fallen out.
      * @return Whether the player has fallen out.
      */

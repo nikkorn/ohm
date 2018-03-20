@@ -1,6 +1,6 @@
 package com.dumbpug.ohm.area;
 
-import com.dumbpug.ohm.area.pickup.Pickup;
+import com.dumbpug.ohm.pickup.Pickup;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.NBPMath;

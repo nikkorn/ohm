@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.area.pickup;
+package com.dumbpug.ohm.pickup;
 
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.Bloom;

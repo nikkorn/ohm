@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.AreaRenderer;
+import com.dumbpug.ohm.hud.HUDRenderer;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.player.IngamePlayer;
@@ -24,9 +25,13 @@ public class Game implements State {
      */
     private Area area;
     /**
-     * The renderer for areas.
+     * The renderer for the game area.
      */
     private AreaRenderer areaRenderer;
+    /**
+     * The renderer for the game HUD.
+     */
+    private HUDRenderer hudRenderer;
     /**
      * The players.
      */
@@ -42,6 +47,8 @@ public class Game implements State {
         this.area = new Area(players);
         // Create the area renderer.
         this.areaRenderer = new AreaRenderer();
+        // Create the HUD renderer.
+        this.hudRenderer = new HUDRenderer();
     }
 
     /**
@@ -133,6 +140,8 @@ public class Game implements State {
         batch.draw(AreaResources.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Draw the area.
         this.areaRenderer.render(batch, area);
+        // Draw the HUD.
+        this.hudRenderer.render(batch, area.getIngamePlayers());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.dumbpug.ohm.projectiles;
 
-import com.dumbpug.ohm.area.pickup.PickupPhysicsBox;
+import com.dumbpug.ohm.pickup.PickupPhysicsBox;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;

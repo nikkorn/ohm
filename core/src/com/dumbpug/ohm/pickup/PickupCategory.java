@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.area.pickup;
+package com.dumbpug.ohm.pickup;
 
 /**
  * Enumeration of pickup categories.

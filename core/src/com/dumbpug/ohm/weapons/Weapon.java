@@ -1,6 +1,5 @@
 package com.dumbpug.ohm.weapons;
 
-import com.dumbpug.ohm.area.pickup.Pickup;
 import com.dumbpug.ohm.projectiles.Projectile;
 import java.util.ArrayList;
 

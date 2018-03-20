@@ -1,4 +1,4 @@
-package com.dumbpug.ohm.area.pickup;
+package com.dumbpug.ohm.pickup;
 
 import com.dumbpug.ohm.area.IPhysicsEntity;
 import com.dumbpug.ohm.nbp.Box;

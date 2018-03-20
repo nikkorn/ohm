@@ -1,7 +1,7 @@
 package com.dumbpug.ohm.weapons;
 
-import com.dumbpug.ohm.area.pickup.Pickup;
-import com.dumbpug.ohm.area.pickup.PickupCategory;
+import com.dumbpug.ohm.pickup.Pickup;
+import com.dumbpug.ohm.pickup.PickupCategory;
 
 /**
  * Factory for creating Weapon instances.

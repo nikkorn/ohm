@@ -2,7 +2,7 @@ package com.dumbpug.ohm.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.dumbpug.ohm.area.pickup.PickupType;
+import com.dumbpug.ohm.pickup.PickupType;
 import java.util.HashMap;
 
 /**
