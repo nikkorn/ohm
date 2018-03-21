@@ -6,37 +6,37 @@ package com.dumbpug.ohm;
 public class Constants {
 
     /** Area. */
-    public static final int BLOCK_SIZE                   = 16;
-    public static final int AREA_TILE_HEIGHT             = 8;
-    public static final long AREA_TRANSITION_DURATION_MS = 2000;
+    public static final int BLOCK_SIZE                      = 16;
+    public static final int AREA_TILE_HEIGHT                = 8;
+    public static final long AREA_TRANSITION_DURATION_MS    = 2000;
 
-    public static final int PLATFORM_SIZE                = 48;
-    public static final int AREA_PLATFORMS_SIZE          = 7;
-    public static final float AREA_ZOOM                  = 0.5f;
+    public static final int PLATFORM_SIZE                   = 48;
+    public static final int AREA_PLATFORMS_SIZE             = 7;
+    public static final float AREA_ZOOM                     = 0.5f;
 
     /** Pickups. */
     public static final int PICKUP_SIZE = 12;
 
     /** Projectiles. */
-    public static final float PROJECTILE_BULLET_SIZE          = 6;
-    public static final float PROJECTILE_BULLET_FIRE_VELOCITY = 2;
+    public static final float PROJECTILE_BULLET_SIZE            = 6;
+    public static final float PROJECTILE_BULLET_FIRE_VELOCITY   = 2;
 
     /** Weapons. */
-    public static final int PROJECTILE_BASIC_BULLET_DAMAGE    = 1;
-    public static final int PROJECTILE_SNIPER_BULLET_DAMAGE   = 4;
+    public static final int PROJECTILE_BASIC_BULLET_DAMAGE      = 1;
+    public static final int PROJECTILE_SNIPER_BULLET_DAMAGE     = 4;
 
-    public static final long PROJECTILE_PISTOL_COOL_DOWN = 500l;
-    public static final int PROJECTILE_PISTOL_MAX_AMMO   = 6;
+    public static final long PROJECTILE_PISTOL_COOL_DOWN        = 500l;
+    public static final int PROJECTILE_PISTOL_MAX_AMMO          = 6;
 
-    public static final long PROJECTILE_SNIPER_COOL_DOWN = 1500l;
-    public static final int PROJECTILE_SNIPER_MAX_AMMO   = 3;
+    public static final long PROJECTILE_SNIPER_COOL_DOWN        = 1500l;
+    public static final int PROJECTILE_SNIPER_MAX_AMMO          = 3;
 
     /** Player. */
     public static final int PLAYER_SIZE                         = 14;
     public static final int PLAYER_PHYSICS_SIZE_WIDTH           = 8;
 
-    public static final float PLAYER_AIM_TARGET_DISTANCE  = PLAYER_SIZE * 2;
-    public static final int PLAYER_LIFE                   = 10;
+    public static final float PLAYER_AIM_TARGET_DISTANCE        = PLAYER_SIZE * 2;
+    public static final int PLAYER_LIFE                         = 8;
 
     /* Character. */
     public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1f;

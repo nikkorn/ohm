@@ -15,5 +15,9 @@ public class HUDRenderer {
      * @param ingamePlayers The in-game players.
      */
     public void render(SpriteBatch batch, ArrayList<IngamePlayer> ingamePlayers) {
+        // Render a status box for each player.
+        for (IngamePlayer player : ingamePlayers) {
+            StatusBox.render(batch, ingamePlayers.size(), ingamePlayers.indexOf(player), player);
+        }
     }
 }

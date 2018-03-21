@@ -11,9 +11,11 @@ import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.input.KeyboardInputProvider;
 import com.dumbpug.ohm.input.OuyaInputProvider;
 import com.dumbpug.ohm.resources.AreaResources;
+import com.dumbpug.ohm.resources.HUDResources;
 import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PickupResources;
 import com.dumbpug.ohm.resources.PlayerResources;
+import com.dumbpug.ohm.resources.StatusBarResources;
 import com.dumbpug.ohm.resources.WeaponResources;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.states.Title;
@@ -44,6 +46,7 @@ public class Ohm extends ApplicationAdapter {
         ParticleResources.load();
         PickupResources.load();
         WeaponResources.load();
+        HUDResources.load();
 
         // Create the input provider specific to the system.
         if (Ouya.isRunningOnOuya()) {
