@@ -1,5 +1,6 @@
 package com.dumbpug.ohm.area;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,21 @@ import java.util.ArrayList;
  * The area renderer.
  */
 public class AreaRenderer {
+    /**
+     * The area camera.
+     */
+    OrthographicCamera camera;
+
+    /**
+     * Creates a new instance of the AreaRender class.
+     */
+    public AreaRenderer() {
+        // Create the area camera.
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false);
+        camera.zoom = Constants.AREA_ZOOM;
+        camera.position.set(70, 70, 0);
+    }
 
     /**
      * Render an area.
@@ -25,10 +41,9 @@ public class AreaRenderer {
      * @param area The area to render.
      */
     public void render(SpriteBatch batch, Area area) {
-        // Get the area camera.
-        OrthographicCamera camera = area.getCamera();
-        // Update the camera.
+        // Update the area camera.
         camera.update();
+        // Apply the area camera projection matrix to the application sprite batch.
         batch.setProjectionMatrix(camera.combined);
         // Draw the platforms.
         drawPlatforms(batch, area.getPlatforms());

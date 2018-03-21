@@ -1,7 +1,5 @@
 package com.dumbpug.ohm.area;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.pickup.Pickup;
 import com.dumbpug.ohm.pickup.PickupCategory;
@@ -13,22 +11,19 @@ import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.WeaponFactory;
-
 import java.util.ArrayList;
 
 /**
  * Represents an area in game.
  */
 public class Area {
-    /** The area camera. */
-    private OrthographicCamera camera;
-    /** The physics world for this area. */
+    /** The physics environment for this area. */
     private AreaEnvironment physicsEnvironment;
     /** The platforms that make up this area. */
     private ArrayList<Platform> platforms;
-    /** The pool of projectilePool in this area. */
+    /** The pool of projectiles in this area. */
     private ProjectilePool projectilePool;
-    /** The ppool of pickups in this area. */
+    /** The pool of pickups in this area. */
     private PickupPool pickupPool;
     /** The in-game players. */
     private ArrayList<IngamePlayer> players;
@@ -48,11 +43,6 @@ public class Area {
         createPlatforms();
         // Prepare the players that have been added to the area.
         preparePlayers(players);
-        // Create the area camera.
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.setToOrtho(false);
-        camera.zoom = Constants.AREA_ZOOM;
-        camera.position.set(70, 70, 0);
 
         // TODO REMOVE!
         this.pickupPool.drop(new Point(70, 50), new Pistol());
@@ -73,12 +63,6 @@ public class Area {
     public PickupPool getPickupPool() {
         return pickupPool;
     }
-
-    /**
-     * Get the area camera.
-     * @return The area camera.
-     */
-    public OrthographicCamera getCamera() { return this.camera; }
 
     /**
      * Get the in-game players.
