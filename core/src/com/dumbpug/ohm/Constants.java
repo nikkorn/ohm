@@ -53,6 +53,6 @@ public class Constants {
     public static final int PARTICLES_EMITTER_PARTICLE_LIMIT  = 80;
 
     /** HUD. */
-    public static final int HUD_STATUS_BOX_WIDTH               = 51;
+    public static final int HUD_STATUS_BOX_WIDTH               = 50;
     public static final int HUD_STATUS_BOX_HEIGHT              = 27;
 }
