@@ -32,8 +32,7 @@ public class HUDResources {
      * @param colour The player colour.
      * @return The status bar resources for a player colour.
      */
-    public static StatusBarResources getStatusBarResources(PlayerColour colour)
-    {
+    public static StatusBarResources getStatusBarResources(PlayerColour colour) {
         return statusBarResourceMap.get(colour);
     }
 }

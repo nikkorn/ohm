@@ -136,8 +136,6 @@ public class Game implements State {
      * @param batch The sprite batch.
      */
     public void draw(SpriteBatch batch) {
-        // Draw background.
-        batch.draw(AreaResources.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Draw the area.
         this.areaRenderer.render(batch, area);
         // Draw the HUD.

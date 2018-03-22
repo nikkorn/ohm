@@ -50,6 +50,9 @@ public class AreaRenderer {
         camera.update();
         // Apply the area camera projection matrix to the application sprite batch.
         batch.setProjectionMatrix(camera.combined);
+        // Draw the area background.
+        batch.draw(AreaResources.background, Gdx.graphics.getWidth() * -0.5f,
+                Gdx.graphics.getHeight() * -0.5f, Gdx.graphics.getWidth() * 2f, Gdx.graphics.getHeight() * 2f);
         // Draw the platforms.
         drawPlatforms(batch, area.getPlatforms());
         // Draw the projectiles.

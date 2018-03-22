@@ -1,10 +1,12 @@
 package com.dumbpug.ohm.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.resources.AreaResources;
+import com.dumbpug.ohm.resources.ColouredPlayerResources;
 import com.dumbpug.ohm.resources.PlayerResources;
 import com.dumbpug.ohm.resources.WeaponResources;
 import com.dumbpug.ohm.weapons.Weapon;
@@ -20,6 +22,8 @@ public class PlayerRenderer {
      * @param player The in-game player to render.
      */
     public static void render(SpriteBatch batch, IngamePlayer player) {
+        // Draw the player marker that sits underneath the player.
+        drawMarker(batch, player);
         // Draw the character.
         drawCharacter(batch, player.getPlayer());
         // Draw the player's equipped weapon, if they have one.
@@ -27,6 +31,20 @@ public class PlayerRenderer {
             drawEquippedWeapon(batch, player.getPlayer().getPhysicsBox().getCurrentOriginPoint(),
                     player.getPlayer().getAngleOfAim(), player.getStatus().getEquippedWeapon());
         }
+    }
+
+    /**
+     * Draws the marker that sits under the player.
+     * @param batch The sprite batch.
+     * @param player The player.
+     */
+    private static void drawMarker(SpriteBatch batch, IngamePlayer player) {
+        // Get the current player physics box.
+        PlayerPhysicsBox playerPhysicsBox = (PlayerPhysicsBox)player.getPlayer().getPhysicsBox();
+        // Get the player resources for the player colour.
+        ColouredPlayerResources resources = PlayerResources.getResourcesForColour(player.getPlayerColour());
+        // Draw the marker.
+        batch.draw(resources.getPlayerMarker(), playerPhysicsBox.getX() - 4, playerPhysicsBox.getY() - 3);
     }
 
     /**
