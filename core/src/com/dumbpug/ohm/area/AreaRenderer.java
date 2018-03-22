@@ -28,11 +28,16 @@ public class AreaRenderer {
      * Creates a new instance of the AreaRender class.
      */
     public AreaRenderer() {
+        float areaSize = Constants.AREA_PLATFORMS_SIZE * Constants.PLATFORM_SIZE;
         // Create the area camera.
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
-        camera.zoom = Constants.AREA_ZOOM;
-        camera.position.set(70, 70, 0);
+        // Move the camera to the middle of the area.
+        float translateY = (Gdx.graphics.getHeight() / 2f) - (areaSize / 2f);
+        float translateX = (Gdx.graphics.getWidth() / 2f) - (areaSize / 2f);
+        camera.translate(-translateX, -translateY, 0);
+        // Zoom in the camera to look at all the pixel-y goodness.
+        camera.zoom = Constants.AREA_DEFAULT_CAMERA_ZOOM;
     }
 
     /**

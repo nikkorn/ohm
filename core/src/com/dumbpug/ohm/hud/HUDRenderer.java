@@ -23,7 +23,7 @@ public class HUDRenderer {
         // Create the HUD camera.
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);
-        camera.zoom = Constants.AREA_ZOOM;
+        camera.zoom = Constants.HUD_CAMERA_ZOOM;
         camera.position.set(0, 0, 0);
     }
 

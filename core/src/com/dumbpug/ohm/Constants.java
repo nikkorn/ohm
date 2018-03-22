@@ -1,5 +1,7 @@
 package com.dumbpug.ohm;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Game constants.
  */
@@ -12,7 +14,7 @@ public class Constants {
 
     public static final int PLATFORM_SIZE                   = 48;
     public static final int AREA_PLATFORMS_SIZE             = 7;
-    public static final float AREA_ZOOM                     = 0.5f;
+    public static final float AREA_DEFAULT_CAMERA_ZOOM      = ((AREA_PLATFORMS_SIZE * PLATFORM_SIZE) * 1.1f) / Gdx.graphics.getHeight();
 
     /** Pickups. */
     public static final int PICKUP_SIZE = 12;
@@ -53,6 +55,7 @@ public class Constants {
     public static final int PARTICLES_EMITTER_PARTICLE_LIMIT  = 80;
 
     /** HUD. */
+    public static final float HUD_CAMERA_ZOOM                  = 0.5f;
     public static final int HUD_STATUS_BOX_WIDTH               = 50;
     public static final int HUD_STATUS_BOX_HEIGHT              = 27;
 }
