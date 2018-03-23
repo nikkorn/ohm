@@ -1,6 +1,5 @@
 package com.dumbpug.ohm.state.states;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.Area;
 import com.dumbpug.ohm.area.AreaRenderer;
@@ -10,7 +9,6 @@ import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Player;
 import com.dumbpug.ohm.player.Status;
-import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.state.State;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.StateType;
@@ -39,11 +37,12 @@ public class Game implements State {
 
     /**
      * Create a new instance of the Game class.
-     * @param players The players.
+     * @param players The players that will be taking part in the match.
      */
     public Game(ArrayList<IngamePlayer> players) {
+        // Set the players that will be taking part in the match.
         this.players = players;
-        // Create the area.
+        // Create the area to have the match in.
         this.area = new Area(players);
         // Create the area renderer.
         this.areaRenderer = new AreaRenderer();
@@ -57,8 +56,10 @@ public class Game implements State {
      */
     @Override
     public void tick(StateManager manager) {
-        // Process player input.
-        processPlayerInput();
+        // Process player input if the match is still going.
+        if (!area.hasMatchFinished()) {
+            processPlayerInput();
+        }
         // Tick the area.
         this.area.tick();
     }
@@ -69,9 +70,13 @@ public class Game implements State {
     private void processPlayerInput() {
         // Process input for each player.
         for (IngamePlayer ingamePlayer : players) {
+            // Do not process player input for dead players.
+            if (ingamePlayer.getStatus().isDead()) {
+                return;
+            }
             // Get the actual Player instance.
             Player player = ingamePlayer.getPlayer();
-            // Get the actual Player instance.
+            // Get the input provider for this player.
             IInputProvider inputProvider = ingamePlayer.getInputProvider();
             // Do nothing if this player has no input provider.
             if (inputProvider == null) {
@@ -79,23 +84,15 @@ public class Game implements State {
             }
             // Are we moving left/right?
             if (inputProvider.isControlPressed(Control.LEFT)) {
-                // We are running left.
                 player.moveLeft();
             } else if (inputProvider.isControlPressed(Control.RIGHT)) {
-                // We are running right.
                 player.moveRight();
-            } else {
-                player.getPhysicsBox().setVelX(0f);
-                // TODO Reduce X axis walking speed.
             }
             // Are we moving up/down?
             if (inputProvider.isControlPressed(Control.UP)) {
                 player.moveUp();
             } else if (inputProvider.isControlPressed(Control.DOWN)) {
                 player.moveDown();
-            } else {
-                player.getPhysicsBox().setVelY(0f);
-                // TODO Reduce Y axis walking speed.
             }
             // Get our angle of aim for the player.
             float angleOfAim = inputProvider.getAngleOfAim();

@@ -6,6 +6,10 @@ import com.dumbpug.ohm.Ohm;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		new LwjglApplication(new Ohm(), new LwjglApplicationConfiguration());
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		//config.fullscreen = true;
+		//config.width      = 0;
+		//config.height     = 0;
+		new LwjglApplication(new Ohm(), config);
 	}
 }

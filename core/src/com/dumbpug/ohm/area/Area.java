@@ -89,6 +89,24 @@ public class Area {
     }
 
     /**
+     * Gets whether the match has finished.
+     * This is determined by
+     *  - Whether only  a single player remains alive.
+     *  - All the players are dead.
+     * @return Whether the match has finished.
+     */
+    public boolean hasMatchFinished() {
+        int aliveCount = 0;
+        for (IngamePlayer player : this.players) {
+            if (!player.getStatus().isDead()) {
+                // This player is still alive!
+                aliveCount++;
+            }
+        }
+        return aliveCount <= 1;
+    }
+
+    /**
      * Create the area platforms.
      */
     private void createPlatforms() {
@@ -174,8 +192,8 @@ public class Area {
     }
 
     /**
-     * Handles a plyer requesting
-     * @param ingamePlayer
+     * Handles a player requesting to swap or drop a weapon.
+     * @param ingamePlayer The player requesting to swap or drop a weapon.
      */
     public void swapOrDropPlayerWeapon(IngamePlayer ingamePlayer) {
         // Get all pickups in the area that the player is standing over.

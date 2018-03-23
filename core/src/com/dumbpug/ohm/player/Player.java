@@ -29,7 +29,7 @@ public class Player implements IPhysicsEntity {
 
     /**
      * Get the angle of aim.
-     * @return
+     * @return The angle of aim.
      */
     public float getAngleOfAim() {
         return angleOfAim;
@@ -37,7 +37,7 @@ public class Player implements IPhysicsEntity {
 
     /**
      * Set the angle of aim.
-     * @param angleOfAim
+     * @param angleOfAim The angle of aim.
      */
     public void setAngleOfAim(float angleOfAim) {
         this.angleOfAim = angleOfAim;
@@ -75,8 +75,8 @@ public class Player implements IPhysicsEntity {
 
     /**
      * Set the character position.
-     * @param x
-     * @param y
+     * @param x The X position.
+     * @param y The Y position.
      */
     public void setPosition(float x, float y) {
         this.physicsBox.setX(x);

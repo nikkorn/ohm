@@ -136,7 +136,11 @@ public class PlayerPhysicsBox extends Box {
     protected void onCollisonWithStaticBox(Box collidingBox, IntersectionPoint originAtCollision) {}
 
     @Override
-    protected void onBeforeUpdate() {}
+    protected void onBeforeUpdate() {
+        // Reduce the player movement velocity over time so that we don't slide everywhere.
+        this.setVelY(this.isIdle() ? 0 : this.getVelY() * 0.75f);
+        this.setVelX(this.isIdle() ? 0 : this.getVelX() * 0.75f);
+    }
 
     @Override
     protected void onAfterUpdate() {}

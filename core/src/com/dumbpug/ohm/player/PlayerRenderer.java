@@ -22,6 +22,10 @@ public class PlayerRenderer {
      * @param player The in-game player to render.
      */
     public static void render(SpriteBatch batch, IngamePlayer player) {
+        // Do not render any dead players.
+        if (player.getStatus().isDead()) {
+            return;
+        }
         // Draw the player marker that sits underneath the player.
         drawMarker(batch, player);
         // Draw the character.

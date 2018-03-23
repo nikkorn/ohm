@@ -14,7 +14,7 @@ public class Constants {
 
     public static final int PLATFORM_SIZE                   = 48;
     public static final int AREA_PLATFORMS_SIZE             = 7;
-    public static final float AREA_DEFAULT_CAMERA_ZOOM      = ((AREA_PLATFORMS_SIZE * PLATFORM_SIZE) * 1.1f) / Gdx.graphics.getHeight();
+    public static final float AREA_DEFAULT_CAMERA_ZOOM      = ((AREA_PLATFORMS_SIZE * PLATFORM_SIZE) * 0.8f) / Gdx.graphics.getHeight();
 
     /** Pickups. */
     public static final int PICKUP_SIZE = 12;
@@ -24,6 +24,8 @@ public class Constants {
     public static final float PROJECTILE_BULLET_FIRE_VELOCITY   = 2;
 
     /** Weapons. */
+    public static final float PROJECTILE_BASIC_RECOIL           = 1.2f;
+
     public static final int PROJECTILE_BASIC_BULLET_DAMAGE      = 1;
     public static final int PROJECTILE_SNIPER_BULLET_DAMAGE     = 4;
 
@@ -41,8 +43,8 @@ public class Constants {
     public static final int PLAYER_LIFE                         = 8;
 
     /* Character. */
-    public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1f;
-    public static final float CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE   = 0.2f;
+    public static final float CHARACTER_PHYSICS_MAX_WALKING_VELOCITY    = 1.2f;
+    public static final float CHARACTER_PHYSICS_WALKING_IMPULSE_VALUE   = 0.4f;
     public static final float CHARACTER_PHYSICS_MAX_VELOCITY            = 1.6f;
     public static final float CHARACTER_PHYSICS_FRICTION                = 0.75f;
     public static final float CHARACTER_PHYSICS_RESTITUTION             = 0f;
