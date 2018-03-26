@@ -20,6 +20,8 @@ public class PickupResources {
     public static void load() {
         animations = new HashMap<PickupType, Animation>();
         animations.put(PickupType.PISTOL, new Animation(new Texture(Gdx.files.internal("graphics/pickups/pistol.png")), 4, 1, 0.5f));
+        animations.put(PickupType.SNIPER, new Animation(new Texture(Gdx.files.internal("graphics/pickups/sniper.png")), 4, 1, 0.5f));
+        animations.put(PickupType.SHOTGUN, new Animation(new Texture(Gdx.files.internal("graphics/pickups/shotgun.png")), 4, 1, 0.5f));
     }
 
     /**

@@ -13,15 +13,19 @@ public class WeaponResources {
     /** The bullet texture. */
     public static Sprite bullet;
 
-    /** The pistol texture. */
+    /** The weapon textures. */
     private static Sprite pistol;
+    private static Sprite sniper;
+    private static Sprite shotgun;
 
     /**
      * Load resources.
      */
     public static void load() {
-        bullet = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/bullet.png")));
-        pistol = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/pistol.png")));
+        bullet  = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/bullet.png")));
+        pistol  = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/pistol.png")));
+        sniper  = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/sniper.png")));
+        shotgun = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/shotgun.png")));
     }
 
     /**
@@ -33,6 +37,10 @@ public class WeaponResources {
         switch (type) {
             case PISTOL:
                 return pistol;
+            case SNIPER:
+                return sniper;
+            case SHOTGUN:
+                return shotgun;
             default:
                 return null;
         }

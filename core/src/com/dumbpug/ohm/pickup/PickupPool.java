@@ -39,9 +39,9 @@ public class PickupPool {
      * Gets the pickups in this pool that are weapons.
      * @return The pickups in this pool that are weapons.
      */
-    public ArrayList<com.dumbpug.ohm.pickup.Pickup> getWeaponPickups() {
-        ArrayList<com.dumbpug.ohm.pickup.Pickup> weaponPickups = new ArrayList<com.dumbpug.ohm.pickup.Pickup>();
-        for (com.dumbpug.ohm.pickup.Pickup pickup : this.pickups) {
+    public ArrayList<Pickup> getWeaponPickups() {
+        ArrayList<Pickup> weaponPickups = new ArrayList<Pickup>();
+        for (Pickup pickup : this.pickups) {
             if (pickup.getCategory() == PickupCategory.WEAPON) {
                 weaponPickups.add(pickup);
             }
@@ -54,7 +54,7 @@ public class PickupPool {
      * @return The pickups in this pool that are powers.
      */
     public ArrayList<com.dumbpug.ohm.pickup.Pickup> getPowerPickups() {
-        ArrayList<com.dumbpug.ohm.pickup.Pickup> powerPickups = new ArrayList<com.dumbpug.ohm.pickup.Pickup>();
+        ArrayList<Pickup> powerPickups = new ArrayList<Pickup>();
         for (com.dumbpug.ohm.pickup.Pickup pickup : this.pickups) {
             if (pickup.getCategory() == PickupCategory.POWER) {
                 powerPickups.add(pickup);
@@ -69,17 +69,23 @@ public class PickupPool {
      * @param weapon The weapon to drop as a pickup.
      */
     public void drop(Point position, Weapon weapon) {
-        com.dumbpug.ohm.pickup.PickupType pickupType;
+        PickupType pickupType;
         // Determine the pickup type based on the weapon type.
         switch (weapon.getType()) {
             case PISTOL:
-                pickupType = com.dumbpug.ohm.pickup.PickupType.PISTOL;
+                pickupType = PickupType.PISTOL;
+                break;
+            case SNIPER:
+                pickupType = PickupType.SNIPER;
+                break;
+            case SHOTGUN:
+                pickupType = PickupType.SHOTGUN;
                 break;
             default:
                 throw new RuntimeException("Unexpected weapon type: " + weapon.getType());
         }
         // Create the pickup at the specified position.
-        com.dumbpug.ohm.pickup.Pickup pickup = new com.dumbpug.ohm.pickup.Pickup(pickupType, position.getX(), position.getY());
+        Pickup pickup = new Pickup(pickupType, position.getX(), position.getY());
         // Set the ammo capacity for this weapon pickup.
         pickup.setCapacity(weapon.getAmmo());
         // Add the pickup to this pool.

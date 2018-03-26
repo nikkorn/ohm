@@ -71,8 +71,11 @@ public class ProjectilePool {
                 for (Projectile projectile : activeWeapon.getNewProjectiles()) {
                     // Set the owner of the projectile to be the player who fired it.
                     projectile.setOwner(player.getPlayer());
+                    // Determine the angle at which this projectile will be fired.
+                    // This is the sum of the projectile angle offset and the player angle of aim.
+                    float angleOfFire = player.getPlayer().getAngleOfAim() + projectile.getAngleOfFireOffset();
                     // Apply the rotation/position of the player to the projectile.
-                    projectile.fireAt(player.getPlayer().getX(), player.getPlayer().getY(), player.getPlayer().getAngleOfAim());
+                    projectile.fireAt(player.getPlayer().getX(), player.getPlayer().getY(), angleOfFire);
                     // Add the projectile to the pool.
                     this.projectiles.add(projectile);
                     // Add the projectile physics box to the physics environment.

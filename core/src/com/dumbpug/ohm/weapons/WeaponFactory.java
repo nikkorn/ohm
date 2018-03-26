@@ -24,6 +24,12 @@ public class WeaponFactory {
             case PISTOL:
                 weapon = new Pistol();
                 break;
+            case SNIPER:
+                weapon = new Sniper();
+                break;
+            case SHOTGUN:
+                weapon = new Shotgun();
+                break;
             default:
                 throw new RuntimeException("Cannot create weapon based on pickup type: " + pickup.getType());
         }
@@ -43,6 +49,10 @@ public class WeaponFactory {
         switch (type) {
             case PISTOL:
                 return new Pistol();
+            case SNIPER:
+                return new Sniper();
+            case SHOTGUN:
+                return new Shotgun();
             default:
                 throw new RuntimeException("Cannot create weapon based on weapon type: " + type);
         }

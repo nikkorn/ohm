@@ -35,6 +35,11 @@ public class Constants {
     public static final long PROJECTILE_SNIPER_COOL_DOWN        = 1500l;
     public static final int PROJECTILE_SNIPER_MAX_AMMO          = 3;
 
+    public static final long PROJECTILE_SHOTGUN_COOL_DOWN        = 1000l;
+    public static final int PROJECTILE_SHOTGUN_MAX_AMMO          = 5;
+    public static final int PROJECTILE_SHOTGUN_SPRAY_COUNT       = 8;
+    public static final int PROJECTILE_SHOTGUN_SPRAY_ANGLE       = 45;
+
     /** Player. */
     public static final int PLAYER_SIZE                         = 14;
     public static final int PLAYER_PHYSICS_SIZE_WIDTH           = 8;

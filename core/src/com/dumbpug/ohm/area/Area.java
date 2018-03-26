@@ -10,6 +10,8 @@ import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Pistol;
+import com.dumbpug.ohm.weapons.Shotgun;
+import com.dumbpug.ohm.weapons.Sniper;
 import com.dumbpug.ohm.weapons.WeaponFactory;
 import java.util.ArrayList;
 
@@ -45,7 +47,8 @@ public class Area {
         preparePlayers(players);
 
         // TODO REMOVE!
-        this.pickupPool.drop(new Point(70, 50), new Pistol());
+        this.pickupPool.drop(new Point(70, 50), new Sniper());
+        this.pickupPool.drop(new Point(80, 90), new Shotgun());
     }
 
     /**

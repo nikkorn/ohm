@@ -87,6 +87,14 @@ public abstract class Projectile implements IPhysicsEntity {
     }
 
     /**
+     * Get the angle of offset for the firing angle of the projectile.
+     * @return The angle of offset for the firing angle of the projectile.
+     */
+    public float getAngleOfFireOffset() {
+        return this.angleOfFireOffset;
+    }
+
+    /**
      * Gets whether this projectile is stale.
      * This means that it has hit or has gone well out of the bounds of the screen.
      * @return Whether this projectile is stale.
