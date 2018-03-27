@@ -6,9 +6,6 @@ import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
 import com.dumbpug.ohm.nbp.Sensor;
 import com.dumbpug.ohm.nbp.point.IntersectionPoint;
-import com.dumbpug.ohm.player.Player;
-
-import java.util.ArrayList;
 
 /**
  * A physics box for a pickup.
@@ -23,6 +20,14 @@ public class PickupPhysicsBox extends Box {
     public PickupPhysicsBox(float x, float y) {
         super(x, y, Constants.PICKUP_SIZE, Constants.PICKUP_SIZE, BoxType.KINETIC);
         this.setName("PICKUP");
+    }
+
+    /**
+     * Get whether the pickup is currently idle (not moving at all)
+     * @return is idle.
+     */
+    public boolean isIdle() {
+        return (getVelX() < 0.2f && getVelX() > -0.2f) && (getVelY() < 0.2f && getVelY() > -0.2f);
     }
 
     @Override
@@ -41,7 +46,11 @@ public class PickupPhysicsBox extends Box {
     protected boolean onBloomPush(Bloom bloom, float angleOfForce, float force, float distance) { return false; }
 
     @Override
-    protected void onBeforeUpdate() {}
+    protected void onBeforeUpdate() {
+        // Reduce the pickup movement velocity over time so that it doesn't slide everywhere.
+        this.setVelY(this.isIdle() ? 0 : this.getVelY() * 0.9f);
+        this.setVelX(this.isIdle() ? 0 : this.getVelX() * 0.9f);
+    }
 
     @Override
     protected void onAfterUpdate() {}

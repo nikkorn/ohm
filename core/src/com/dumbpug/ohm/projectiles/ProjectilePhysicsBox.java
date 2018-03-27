@@ -1,5 +1,6 @@
 package com.dumbpug.ohm.projectiles;
 
+import com.dumbpug.ohm.pickup.Pickup;
 import com.dumbpug.ohm.pickup.PickupPhysicsBox;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
@@ -90,7 +91,12 @@ public class ProjectilePhysicsBox extends Box {
      * @param pickupPhysicsBox The pickup physics box.
      */
     private void handlePickupCollision(PickupPhysicsBox pickupPhysicsBox) {
-        System.out.println("Hit pickup!");
+        // Get the pickup that we have collided with.
+        Pickup pickup = (Pickup)pickupPhysicsBox.getUserData();
+        // Get the projectile that this physics box represents.
+        Projectile projectile = (Projectile)this.getUserData();
+        // Projectiles should handle pickup collisions.
+        projectile.onPickupHit(pickup);
         // This projectile has hit a pickup and is now stale.
         this.isStale = true;
         // This projectile has hit something.

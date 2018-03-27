@@ -3,6 +3,7 @@ package com.dumbpug.ohm.projectiles;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dumbpug.ohm.area.IPhysicsEntity;
 import com.dumbpug.ohm.nbp.Box;
+import com.dumbpug.ohm.pickup.Pickup;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Player;
 
@@ -127,6 +128,15 @@ public abstract class Projectile implements IPhysicsEntity {
         // The impact of the projectile should push the hit player slightly.
         hitPlayer.getPlayer().getPhysicsBox()
                 .applyImpulse(this.getPhysicsBox().getVelX(), this.getPhysicsBox().getVelY());
+    }
+
+    /**
+     * Called when this projectile hits a pickup.
+     * @param hitPickup The pickup that this projectile hit.
+     */
+    public void onPickupHit(Pickup hitPickup) {
+        // The impact of the projectile should push the hit pickup slightly.
+        hitPickup.getPhysicsBox().applyImpulse(this.getPhysicsBox().getVelX(), this.getPhysicsBox().getVelY());
     }
 
     /**
