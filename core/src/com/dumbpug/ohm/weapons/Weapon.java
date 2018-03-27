@@ -86,6 +86,14 @@ public abstract class Weapon {
     }
 
     /**
+     * Gets whether this weapon should be un-equipped when it is depleted.
+     * @return Whether this weapon should be un-equipped when it is depleted.
+     */
+    public boolean unEquipWhenEmpty() {
+        return false;
+    }
+
+    /**
      * Called when the weapon is successfully fired.
      */
     protected abstract void onFire();
@@ -106,6 +114,12 @@ public abstract class Weapon {
      * @return The maximum amount of ammo for this weapon.
      */
     public abstract int getMaxAmmoAmount();
+
+    /**
+     * Gets whether this weapon is an automatic weapon.
+     * @return Whether this weapon is an automatic weapon.
+     */
+    public abstract boolean isAutomatic();
 
     /**
      * Gets the type of the weapon.

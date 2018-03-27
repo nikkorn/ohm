@@ -5,5 +5,7 @@ package com.dumbpug.ohm.weapons;
  */
 public enum WeaponType {
     SNIPER,
-    SHOTGUN, PISTOL
+    SHOTGUN,
+    PISTOL,
+    GRENADE
 }

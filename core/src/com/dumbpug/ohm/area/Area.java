@@ -9,6 +9,7 @@ import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
+import com.dumbpug.ohm.weapons.Grenade;
 import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.Shotgun;
 import com.dumbpug.ohm.weapons.Sniper;
@@ -49,6 +50,7 @@ public class Area {
         // TODO REMOVE!
         this.pickupPool.drop(new Point(70, 50), new Sniper());
         this.pickupPool.drop(new Point(80, 90), new Shotgun());
+        this.pickupPool.drop(new Point(90, 100), new Grenade());
     }
 
     /**

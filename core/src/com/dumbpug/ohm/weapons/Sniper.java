@@ -46,6 +46,15 @@ public class Sniper extends Weapon {
     }
 
     /**
+     * Gets whether this weapon is an automatic weapon.
+     * @return Whether this weapon is an automatic weapon.
+     */
+    @Override
+    public boolean isAutomatic() {
+        return false;
+    }
+
+    /**
      * Gets the type of the weapon.
      * @return The type of the weapon.
      */

@@ -81,6 +81,11 @@ public class ProjectilePool {
                     // Add the projectile physics box to the physics environment.
                     this.physicsEnvironment.addBox(projectile.getPhysicsBox());
                 }
+                // If this weapon needs to be un-equipped when empty then do that now if it is empty.
+                if (activeWeapon.unEquipWhenEmpty() && activeWeapon.getAmmo() == 0) {
+                    // Take this weapon from the player.
+                    player.getStatus().setEquippedWeapon(null);
+                }
             }
         }
     }

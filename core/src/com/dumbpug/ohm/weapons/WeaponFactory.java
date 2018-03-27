@@ -30,6 +30,9 @@ public class WeaponFactory {
             case SHOTGUN:
                 weapon = new Shotgun();
                 break;
+            case GRENADE:
+                weapon = new Grenade();
+                break;
             default:
                 throw new RuntimeException("Cannot create weapon based on pickup type: " + pickup.getType());
         }
@@ -53,6 +56,8 @@ public class WeaponFactory {
                 return new Sniper();
             case SHOTGUN:
                 return new Shotgun();
+            case GRENADE:
+                return new Grenade();
             default:
                 throw new RuntimeException("Cannot create weapon based on weapon type: " + type);
         }
