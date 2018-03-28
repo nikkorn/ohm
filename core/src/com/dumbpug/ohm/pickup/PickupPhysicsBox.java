@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.pickup;
 
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.Helpers;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
@@ -22,14 +23,6 @@ public class PickupPhysicsBox extends Box {
         this.setName("PICKUP");
     }
 
-    /**
-     * Get whether the pickup is currently idle (not moving at all)
-     * @return is idle.
-     */
-    public boolean isIdle() {
-        return (getVelX() < 0.2f && getVelX() > -0.2f) && (getVelY() < 0.2f && getVelY() > -0.2f);
-    }
-
     @Override
     protected void onCollisonWithKineticBox(Box collidingBox, IntersectionPoint kinematicBoxOriginAtCollision) {}
 
@@ -48,8 +41,8 @@ public class PickupPhysicsBox extends Box {
     @Override
     protected void onBeforeUpdate() {
         // Reduce the pickup movement velocity over time so that it doesn't slide everywhere.
-        this.setVelY(this.isIdle() ? 0 : this.getVelY() * 0.9f);
-        this.setVelX(this.isIdle() ? 0 : this.getVelX() * 0.9f);
+        this.setVelY(Helpers.isBoxIdle(this) ? 0 : this.getVelY() * 0.9f);
+        this.setVelX(Helpers.isBoxIdle(this) ? 0 : this.getVelX() * 0.9f);
     }
 
     @Override

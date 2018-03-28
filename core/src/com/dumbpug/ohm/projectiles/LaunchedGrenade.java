@@ -7,7 +7,7 @@ import com.dumbpug.ohm.resources.WeaponResources;
 /**
  * A basic grenade projectile.
  */
-public class LaunchedGrenade extends Projectile {
+public class LaunchedGrenade extends ThrownProjectile {
 
     @Override
     public boolean isAirborne() {
@@ -24,12 +24,6 @@ public class LaunchedGrenade extends Projectile {
         // A grenade projectile fire velocity can be built up (cooked).
         // This is the default velocity if the grenade is launched without cooking it.
         return Constants.PROJECTILE_GRENADE_BASE_FIRE_VELOCITY;
-    }
-
-    @Override
-    public int getDamage() {
-        // The grenade itself does no damage, just the explosion does.
-        return 0;
     }
 
     @Override

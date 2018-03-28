@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.Helpers;
 import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.ColouredPlayerResources;
@@ -82,7 +83,7 @@ public class PlayerRenderer {
         float x = playerPhysicsBox.getX() - ((Constants.PLAYER_SIZE - Constants.PLAYER_PHYSICS_SIZE_WIDTH) / 2f);
         // Which way is the player facing?
         if (playerPhysicsBox.getFacingDirection() == FacingDirection.LEFT) {
-            if (playerPhysicsBox.isIdle()) {
+            if (Helpers.isBoxIdle(playerPhysicsBox)) {
                 // If our player is idle then draw idle body.
                 batch.draw(PlayerResources.ohm_standing_left, x, playerPhysicsBox.getY());
             } else {
@@ -90,7 +91,7 @@ public class PlayerRenderer {
                 batch.draw(PlayerResources.ohm_walking_left.getCurrentFrame(true), x, playerPhysicsBox.getY());
             }
         } else {
-            if (playerPhysicsBox.isIdle()) {
+            if (Helpers.isBoxIdle(playerPhysicsBox)) {
                 // If our player is idle then draw idle body.
                 batch.draw(PlayerResources.ohm_standing_right, x, playerPhysicsBox.getY());
             } else {

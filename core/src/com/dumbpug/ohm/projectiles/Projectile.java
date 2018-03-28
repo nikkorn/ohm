@@ -30,7 +30,7 @@ public abstract class Projectile implements IPhysicsEntity {
      */
     public Projectile() {
         // Create the physics box for this projectile.
-        physicsBox = new ProjectilePhysicsBox(this.getSize());
+        physicsBox = this.createPhysicsBox();
         // Set the user data of the physics box to be the projectile.
         physicsBox.setUserData(this);
         // Give the physics box a name to identify it.
@@ -146,5 +146,13 @@ public abstract class Projectile implements IPhysicsEntity {
     @Override
     public Box getPhysicsBox() {
         return this.physicsBox;
+    }
+
+    /**
+     * Creates the projectile physics box for this projectile.
+     * @return The projectile physics box for this projectile.
+     */
+    protected ProjectilePhysicsBox createPhysicsBox() {
+        return new ProjectilePhysicsBox(this.getSize());
     }
 }

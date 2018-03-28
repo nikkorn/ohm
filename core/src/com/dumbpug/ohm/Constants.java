@@ -38,8 +38,8 @@ public class Constants {
     public static final long PROJECTILE_GRENADE_COOL_DOWN                 = 1500l;
     public static final int PROJECTILE_GRENADE_MAX_AMMO                   = 2;
     public static final long PROJECTILE_GRENADE_FUSE                      = 3000l;
-    public static final float PROJECTILE_GRENADE_BASE_FIRE_VELOCITY       = 0.5f;
-    public static final float PROJECTILE_GRENADE_MAX_FIRE_VELOCITY        = 2f;
+    public static final float PROJECTILE_GRENADE_BASE_FIRE_VELOCITY       = PROJECTILE_BULLET_FIRE_VELOCITY * 0.75f;
+    public static final float PROJECTILE_GRENADE_MAX_FIRE_VELOCITY        = PROJECTILE_GRENADE_BASE_FIRE_VELOCITY * 3f;
     public static final float PROJECTILE_GRENADE_SIZE                     = 7;
 
     public static final long PROJECTILE_SHOTGUN_COOL_DOWN                 = 1000l;

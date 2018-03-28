@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.player;
 
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.Helpers;
 import com.dumbpug.ohm.nbp.Bloom;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.BoxType;
@@ -95,14 +96,6 @@ public class PlayerPhysicsBox extends Box {
     }
 
     /**
-     * Get whether the character is currently idle (not moving at all)
-     * @return is idle.
-     */
-    public boolean isIdle() {
-        return (getVelX() < 0.2f && getVelX() > -0.2f) && (getVelY() < 0.2f && getVelY() > -0.2f);
-    }
-
-    /**
      * Get the facing direction of the character physics box.
      * @return facing direction.
      */
@@ -138,8 +131,8 @@ public class PlayerPhysicsBox extends Box {
     @Override
     protected void onBeforeUpdate() {
         // Reduce the player movement velocity over time so that we don't slide everywhere.
-        this.setVelY(this.isIdle() ? 0 : this.getVelY() * 0.75f);
-        this.setVelX(this.isIdle() ? 0 : this.getVelX() * 0.75f);
+        this.setVelY(Helpers.isBoxIdle(this) ? 0 : this.getVelY() * 0.75f);
+        this.setVelX(Helpers.isBoxIdle(this) ? 0 : this.getVelX() * 0.75f);
     }
 
     @Override
