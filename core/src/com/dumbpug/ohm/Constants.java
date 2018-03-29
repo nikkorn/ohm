@@ -72,4 +72,7 @@ public class Constants {
     public static final float HUD_CAMERA_ZOOM                              = 0.5f;
     public static final int HUD_STATUS_BOX_WIDTH                           = 50;
     public static final int HUD_STATUS_BOX_HEIGHT                          = 27;
+
+    /** Render. */
+    public static final int RENDER_SHADOW_OFFSET                           = 2;
 }

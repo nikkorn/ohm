@@ -55,6 +55,8 @@ public class AreaRenderer {
                 Gdx.graphics.getHeight() * -0.5f, Gdx.graphics.getWidth() * 2f, Gdx.graphics.getHeight() * 2f);
         // Draw the platforms.
         drawPlatforms(batch, area.getPlatforms());
+        // Draw the shadows of the entities in the area.
+        drawShadows(batch, area);
         // Draw the projectiles.
         drawProjectiles(batch, area.getProjectilePool().getProjectiles());
         // Draw the pickups.
@@ -62,6 +64,28 @@ public class AreaRenderer {
         // Draw the players.
         for (IngamePlayer ingamePlayer : area.getIngamePlayers()) {
             PlayerRenderer.render(batch, ingamePlayer);
+        }
+    }
+
+    /**
+     * Draw the shadows of the entities in the area.
+     * @param batch The sprite batch.
+     * @param area The area.
+     */
+    private void drawShadows(SpriteBatch batch, Area area) {
+        // Draw the player shadows.
+        for (IngamePlayer ingamePlayer : area.getIngamePlayers()) {
+            // Get the physics box for the current player.
+            Box playerPhysicsBox = ingamePlayer.getPlayer().getPhysicsBox();
+            // Draw the shadow for the player.
+            batch.draw(AreaResources.shadow_player, playerPhysicsBox.getX(), playerPhysicsBox.getY() - Constants.RENDER_SHADOW_OFFSET);
+        }
+        // Draw the pickup shadows.
+        for (Pickup pickup : area.getPickupPool().getPickups()) {
+            // Get the physics box for the current pickup.
+            Box pickupPhysicsBox = pickup.getPhysicsBox();
+            // Draw the shadow for the pickup.
+            batch.draw(AreaResources.shadow_pickup, pickupPhysicsBox.getX(), pickupPhysicsBox.getY());
         }
     }
 
