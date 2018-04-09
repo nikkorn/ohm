@@ -96,6 +96,14 @@ public abstract class Projectile implements IPhysicsEntity {
     }
 
     /**
+     * Gets the rotation of a projectile based on its current velocity.
+     * @return The rotation of a projectile based on its current velocity.
+     */
+    public float getRotation() {
+        return (float) -(Math.atan2(this.physicsBox.getVelX(), this.physicsBox.getVelY())/(Math.PI/180));
+    }
+
+    /**
      * Gets whether this projectile is stale.
      * This means that it has hit or has gone well out of the bounds of the screen.
      * @return Whether this projectile is stale.

@@ -119,7 +119,7 @@ public class AreaRenderer {
             // Set the correct position of the sprite.
             projectileSprite.setX(projectile.getPhysicsBox().getX());
             projectileSprite.setY(projectile.getPhysicsBox().getY());
-            projectileSprite.setRotation(0 /** TODO Set this based on directional velocity of projectile.*/);
+            projectileSprite.setRotation(projectile.getRotation());
             // Draw the sprite.
             projectileSprite.draw(batch);
         }
