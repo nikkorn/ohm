@@ -48,6 +48,15 @@ public class Grenade extends Weapon {
         return true;
     }
 
+    /**
+     * Gets the length of the weapon.
+     * @return The length of the weapon.
+     */
+    @Override
+    public int getLength() {
+        return 6;
+    }
+
     @Override
     public WeaponType getType() {
         return WeaponType.GRENADE;

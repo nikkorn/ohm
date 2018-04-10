@@ -55,6 +55,15 @@ public class Pistol extends Weapon {
     }
 
     /**
+     * Gets the length of the weapon.
+     * @return The length of the weapon.
+     */
+    @Override
+    public int getLength() {
+        return 13;
+    }
+
+    /**
      * Gets the type of the weapon.
      * @return The type of the weapon.
      */

@@ -86,6 +86,14 @@ public abstract class Weapon {
     }
 
     /**
+     * Gets whether this weapon is empty.
+     * @return Whether this weapon is empty.
+     */
+    public boolean isEmpty() {
+        return this.ammo == 0;
+    }
+
+    /**
      * Gets whether this weapon should be un-equipped when it is depleted.
      * @return Whether this weapon should be un-equipped when it is depleted.
      */
@@ -104,13 +112,19 @@ public abstract class Weapon {
     protected abstract ArrayList<Projectile> generateProjectiles();
 
     /**
-     * Get the cool-down time needed between successful shots.
+     * Gets the cool-down time needed between successful shots.
      * @return The cool-down time needed between successful shots.
      */
     public abstract long getCooldown();
 
     /**
-     * Get the maximum amount of ammo for this weapon.
+     * Gets the length of the weapon.
+     * @return The length of the weapon.
+     */
+    public abstract int getLength();
+
+    /**
+     * Gets the maximum amount of ammo for this weapon.
      * @return The maximum amount of ammo for this weapon.
      */
     public abstract int getMaxAmmoAmount();
