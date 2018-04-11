@@ -52,7 +52,7 @@ public class Constants {
     public static final int PLAYER_PHYSICS_SIZE_WIDTH                     = 8;
 
     public static final float PLAYER_AIM_TARGET_DISTANCE                  = PLAYER_SIZE * 2;
-    public static final int PLAYER_WEAPON_OFFSET                          = PLAYER_SIZE;
+    public static final float PLAYER_WEAPON_OFFSET                        = PLAYER_SIZE * 0.65f;
     public static final int PLAYER_LIFE                                   = 8;
 
     /* Character. */

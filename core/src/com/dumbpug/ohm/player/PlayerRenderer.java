@@ -1,13 +1,14 @@
 package com.dumbpug.ohm.player;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.area.Helpers;
+import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.resources.AreaResources;
 import com.dumbpug.ohm.resources.ColouredPlayerResources;
+import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PlayerResources;
 import com.dumbpug.ohm.resources.WeaponResources;
 import com.dumbpug.ohm.weapons.Weapon;
@@ -55,18 +56,21 @@ public class PlayerRenderer {
     /**
      * Draw the equipped weapon of the player.
      * @param batch The sprite batch.
-     * @param playerOrigin The player origin point.
+     * @param playerOrigin The player origin.
      * @param angleOfAim The player angle of aim.
      * @param equippedWeapon The equipped weapon.
      */
     private static void drawEquippedWeapon(SpriteBatch batch, Point playerOrigin, float angleOfAim, Weapon equippedWeapon) {
         // Get the sprite for the equipped weapon type.
         Sprite weaponSprite = WeaponResources.getWeaponSprite(equippedWeapon.getType());
+        // Calculate the position of the sprite based on player position and angle of aim.
+        float weaponPositionX = playerOrigin.getX() + Constants.PLAYER_WEAPON_OFFSET * (float) Math.cos(Math.toRadians(angleOfAim));
+        float weaponPositionY = playerOrigin.getY() + Constants.PLAYER_WEAPON_OFFSET * (float) Math.sin(Math.toRadians(angleOfAim));
         // Prepare the sprite to be drawn.
         weaponSprite.setRotation(0);
-        weaponSprite.setOrigin(-Constants.PLAYER_PHYSICS_SIZE_WIDTH, weaponSprite.getHeight() / 2); // TODO Tweak this!
+        weaponSprite.setOrigin(0, weaponSprite.getHeight() / 2);
+        weaponSprite.setPosition(weaponPositionX, weaponPositionY - (weaponSprite.getHeight() / 2));
         weaponSprite.setRotation(angleOfAim);
-        weaponSprite.setPosition(playerOrigin.getX(), playerOrigin.getY());
         // Draw the sprite.
         weaponSprite.draw(batch);
     }
@@ -99,10 +103,5 @@ public class PlayerRenderer {
                 batch.draw(PlayerResources.ohm_walking_right.getCurrentFrame(true), x, playerPhysicsBox.getY());
             }
         }
-        // Draw target based on the angle of aim.
-        float angleOfAim   = player.getAngleOfAim();
-        float targetPointX = playerPhysicsBox.getX() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.cos(Math.toRadians(angleOfAim));
-        float targetPointY = playerPhysicsBox.getY() + Constants.PLAYER_AIM_TARGET_DISTANCE * (float) Math.sin(Math.toRadians(angleOfAim));
-        batch.draw(AreaResources.target, targetPointX, targetPointY);
     }
 }
