@@ -7,6 +7,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dumbpug.ohm.hud.DevHUDRenderer;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.input.KeyboardInputProvider;
 import com.dumbpug.ohm.input.OuyaInputProvider;
@@ -15,7 +16,6 @@ import com.dumbpug.ohm.resources.HUDResources;
 import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PickupResources;
 import com.dumbpug.ohm.resources.PlayerResources;
-import com.dumbpug.ohm.resources.StatusBarResources;
 import com.dumbpug.ohm.resources.WeaponResources;
 import com.dumbpug.ohm.state.StateManager;
 import com.dumbpug.ohm.state.states.Title;
@@ -30,6 +30,10 @@ public class Ohm extends ApplicationAdapter {
      */
     private StateManager stateManager;
     /**
+     * The developer HUD renderer.
+     */
+    private DevHUDRenderer devHUDRenderer;
+    /**
      * The input provider.
      */
     private static IInputProvider inputProvider;
@@ -39,6 +43,9 @@ public class Ohm extends ApplicationAdapter {
 
         // Create the game sprite batch.
         batch = new SpriteBatch();
+
+        // Create a developer HUD renderer.
+        this.devHUDRenderer = new DevHUDRenderer();
 
         // Load the game resources.
         AreaResources.load();
@@ -89,7 +96,12 @@ public class Ohm extends ApplicationAdapter {
 
         // Draw the game.
         batch.begin();
+        // Draw the current state.
         stateManager.draw(batch);
+        // Are we drawing out dev HUD?
+        if (Constants.SHOW_DEV_HUD) {
+            devHUDRenderer.render(batch);
+        }
         batch.end();
     }
 

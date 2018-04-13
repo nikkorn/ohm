@@ -2,8 +2,9 @@ package com.dumbpug.ohm.state.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.Area;
+import com.dumbpug.ohm.area.AreaCamera;
 import com.dumbpug.ohm.area.AreaRenderer;
-import com.dumbpug.ohm.hud.HUDRenderer;
+import com.dumbpug.ohm.hud.AreaHUDRenderer;
 import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.player.IngamePlayer;
@@ -27,9 +28,13 @@ public class Game implements State {
      */
     private AreaRenderer areaRenderer;
     /**
+     * The area camera.
+     */
+    private AreaCamera areaCamera;
+    /**
      * The renderer for the game HUD.
      */
-    private HUDRenderer hudRenderer;
+    private AreaHUDRenderer areaHudRenderer;
     /**
      * The players.
      */
@@ -46,8 +51,10 @@ public class Game implements State {
         this.area = new Area(players);
         // Create the area renderer.
         this.areaRenderer = new AreaRenderer();
+        // Create the area camera.
+        this.areaCamera = new AreaCamera();
         // Create the HUD renderer.
-        this.hudRenderer = new HUDRenderer();
+        this.areaHudRenderer = new AreaHUDRenderer();
     }
 
     /**
@@ -61,7 +68,7 @@ public class Game implements State {
             processPlayerInput();
         }
         // Tick the area.
-        this.area.tick();
+        this.area.tick(this.areaCamera);
     }
 
     /**
@@ -134,9 +141,9 @@ public class Game implements State {
      */
     public void draw(SpriteBatch batch) {
         // Draw the area.
-        this.areaRenderer.render(batch, area);
+        this.areaRenderer.render(batch, this.areaCamera, this.area);
         // Draw the HUD.
-        this.hudRenderer.render(batch, area.getIngamePlayers());
+        this.areaHudRenderer.render(batch, area.getIngamePlayers());
     }
 
     @Override

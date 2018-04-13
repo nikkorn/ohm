@@ -1,7 +1,6 @@
 package com.dumbpug.ohm.area;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.Constants;
@@ -19,33 +18,14 @@ import java.util.ArrayList;
  * The area renderer.
  */
 public class AreaRenderer {
-    /**
-     * The area camera.
-     */
-    OrthographicCamera camera;
-
-    /**
-     * Creates a new instance of the AreaRender class.
-     */
-    public AreaRenderer() {
-        float areaSize = Constants.AREA_PLATFORMS_SIZE * Constants.PLATFORM_SIZE;
-        // Create the area camera.
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.setToOrtho(false);
-        // Move the camera to the middle of the area.
-        float translateY = (Gdx.graphics.getHeight() / 2f) - (areaSize / 2f);
-        float translateX = (Gdx.graphics.getWidth() / 2f) - (areaSize / 2f);
-        camera.translate(-translateX, -translateY, 0);
-        // Zoom in the camera to look at all the pixel-y goodness.
-        camera.zoom = Constants.AREA_DEFAULT_CAMERA_ZOOM;
-    }
 
     /**
      * Render an area.
      * @param batch The sprite batch.
+     * @param camera The area camera.
      * @param area The area to render.
      */
-    public void render(SpriteBatch batch, Area area) {
+    public void render(SpriteBatch batch, AreaCamera camera, Area area) {
         // Update the area camera.
         camera.update();
         // Apply the area camera projection matrix to the application sprite batch.

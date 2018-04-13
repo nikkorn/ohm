@@ -7,14 +7,20 @@ import com.badlogic.gdx.Gdx;
  */
 public class Constants {
 
-    /** Area. */
-    public static final int BLOCK_SIZE                      = 16;
-    public static final int AREA_TILE_HEIGHT                = 8;
-    public static final long AREA_TRANSITION_DURATION_MS    = 2000;
+    /** Settings. */
+    public static final boolean SHOW_DEV_HUD                = false;
 
+    /** Fonts. */
+    public static final int FONT_DEV_HUD_SIZE               = 8;
+
+    /** Area. */
     public static final int PLATFORM_SIZE                   = 48;
     public static final int AREA_PLATFORMS_SIZE             = 7;
     public static final float AREA_DEFAULT_CAMERA_ZOOM      = ((AREA_PLATFORMS_SIZE * PLATFORM_SIZE) * 0.8f) / Gdx.graphics.getHeight();
+
+    public static final long AREA_CAMERA_SMALL_SHAKE_DURATION             = 100l;
+    public static final long AREA_CAMERA_MEDIUM_SHAKE_DURATION            = 200l;
+    public static final long AREA_CAMERA_LARGE_SHAKE_DURATION             = 300l;
 
     /** Pickups. */
     public static final int PICKUP_SIZE                                   = 12;

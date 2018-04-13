@@ -1,6 +1,8 @@
 package com.dumbpug.ohm.projectiles;
 
 import com.dumbpug.ohm.Constants;
+import com.dumbpug.ohm.area.AreaCamera;
+import com.dumbpug.ohm.area.CameraShake;
 import com.dumbpug.ohm.nbp.Environment;
 import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.player.IngamePlayer;
@@ -40,12 +42,13 @@ public class ProjectilePool {
     /**
      * Tick the projectiles pool.
      * @param players The in-game players who can generate projectiles.
+     * @param camera The area camera which we may need to apply shake to on creating projectiles.
      */
-    public void tick(ArrayList<IngamePlayer> players) {
+    public void tick(ArrayList<IngamePlayer> players, AreaCamera camera) {
         // Check for whether any projectiles have not left their owner players box.
         checkForProjectilesPrimedForOwnerHit();
         // Check whether any players have generated any projectiles and adds them to the pool.
-        checkForNewProjectiles(players);
+        checkForNewProjectiles(players, camera);
         // Remove stale projectiles.
         removeStaleProjectiles();
     }
@@ -61,8 +64,9 @@ public class ProjectilePool {
     /**
      * Check whether any players have generated any projectiles and adds them to the pool.
      * @param players The in-game players who can generate projectiles.
+     * @param camera The area camera which we may need to apply shake to on creating projectiles.
      */
-    private void checkForNewProjectiles(ArrayList<IngamePlayer> players) {
+    private void checkForNewProjectiles(ArrayList<IngamePlayer> players, AreaCamera camera) {
         // Check each player in turn.
         for (IngamePlayer player : players) {
             // Get the player's current weapon (if any).
@@ -93,6 +97,9 @@ public class ProjectilePool {
                     // Add the projectile physics box to the physics environment.
                     this.physicsEnvironment.addBox(projectile.getPhysicsBox());
                 }
+                // We have just launched some projectiles. Apply a camera shake if needed based on the weapon.
+                // TODO Determine what magnitude to use or whether to apply shake at all based on weapon type.
+                camera.shake(CameraShake.Magnitude.SMALL);
                 // If this weapon needs to be un-equipped when empty then do that now if it is empty.
                 if (activeWeapon.unEquipWhenEmpty() && activeWeapon.isEmpty()) {
                     // Take this weapon from the player.

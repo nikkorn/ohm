@@ -8,18 +8,18 @@ import com.dumbpug.ohm.player.IngamePlayer;
 import java.util.ArrayList;
 
 /**
- * The HUD renderer.
+ * The Area HUD renderer.
  */
-public class HUDRenderer {
+public class AreaHUDRenderer {
     /**
-     * The HUD camera.
+     * The Area HUD camera.
      */
     OrthographicCamera camera;
 
     /**
-     * Creates a new instance of the HUDRenderer class.
+     * Creates a new instance of the AreaHUDRenderer class.
      */
-    public HUDRenderer() {
+    public AreaHUDRenderer() {
         // Create the HUD camera.
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false);

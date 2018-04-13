@@ -83,12 +83,13 @@ public class Area {
 
     /**
      * Tick the area.
+     * @param camera The area camera.
      */
-    public void tick() {
+    public void tick(AreaCamera camera) {
         // Update the physics environment.
         physicsEnvironment.update();
         // Update the projectilePool pool.
-        projectilePool.tick(this.players);
+        projectilePool.tick(this.players, camera);
         // Process fall-outs.
         CheckForFallOuts();
     }
