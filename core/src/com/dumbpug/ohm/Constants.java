@@ -18,9 +18,9 @@ public class Constants {
     public static final int AREA_PLATFORMS_SIZE             = 7;
     public static final float AREA_DEFAULT_CAMERA_ZOOM      = ((AREA_PLATFORMS_SIZE * PLATFORM_SIZE) * 0.8f) / Gdx.graphics.getHeight();
 
-    public static final long AREA_CAMERA_SMALL_SHAKE_DURATION             = 100l;
-    public static final long AREA_CAMERA_MEDIUM_SHAKE_DURATION            = 200l;
-    public static final long AREA_CAMERA_LARGE_SHAKE_DURATION             = 300l;
+    public static final long AREA_CAMERA_SMALL_SHAKE_DURATION             = 50l;
+    public static final long AREA_CAMERA_MEDIUM_SHAKE_DURATION            = 100l;
+    public static final long AREA_CAMERA_LARGE_SHAKE_DURATION             = 200l;
 
     /** Pickups. */
     public static final int PICKUP_SIZE                                   = 12;

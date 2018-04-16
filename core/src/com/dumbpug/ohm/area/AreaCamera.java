@@ -16,7 +16,7 @@ public class AreaCamera extends OrthographicCamera {
     /**
      * The initial position.
      */
-    private Vector3 initialPosition;
+    private float initialPositionX, initialPositionY;
 
     /**
      * Creates a new instance of the AreaCamera class.
@@ -34,7 +34,8 @@ public class AreaCamera extends OrthographicCamera {
         float translateX = (Gdx.graphics.getWidth() / 2f) - (areaSize / 2f);
         this.translate(-translateX, -translateY, 0);
         // Get the initial position.
-        this.initialPosition = this.position;
+        this.initialPositionX = this.position.x;
+        this.initialPositionY = this.position.y;
     }
 
     /**
@@ -49,7 +50,7 @@ public class AreaCamera extends OrthographicCamera {
      * Apply the default translation for the area camera.
      */
     public void resetPosition() {
-        this.position.set(this.initialPosition.x, this.initialPosition.y, 0);
+        this.position.set(this.initialPositionX, this.initialPositionY, 0);
     }
 
     /**

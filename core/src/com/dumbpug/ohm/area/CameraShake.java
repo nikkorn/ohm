@@ -1,7 +1,6 @@
 package com.dumbpug.ohm.area;
 
 import com.dumbpug.ohm.Constants;
-
 import java.util.Random;
 
 /**
@@ -72,6 +71,6 @@ public class CameraShake {
      * @return The translation offset to apply to a camera axis to simulate a shake.
      */
     private float getShakeTranslationOffset() {
-        return (this.rng.nextFloat() * 2) - 1;
+        return this.rng.nextFloat() - 0.5f;
     }
 }
