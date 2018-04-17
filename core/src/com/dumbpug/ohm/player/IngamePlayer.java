@@ -1,6 +1,9 @@
 package com.dumbpug.ohm.player;
 
+import com.dumbpug.ohm.area.Area;
+import com.dumbpug.ohm.input.Control;
 import com.dumbpug.ohm.input.IInputProvider;
+import com.dumbpug.ohm.weapons.Weapon;
 
 /**
  * Represents an in-game player.
@@ -34,6 +37,68 @@ public class IngamePlayer {
         this.inputProvider = inputProvider;
         this.playerColour  = colour;
         this.player.getPhysicsBox().setUserData(this);
+    }
+
+    /**
+     * Process input gor this in-game player.
+     * @param area The area the player is in.
+     */
+    public void processInput(Area area) {
+        // Do nothing if this player has no input provider.
+        if (inputProvider == null) {
+            return;
+        }
+        // Get the actual Player instance.
+        Player player = this.getPlayer();
+        // Are we moving left/right?
+        if (inputProvider.isControlPressed(Control.LEFT)) {
+            player.moveLeft();
+        } else if (inputProvider.isControlPressed(Control.RIGHT)) {
+            player.moveRight();
+        }
+        // Are we moving up/down?
+        if (inputProvider.isControlPressed(Control.UP)) {
+            player.moveUp();
+        } else if (inputProvider.isControlPressed(Control.DOWN)) {
+            player.moveDown();
+        }
+        // Get our angle of aim for the player.
+        float angleOfAim = inputProvider.getAngleOfAim();
+        if (angleOfAim != -1) {
+            player.setAngleOfAim(angleOfAim);
+        }
+        // Process any input relating to using an equipped weapon (if we have one).
+        if (this.getStatus() != null && this.getStatus().getEquippedWeapon() != null) {
+            ProcessWeaponUse();
+        }
+        // Has the player tried to drop/swap their current weapon?
+        if (inputProvider.isControlJustPressed(Control.SECONDARY)) {
+            // What we do here depends on whether the player is already holding a weapon.
+            if (this.getStatus().getEquippedWeapon() != null) {
+                // The player wants to swap their weapon for a weapon pickup
+                // if they are standing over one. Or drop their weapon if
+                // they are not standing over a weapon pickup.
+                area.swapOrDropPlayerWeapon(this);
+            } else {
+                // The player has no weapon but is trying to pick one up.
+                area.pickUpPlayerWeapon(this);
+            }
+        }
+    }
+
+    /**
+     * Process any input relating to using the equipped weapon.
+     */
+    private void ProcessWeaponUse() {
+        // Get the weapon.
+        Weapon weapon = this.getStatus().getEquippedWeapon();
+        // Get whether the fire button was JUST pressed.
+        boolean fireJustPressed = inputProvider.isControlJustPressed(Control.ACCEPT);
+        // Attempt to use the weapon if the fire button is pressed.
+        if (inputProvider.isControlPressed(Control.ACCEPT)) {
+            // Use our weapon!
+            weapon.use(fireJustPressed);
+        }
     }
 
     /**

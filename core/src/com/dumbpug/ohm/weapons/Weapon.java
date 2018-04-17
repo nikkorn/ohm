@@ -30,8 +30,13 @@ public abstract class Weapon {
 
     /**
      * Attempt to use the weapon.
+     * @param isTriggerJustPressed Whether the trigger was just pressed.
      */
-    public void use() {
+    public void use(boolean isTriggerJustPressed) {
+        // If this weapon is not an automatic then it should only be used once per trigger press.
+        if ((!this.isAutomatic()) && (!isTriggerJustPressed)) {
+            return;
+        }
         // Do we have enough ammo to fire?
         if (ammo > 0) {
             // Get the current time.
@@ -46,13 +51,7 @@ public abstract class Weapon {
                 this.newProjectiles = this.generateProjectiles();
                 // We have successfully fired our weapon!
                 this.onFire();
-            } else {
-                // TODO Handle attempting to fire before cool-down!
-                System.out.println("Weapon must cool down!");
             }
-        } else {
-            // TODO Handle empty weapon!
-            System.out.println("Weapon empty!");
         }
     }
 
