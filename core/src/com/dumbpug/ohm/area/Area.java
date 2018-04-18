@@ -13,6 +13,7 @@ import com.dumbpug.ohm.weapons.Grenade;
 import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.Shotgun;
 import com.dumbpug.ohm.weapons.Sniper;
+import com.dumbpug.ohm.weapons.Uzi;
 import com.dumbpug.ohm.weapons.WeaponFactory;
 import java.util.ArrayList;
 
@@ -49,8 +50,9 @@ public class Area {
 
         // TODO REMOVE!
         this.pickupPool.drop(new Point(70, 50), new Sniper());
-        this.pickupPool.drop(new Point(80, 90), new Shotgun());
-        this.pickupPool.drop(new Point(90, 100), new Grenade());
+        this.pickupPool.drop(new Point(90, 100), new Shotgun());
+        this.pickupPool.drop(new Point(110, 120), new Grenade());
+        this.pickupPool.drop(new Point(130, 150), new Uzi());
     }
 
     /**

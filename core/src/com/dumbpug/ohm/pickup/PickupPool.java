@@ -84,6 +84,9 @@ public class PickupPool {
             case GRENADE:
                 pickupType = PickupType.GRENADE;
                 break;
+            case UZI:
+                pickupType = PickupType.UZI;
+                break;
             default:
                 throw new RuntimeException("Unexpected weapon type: " + weapon.getType());
         }

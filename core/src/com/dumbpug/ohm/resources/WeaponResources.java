@@ -19,6 +19,7 @@ public class WeaponResources {
     private static Sprite sniper;
     private static Sprite shotgun;
     private static Sprite grenade;
+    private static Sprite uzi;
 
     /**
      * Load resources.
@@ -32,6 +33,7 @@ public class WeaponResources {
         sniper  = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/sniper.png")));
         shotgun = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/shotgun.png")));
         grenade = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/grenade.png")));
+        uzi     = new Sprite(new Texture(Gdx.files.internal("graphics/weapons/uzi.png")));
     }
 
     /**
@@ -49,6 +51,8 @@ public class WeaponResources {
                 return shotgun;
             case GRENADE:
                 return grenade;
+            case UZI:
+                return uzi;
             default:
                 return null;
         }

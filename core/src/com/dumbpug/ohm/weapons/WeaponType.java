@@ -7,5 +7,6 @@ public enum WeaponType {
     SNIPER,
     SHOTGUN,
     PISTOL,
+    UZI,
     GRENADE
 }

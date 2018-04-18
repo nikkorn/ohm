@@ -38,6 +38,9 @@ public class Constants {
     public static final long PROJECTILE_PISTOL_COOL_DOWN                  = 500l;
     public static final int PROJECTILE_PISTOL_MAX_AMMO                    = 6;
 
+    public static final long PROJECTILE_UZI_COOL_DOWN                     = 100l;
+    public static final int PROJECTILE_UZI_MAX_AMMO                       = 30;
+
     public static final long PROJECTILE_SNIPER_COOL_DOWN                  = 1500l;
     public static final int PROJECTILE_SNIPER_MAX_AMMO                    = 3;
 
@@ -57,7 +60,6 @@ public class Constants {
     public static final int PLAYER_SIZE                                   = 14;
     public static final int PLAYER_PHYSICS_SIZE_WIDTH                     = 8;
 
-    public static final float PLAYER_AIM_TARGET_DISTANCE                  = PLAYER_SIZE * 2;
     public static final float PLAYER_WEAPON_OFFSET                        = PLAYER_SIZE * 0.65f;
     public static final int PLAYER_LIFE                                   = 8;
 
