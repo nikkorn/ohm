@@ -12,6 +12,7 @@ import com.dumbpug.ohm.input.IInputProvider;
 import com.dumbpug.ohm.input.KeyboardInputProvider;
 import com.dumbpug.ohm.input.OuyaInputProvider;
 import com.dumbpug.ohm.resources.AreaResources;
+import com.dumbpug.ohm.resources.AudioResources;
 import com.dumbpug.ohm.resources.HUDResources;
 import com.dumbpug.ohm.resources.ParticleResources;
 import com.dumbpug.ohm.resources.PickupResources;
@@ -48,6 +49,7 @@ public class Ohm extends ApplicationAdapter {
         this.devHUDRenderer = new DevHUDRenderer();
 
         // Load the game resources.
+        AudioResources.load();
         AreaResources.load();
         PlayerResources.load();
         ParticleResources.load();

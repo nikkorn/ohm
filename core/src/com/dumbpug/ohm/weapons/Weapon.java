@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.weapons;
 
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.resources.AudioResources;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +52,10 @@ public abstract class Weapon {
                 this.newProjectiles = this.generateProjectiles();
                 // We have successfully fired our weapon!
                 this.onFire();
+                // If this weapon makes a sound when fired then play it now.
+                if (this.getFireSoundEffect() != null) {
+                    AudioResources.getSoundEffect(this.getFireSoundEffect()).play();
+                }
             }
         }
     }
@@ -127,6 +132,12 @@ public abstract class Weapon {
      * @return The maximum amount of ammo for this weapon.
      */
     public abstract int getMaxAmmoAmount();
+
+    /**
+     * Get the sound effect to be played when this weapon is successfully fired.
+     * @return The sound effect to be played when this weapon is successfully fired.
+     */
+    public abstract AudioResources.SoundEffect getFireSoundEffect();
 
     /**
      * Gets whether this weapon is an automatic weapon.

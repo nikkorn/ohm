@@ -3,6 +3,7 @@ package com.dumbpug.ohm.weapons;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.projectiles.LaunchedGrenade;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.resources.AudioResources;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +47,15 @@ public class Grenade extends Weapon {
     public boolean unEquipWhenEmpty() {
         // We wouldn't expect our player to be holding a grenade if we had no ammo for it.
         return true;
+    }
+
+    /**
+     * Get the sound effect to be played when this weapon is successfully fired.
+     * @return The sound effect to be played when this weapon is successfully fired.
+     */
+    @Override
+    public AudioResources.SoundEffect getFireSoundEffect() {
+        return null;
     }
 
     /**

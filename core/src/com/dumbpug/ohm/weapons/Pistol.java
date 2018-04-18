@@ -3,6 +3,8 @@ package com.dumbpug.ohm.weapons;
 import com.dumbpug.ohm.Constants;
 import com.dumbpug.ohm.projectiles.Bullet;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.resources.AudioResources;
+
 import java.util.ArrayList;
 
 /**
@@ -43,6 +45,15 @@ public class Pistol extends Weapon {
     @Override
     public int getMaxAmmoAmount() {
         return Constants.PROJECTILE_PISTOL_MAX_AMMO * 10000;
+    }
+
+    /**
+     * Get the sound effect to be played when this weapon is successfully fired.
+     * @return The sound effect to be played when this weapon is successfully fired.
+     */
+    @Override
+    public AudioResources.SoundEffect getFireSoundEffect() {
+        return AudioResources.SoundEffect.BASIC_SHOT;
     }
 
     /**
