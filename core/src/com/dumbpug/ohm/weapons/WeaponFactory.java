@@ -36,6 +36,9 @@ public class WeaponFactory {
             case UZI:
                 weapon = new Uzi();
                 break;
+            case ROCKET_LAUNCHER:
+                weapon = new RocketLauncher();
+                break;
             default:
                 throw new RuntimeException("Cannot create weapon based on pickup type: " + pickup.getType());
         }
@@ -63,6 +66,8 @@ public class WeaponFactory {
                 return new Grenade();
             case UZI:
                 return new Uzi();
+            case ROCKET_LAUNCHER:
+                return new RocketLauncher();
             default:
                 throw new RuntimeException("Cannot create weapon based on weapon type: " + type);
         }

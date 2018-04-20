@@ -1,20 +1,20 @@
 package com.dumbpug.ohm.weapons;
 
 import com.dumbpug.ohm.Constants;
-import com.dumbpug.ohm.projectiles.Bullet;
 import com.dumbpug.ohm.projectiles.Projectile;
+import com.dumbpug.ohm.projectiles.Rocket;
 import com.dumbpug.ohm.resources.AudioResources;
 import java.util.ArrayList;
 
 /**
- * Represents a basic pistol.
+ * Represents a rocket launcher.
  */
-public class Pistol extends Weapon {
+public class RocketLauncher extends Weapon {
 
     @Override
     protected void onFire() {
         // TODO Make sound/ add muzzle flash texture.
-        System.out.print("Fired Pistol!");
+        System.out.print("Fired Rocket!");
     }
 
     /**
@@ -22,9 +22,9 @@ public class Pistol extends Weapon {
      */
     @Override
     protected ArrayList<Projectile> generateProjectiles() {
-        // A pistol can only shoot a single bullet.
+        // A rocket launcher can only shoot a single rocket at a time.
         return new ArrayList<Projectile>() {{
-            add(new Bullet());
+            add(new Rocket());
         }};
     }
 
@@ -34,7 +34,7 @@ public class Pistol extends Weapon {
      */
     @Override
     public long getCooldown() {
-        return Constants.PROJECTILE_PISTOL_COOL_DOWN;
+        return Constants.PROJECTILE_ROCKET_LAUNCHER_COOL_DOWN;
     }
 
     /**
@@ -43,7 +43,7 @@ public class Pistol extends Weapon {
      */
     @Override
     public int getMaxAmmoAmount() {
-        return Constants.PROJECTILE_PISTOL_MAX_AMMO * 10000;
+        return Constants.PROJECTILE_ROCKET_LAUNCHER_MAX_AMMO;
     }
 
     /**
@@ -52,7 +52,7 @@ public class Pistol extends Weapon {
      */
     @Override
     public AudioResources.SoundEffect getFireSoundEffect() {
-        return AudioResources.SoundEffect.BASIC_SHOT;
+        return AudioResources.SoundEffect.HEAVY_SHOT;
     }
 
     /**
@@ -70,7 +70,7 @@ public class Pistol extends Weapon {
      */
     @Override
     public int getLength() {
-        return 13;
+        return 14;
     }
 
     /**
@@ -79,6 +79,6 @@ public class Pistol extends Weapon {
      */
     @Override
     public WeaponType getType() {
-        return WeaponType.PISTOL;
+        return WeaponType.ROCKET_LAUNCHER;
     }
 }

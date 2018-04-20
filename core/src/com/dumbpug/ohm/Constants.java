@@ -28,6 +28,7 @@ public class Constants {
     /** Projectiles. */
     public static final float PROJECTILE_BULLET_SIZE                      = 6;
     public static final float PROJECTILE_BULLET_FIRE_VELOCITY             = 2;
+    public static final float PROJECTILE_ROCKET_FIRE_VELOCITY             = PROJECTILE_BULLET_FIRE_VELOCITY * 0.75f;
 
     /** Weapons. */
     public static final float PROJECTILE_BASIC_RECOIL                     = 1.2f;
@@ -43,6 +44,9 @@ public class Constants {
 
     public static final long PROJECTILE_SNIPER_COOL_DOWN                  = 1500l;
     public static final int PROJECTILE_SNIPER_MAX_AMMO                    = 3;
+
+    public static final long PROJECTILE_ROCKET_LAUNCHER_COOL_DOWN         = 1500l;
+    public static final int PROJECTILE_ROCKET_LAUNCHER_MAX_AMMO           = 2;
 
     public static final long PROJECTILE_GRENADE_COOL_DOWN                 = 1500l;
     public static final int PROJECTILE_GRENADE_MAX_AMMO                   = 2;

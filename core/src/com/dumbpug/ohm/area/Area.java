@@ -11,6 +11,7 @@ import com.dumbpug.ohm.player.Status;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Grenade;
 import com.dumbpug.ohm.weapons.Pistol;
+import com.dumbpug.ohm.weapons.RocketLauncher;
 import com.dumbpug.ohm.weapons.Shotgun;
 import com.dumbpug.ohm.weapons.Sniper;
 import com.dumbpug.ohm.weapons.Uzi;
@@ -53,6 +54,7 @@ public class Area {
         this.pickupPool.drop(new Point(90, 100), new Shotgun());
         this.pickupPool.drop(new Point(110, 120), new Grenade());
         this.pickupPool.drop(new Point(130, 150), new Uzi());
+        this.pickupPool.drop(new Point(150, 160), new RocketLauncher());
     }
 
     /**
