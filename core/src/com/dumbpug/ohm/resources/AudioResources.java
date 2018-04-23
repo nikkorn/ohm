@@ -20,6 +20,7 @@ public class AudioResources {
         BASIC_SHOT,
         LIGHT_SHOT,
         HEAVY_SHOT,
+        DRY_SHOT,
         PICKUP,
         SWAP,
         WIN

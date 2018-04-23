@@ -38,12 +38,12 @@ public abstract class Weapon {
         if ((!this.isAutomatic()) && (!isTriggerJustPressed)) {
             return;
         }
-        // Do we have enough ammo to fire?
-        if (ammo > 0) {
-            // Get the current time.
-            long currentTime = System.currentTimeMillis();
-            // Have we waited long enough since we last fired this weapon?
-            if (System.currentTimeMillis() >= (lastFired + this.getCooldown())) {
+        // Get the current time.
+        long currentTime = System.currentTimeMillis();
+        // Have we waited long enough since we last fired this weapon?
+        if (System.currentTimeMillis() >= (lastFired + this.getCooldown())) {
+            // Do we have enough ammo to fire?
+            if (ammo > 0) {
                 // Use a unit of ammo.
                 this.ammo--;
                 // Reset the last fired time.
@@ -56,6 +56,11 @@ public abstract class Weapon {
                 if (this.getFireSoundEffect() != null) {
                     AudioResources.getSoundEffect(this.getFireSoundEffect()).play();
                 }
+            } else {
+                // We have no ammo!
+                AudioResources.getSoundEffect(AudioResources.SoundEffect.DRY_SHOT).play();
+                // Reset the last fired time.
+                this.lastFired = currentTime;
             }
         }
     }
