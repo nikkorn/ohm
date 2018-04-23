@@ -1,6 +1,7 @@
 package com.dumbpug.ohm.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dumbpug.ohm.area.IPhysicsEntity;
 import com.dumbpug.ohm.nbp.Box;
 import com.dumbpug.ohm.pickup.Pickup;
@@ -80,6 +81,11 @@ public abstract class Projectile implements IPhysicsEntity {
     public abstract Sprite getSprite();
 
     /**
+     * Tick the projectile.
+     */
+    public void tick() {}
+
+    /**
      * Set the angle of offset for the firing angle of the projectile.
      * @param angleOfFireOffset The angle of offset for the firing angle of the projectile.
      */
@@ -154,6 +160,21 @@ public abstract class Projectile implements IPhysicsEntity {
     @Override
     public Box getPhysicsBox() {
         return this.physicsBox;
+    }
+
+    /**
+     * Draw the projectile.
+     * @param batch The sprite batch.
+     */
+    public void draw(SpriteBatch batch) {
+        // Get the sprite for this projectile.
+        Sprite projectileSprite = this.getSprite();
+        // Set the correct position of the sprite.
+        projectileSprite.setX(getPhysicsBox().getX());
+        projectileSprite.setY(getPhysicsBox().getY());
+        projectileSprite.setRotation(getRotation());
+        // Draw the sprite.
+        projectileSprite.draw(batch);
     }
 
     /**

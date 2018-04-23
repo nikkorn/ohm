@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class ParticleResources {
 
-    /** The electro particle texture. */
-    public static Sprite electro_particle;
+    /** The rocket smoke particle texture. */
+    public static Sprite rocket_smoke_particle;
 
     /**
      * Load resources.
      */
     public static void load() {
-        electro_particle = new Sprite(new Texture(Gdx.files.internal("graphics/particles/electro_particle.png")));
+        rocket_smoke_particle = new Sprite(new Texture(Gdx.files.internal("graphics/particles/rocket_smoke_particle.png")));
     }
 }

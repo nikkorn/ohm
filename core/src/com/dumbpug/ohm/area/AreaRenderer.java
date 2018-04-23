@@ -94,14 +94,7 @@ public class AreaRenderer {
      */
     private void drawProjectiles(SpriteBatch batch, ArrayList<Projectile> projectiles) {
         for (Projectile projectile : projectiles) {
-            // Get the sprite for this projectile.
-            Sprite projectileSprite = projectile.getSprite();
-            // Set the correct position of the sprite.
-            projectileSprite.setX(projectile.getPhysicsBox().getX());
-            projectileSprite.setY(projectile.getPhysicsBox().getY());
-            projectileSprite.setRotation(projectile.getRotation());
-            // Draw the sprite.
-            projectileSprite.draw(batch);
+            projectile.draw(batch);
         }
     }
 

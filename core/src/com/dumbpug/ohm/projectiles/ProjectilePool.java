@@ -45,9 +45,13 @@ public class ProjectilePool {
      * @param camera The area camera which we may need to apply shake to on creating projectiles.
      */
     public void tick(ArrayList<IngamePlayer> players, AreaCamera camera) {
+        // Tick each projectile.
+        for (Projectile projectile : this.projectiles) {
+            projectile.tick();
+        }
         // Check for whether any projectiles have not left their owner players box.
         checkForProjectilesPrimedForOwnerHit();
-        // Check whether any players have generated any projectiles and adds them to the pool.
+        // Check whether any players have generated any projectiles and add them to the pool.
         checkForNewProjectiles(players, camera);
         // Remove stale projectiles.
         removeStaleProjectiles();
