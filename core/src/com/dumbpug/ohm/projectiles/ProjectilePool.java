@@ -102,7 +102,6 @@ public class ProjectilePool {
                     this.physicsEnvironment.addBox(projectile.getPhysicsBox());
                 }
                 // We have just launched some projectiles. Apply a camera shake if needed based on the weapon.
-                // TODO Determine what magnitude to use or whether to apply shake at all based on weapon type.
                 camera.shake(CameraShake.Magnitude.SMALL);
                 // If this weapon needs to be un-equipped when empty then do that now if it is empty.
                 if (activeWeapon.unEquipWhenEmpty() && activeWeapon.isEmpty()) {

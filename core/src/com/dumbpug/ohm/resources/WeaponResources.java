@@ -59,6 +59,8 @@ public class WeaponResources {
                 return uzi;
             case ROCKET_LAUNCHER:
                 return rocket_launcher;
+            case TRACKING_ROCKET_LAUNCHER:
+                return rocket_launcher;
             default:
                 return null;
         }

@@ -8,12 +8,14 @@ import com.dumbpug.ohm.nbp.NBPMath;
 import com.dumbpug.ohm.nbp.point.Point;
 import com.dumbpug.ohm.player.IngamePlayer;
 import com.dumbpug.ohm.player.Status;
+import com.dumbpug.ohm.player.Tracker;
 import com.dumbpug.ohm.projectiles.ProjectilePool;
 import com.dumbpug.ohm.weapons.Grenade;
 import com.dumbpug.ohm.weapons.Pistol;
 import com.dumbpug.ohm.weapons.RocketLauncher;
 import com.dumbpug.ohm.weapons.Shotgun;
 import com.dumbpug.ohm.weapons.Sniper;
+import com.dumbpug.ohm.weapons.TrackingRocketLauncher;
 import com.dumbpug.ohm.weapons.Uzi;
 import com.dumbpug.ohm.weapons.WeaponFactory;
 import java.util.ArrayList;
@@ -50,11 +52,13 @@ public class Area {
         preparePlayers(players);
 
         // TODO REMOVE!
+        this.pickupPool.drop(new Point(60, 70), new Pistol());
         this.pickupPool.drop(new Point(70, 50), new Sniper());
         this.pickupPool.drop(new Point(90, 100), new Shotgun());
         this.pickupPool.drop(new Point(110, 120), new Grenade());
         this.pickupPool.drop(new Point(130, 150), new Uzi());
         this.pickupPool.drop(new Point(150, 160), new RocketLauncher());
+        this.pickupPool.drop(new Point(170, 180), new TrackingRocketLauncher(null));
     }
 
     /**
@@ -101,7 +105,7 @@ public class Area {
     /**
      * Gets whether the match has finished.
      * This is determined by
-     *  - Whether only  a single player remains alive.
+     *  - Whether only a single player remains alive.
      *  - All the players are dead.
      * @return Whether the match has finished.
      */
@@ -135,16 +139,14 @@ public class Area {
     private void preparePlayers(ArrayList<IngamePlayer> players) {
         // Prepare each player.
         for(IngamePlayer ingamePlayer : players) {
-            // Add player to this area at the player spawn and
-            // Set the player at a free spawn. TODO Add correct positions.
+            // Add player to this area at the player spawn and set the player at a free spawn. TODO Add correct positions.
             ingamePlayer.getPlayer().setPosition(players.indexOf(ingamePlayer) * 50, 50);
             // Add the characters physics box to the world.
             physicsEnvironment.addBox(ingamePlayer.getPlayer().getPhysicsBox());
+            // Set the tracker for the player, giving them insight into enemy positions.
+            ingamePlayer.setTracker(new Tracker(ingamePlayer, players));
             // Prepare the player with a fresh new status.
             ingamePlayer.setStatus(new Status());
-
-            // TODO Remove! Give the player a pistol!
-            ingamePlayer.getStatus().setEquippedWeapon(new Pistol());
         }
         this.players = players;
     }
@@ -194,7 +196,7 @@ public class Area {
                 // Remove this pickup from the pickup pool.
                 this.pickupPool.remove(pickup);
                 // Give the player the weapon that this pickup represents.
-                ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(pickup));
+                ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(pickup, ingamePlayer.getTracker()));
                 // We only want to pick up one weapon.
                 return;
             }
@@ -232,7 +234,7 @@ public class Area {
             // Remove this pickup from the pickup pool.
             this.pickupPool.remove(closeWeaponPickup);
             // Give the player the weapon that this pickup represents.
-            ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(closeWeaponPickup));
+            ingamePlayer.getStatus().setEquippedWeapon(WeaponFactory.createFromPickup(closeWeaponPickup, ingamePlayer.getTracker()));
         }
     }
 }

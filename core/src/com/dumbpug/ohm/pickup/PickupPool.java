@@ -90,6 +90,9 @@ public class PickupPool {
             case ROCKET_LAUNCHER:
                 pickupType = PickupType.ROCKET_LAUNCHER;
                 break;
+            case TRACKING_ROCKET_LAUNCHER:
+                pickupType = PickupType.TRACKING_ROCKET_LAUNCHER;
+                break;
             default:
                 throw new RuntimeException("Unexpected weapon type: " + weapon.getType());
         }

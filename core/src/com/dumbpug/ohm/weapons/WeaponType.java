@@ -9,5 +9,6 @@ public enum WeaponType {
     PISTOL,
     UZI,
     ROCKET_LAUNCHER,
+    TRACKING_ROCKET_LAUNCHER,
     GRENADE
 }

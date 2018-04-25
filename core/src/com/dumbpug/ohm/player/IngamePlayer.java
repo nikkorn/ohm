@@ -18,6 +18,10 @@ public class IngamePlayer {
      */
     private Status status = new Status();
     /**
+     * The player tracker.
+     */
+    private Tracker tracker = null;
+    /**
      * The input provider for the player.
      */
     private IInputProvider inputProvider;
@@ -113,6 +117,22 @@ public class IngamePlayer {
             // Set the players life, not going below zero.
             this.getStatus().setLife(newLife < 0 ? 0 : newLife);
         }
+    }
+
+    /**
+     * Get the tracker of the in-game player.
+     * @return The tracker of the in-game player.
+     */
+    public Tracker getTracker() {
+        return this.tracker;
+    }
+
+    /**
+     * Set the tracker of the in-game player.
+     * @param tracker The tracker of the in-game player.
+     */
+    public void setTracker(Tracker tracker) {
+        this.tracker = tracker;
     }
 
     /**

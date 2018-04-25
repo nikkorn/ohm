@@ -25,6 +25,7 @@ public class PickupResources {
         animations.put(PickupType.GRENADE, new Animation(new Texture(Gdx.files.internal("graphics/pickups/grenade.png")), 4, 1, 0.5f));
         animations.put(PickupType.UZI, new Animation(new Texture(Gdx.files.internal("graphics/pickups/uzi.png")), 4, 1, 0.5f));
         animations.put(PickupType.ROCKET_LAUNCHER, new Animation(new Texture(Gdx.files.internal("graphics/pickups/rocket_launcher.png")), 4, 1, 0.5f));
+        animations.put(PickupType.TRACKING_ROCKET_LAUNCHER, new Animation(new Texture(Gdx.files.internal("graphics/pickups/rocket_launcher.png")), 4, 1, 0.5f));
     }
 
     /**

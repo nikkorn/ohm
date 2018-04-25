@@ -13,6 +13,7 @@ public enum PickupType {
     UZI,
     SNIPER,
     ROCKET_LAUNCHER,
+    TRACKING_ROCKET_LAUNCHER,
     REMOTE_ROCKET_LAUNCHER,
     AUTO_TURRET,
 

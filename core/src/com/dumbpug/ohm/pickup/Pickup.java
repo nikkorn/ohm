@@ -73,6 +73,7 @@ public class Pickup implements IPhysicsEntity {
             case SNIPER:
             case ROCKET_LAUNCHER:
             case REMOTE_ROCKET_LAUNCHER:
+            case TRACKING_ROCKET_LAUNCHER:
             case AUTO_TURRET:
                 return PickupCategory.WEAPON;
             case SHIELD:
