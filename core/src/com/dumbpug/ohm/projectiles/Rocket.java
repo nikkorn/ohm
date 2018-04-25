@@ -24,6 +24,9 @@ public class Rocket extends Projectile {
         super();
         // Create the rocket smoke particle emitter.
         createRocketSmokeParticleEmitter();
+        // Rockets can only go so fast.
+        this.getPhysicsBox().setMaxVelocityX(Constants.PROJECTILE_ROCKET_MAX_VELOCITY);
+        this.getPhysicsBox().setMaxVelocityY(Constants.PROJECTILE_ROCKET_MAX_VELOCITY);
     }
 
     /**

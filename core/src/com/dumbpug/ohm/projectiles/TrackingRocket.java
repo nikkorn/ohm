@@ -28,6 +28,6 @@ public class TrackingRocket extends Rocket {
         // Use the tracker to determine the angle between the rocket and the closest enemy.
         float angleToClosestEnemy = this.tracker.getAngleToClosestEnemy(getPhysicsBox().getCurrentOriginPoint());
         // Change the direction of this tracking rocket.
-        getPhysicsBox().applyVelocityInDirection(angleToClosestEnemy, 0.1f);
+        getPhysicsBox().applyVelocityInDirection(angleToClosestEnemy, 0.6f);
     }
 }
