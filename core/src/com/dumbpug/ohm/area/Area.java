@@ -52,13 +52,13 @@ public class Area {
         preparePlayers(players);
 
         // TODO REMOVE!
-        this.pickupPool.drop(new Point(60, 70), new Pistol());
+        this.pickupPool.drop(new Point(60, 170), new Pistol());
         this.pickupPool.drop(new Point(70, 50), new Sniper());
         this.pickupPool.drop(new Point(90, 100), new Shotgun());
         this.pickupPool.drop(new Point(110, 120), new Grenade());
         this.pickupPool.drop(new Point(130, 150), new Uzi());
         this.pickupPool.drop(new Point(150, 160), new RocketLauncher());
-        this.pickupPool.drop(new Point(170, 180), new TrackingRocketLauncher(null));
+        this.pickupPool.drop(new Point(60, 70), new TrackingRocketLauncher(null));
     }
 
     /**

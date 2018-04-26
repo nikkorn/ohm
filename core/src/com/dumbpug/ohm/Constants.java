@@ -49,6 +49,9 @@ public class Constants {
     public static final int PROJECTILE_ROCKET_LAUNCHER_MAX_AMMO           = 1000;
     public static final float PROJECTILE_ROCKET_MAX_VELOCITY              = 2f;
 
+    public static final long PROJECTILE_TRACKING_ROCKET_DELAY             = 500l;
+    public static final float PROJECTILE_TRACKING_ROCKET_FIRE_VELOCITY    = PROJECTILE_ROCKET_FIRE_VELOCITY * 0.5f;
+
     public static final long PROJECTILE_GRENADE_COOL_DOWN                 = 1500l;
     public static final int PROJECTILE_GRENADE_MAX_AMMO                   = 2;
     public static final long PROJECTILE_GRENADE_FUSE                      = 3000l;

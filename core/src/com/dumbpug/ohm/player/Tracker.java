@@ -28,11 +28,11 @@ public class Tracker {
     }
 
     /**
-     * Gets the angle between the origin and the closest enemy player.
-     * @param origin The origin at which the angle starts.
-     * @return The angle between the origin and the closest enemy player.
+     * Gets the position of the closest enemy player to the origin.
+     * @param origin The origin.
+     * @return The position of the closest enemy player to the origin.
      */
-    public float getAngleToClosestEnemy(Point origin) {
+    public Point getClosestEnemyPosition(Point origin) {
         IngamePlayer closestPlayer = null;
         // Firstly, find the closest player to the specified point that is not the owner.
         for (IngamePlayer player : this.players) {
@@ -55,12 +55,32 @@ public class Tracker {
                 }
             }
         }
+        // Return the origin of the closest player.
+        return closestPlayer.getPlayer().getPhysicsBox().getCurrentOriginPoint();
+    }
+
+    /**
+     * Gets the position of the closest enemy player to the player.
+     * @return The position of the closest enemy player to the player.
+     */
+    public Point getClosestEnemyPosition() {
+        return getClosestEnemyPosition(this.owner.getPlayer().getPhysicsBox().getCurrentOriginPoint());
+    }
+
+    /**
+     * Gets the angle between the origin and the closest enemy player.
+     * @param origin The origin at which the angle starts.
+     * @return The angle between the origin and the closest enemy player.
+     */
+    public float getAngleToClosestEnemy(Point origin) {
+        // Firstly, find the position of the closest player to the specified point that is not the owner.
+        Point closestPlayerPosition = this.getClosestEnemyPosition(origin);
         // If we have no closest player then just return 0.
-        if (closestPlayer == null) {
+        if (closestPlayerPosition == null) {
             return 0f;
         }
         // Now that we know who the closest player is, return the angle between the specified point and them.
-        return NBPMath.getAngleBetweenPoints(origin, closestPlayer.getPlayer().getPhysicsBox().getCurrentOriginPoint());
+        return NBPMath.getAngleBetweenPoints(origin, closestPlayerPosition);
     }
 
     /**
